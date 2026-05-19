@@ -13,9 +13,7 @@ import {
   Gauge,
   LayoutDashboard,
   Mail,
-  MapPin,
   MessageSquare,
-  Phone,
   RefreshCw,
   Rocket,
   ScrollText,
@@ -37,6 +35,19 @@ import {
   TrendingUp,
   Settings,
   Plug,
+  Package,
+  Factory,
+  DollarSign,
+  Truck,
+  ShoppingCart,
+  FileText,
+  PieChart,
+  Cloud,
+  Lock,
+  HeadphonesIcon,
+  Target,
+  Lightbulb,
+  Handshake,
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
@@ -95,6 +106,57 @@ function FadeInSection({ children, className = '', delay = 0 }: { children: Reac
 }
 
 /* ─── Data ─── */
+const bcModules = [
+  {
+    icon: DollarSign,
+    title: 'Finanzas',
+    description: 'Contabilidad, cuentas por cobrar y pagar, presupuestos, conciliaciones bancarias, flujo de caja y cierres contables automáticos.',
+    tags: ['Contabilidad', 'CxC/CxP', 'Flujo de Efectivo'],
+  },
+  {
+    icon: ShoppingCart,
+    title: 'Ventas',
+    description: 'Seguimiento de clientes, pedidos, cotizaciones, facturación electrónica, devoluciones, comisiones y condiciones comerciales.',
+    tags: ['Cotizaciones', 'Pedidos', 'Facturación'],
+  },
+  {
+    icon: Package,
+    title: 'Compras',
+    description: 'Solicitudes de compra, control de proveedores, órdenes de compra, recepción de mercancías, facturación y pagos automatizados.',
+    tags: ['Proveedores', 'Órdenes', 'Pagos'],
+  },
+  {
+    icon: Database,
+    title: 'Inventario y Almacenes',
+    description: 'Control de entradas y salidas en tiempo real, ubicaciones, trazabilidad, transferencias, ajustes y reservas de inventario.',
+    tags: ['Stock', 'Trazabilidad', 'Almacenes'],
+  },
+  {
+    icon: Factory,
+    title: 'Producción',
+    description: 'Control de procesos y costos de producción, materiales, órdenes de trabajo, rutas de fabricación y planificación de capacidad.',
+    tags: ['Órdenes', 'Materiales', 'Costos'],
+  },
+  {
+    icon: Truck,
+    title: 'Logística y Envíos',
+    description: 'Gestión de remisiones, rastreo de envíos, integración con paqueterías, planificación de rutas y confirmación de entregas.',
+    tags: ['Envíos', 'Rastreo', 'Paquetería'],
+  },
+  {
+    icon: FileText,
+    title: 'Reportes e Inteligencia',
+    description: 'Análisis interactivos, KPIs en tiempo real, dashboards ejecutivos, integración nativa con Power BI y exportación automática.',
+    tags: ['Power BI', 'KPIs', 'Dashboards'],
+  },
+  {
+    icon: PieChart,
+    title: 'Gestión de Proyectos',
+    description: 'Planeación, asignación de recursos, seguimiento de tiempos y costos, facturación por proyecto y análisis de rentabilidad.',
+    tags: ['Recursos', 'Tiempos', 'Rentabilidad'],
+  },
+]
+
 const automationIdeas = [
   {
     icon: RefreshCw,
@@ -104,20 +166,20 @@ const automationIdeas = [
   },
   {
     icon: ScrollText,
-    title: 'Facturación Electrónica Automática',
-    description: 'Genera y envía facturas electrónicas (CFDI) directamente desde Business Central. Cumple con requisitos fiscales automáticamente.',
+    title: 'Facturación Electrónica Automática (CFDI)',
+    description: 'Genera y envía facturas electrónicas directamente desde Business Central. Cumple con requisitos fiscales del SAT de forma automática.',
     tags: ['Facturación', 'SAT/CFDI', 'Compliance'],
   },
   {
     icon: Bot,
     title: 'Notificaciones Inteligentes con Power Automate',
-    description: 'Flujos automáticos que notifican cuando un pedido se retrasa, cuando el inventario baja, o cuando un cliente requiere seguimiento.',
+    description: 'Flujos automáticos que notifican cuando un pedido se retrasa, el inventario baja, o un cliente requiere seguimiento.',
     tags: ['Power Automate', 'Alertas', 'Workflows'],
   },
   {
     icon: FileSpreadsheet,
     title: 'Reportes Financieros Automatizados',
-    description: 'Genera reportes de ventas, flujo de caja y estados financieros automáticamente cada semana o mes y envialos por correo.',
+    description: 'Genera reportes de ventas, flujo de caja y estados financieros automáticamente cada semana o mes y envíalos por correo.',
     tags: ['Reportes', 'Finanzas', 'Email'],
   },
   {
@@ -132,13 +194,25 @@ const automationIdeas = [
     description: 'Automatiza la importación de catálogos, clientes y proveedores desde Excel, sistemas legacy u otras bases de datos.',
     tags: ['Migración', 'Datos', 'Importación'],
   },
+  {
+    icon: Mail,
+    title: 'Campañas de Email Automatizadas',
+    description: 'Segmenta clientes en Business Central y dispara campañas de email personalizadas según su historial de compras.',
+    tags: ['Email Marketing', 'Segmentación', 'CRM'],
+  },
+  {
+    icon: RefreshCw,
+    title: 'Conciliación Bancaria Automática',
+    description: 'Importa estados de cuenta automáticamente y concilia transacciones con tus registros contables sin intervención manual.',
+    tags: ['Bancos', 'Conciliación', 'Contabilidad'],
+  },
 ]
 
 const developmentIdeas = [
   {
     icon: Smartphone,
     title: 'App Móvil de Campo',
-    description: 'Aplicación personalizada para vendedores o técnicos de campo que se conecta en tiempo real con Business Central para crear pedidos, consultar inventario y registrar visitas.',
+    description: 'Aplicación personalizada para vendedores o técnicos que se conecta en tiempo real con Business Central para crear pedidos, consultar inventario y registrar visitas.',
     color: 'emerald',
   },
   {
@@ -156,7 +230,7 @@ const developmentIdeas = [
   {
     icon: Shield,
     title: 'Portal de Proveedores',
-    description: 'Portal web donde tus proveedores consultan órdenes de compra, suben facturas y dan seguimiento a pagos, directamente conectado a Business Central.',
+    description: 'Portal web donde tus proveedores consultan órdenes de compra, suben facturas y dan seguimiento a pagos, conectado a Business Central.',
     color: 'amber',
   },
   {
@@ -168,8 +242,53 @@ const developmentIdeas = [
   {
     icon: Globe,
     title: 'Integración con Plataformas de Envío',
-    description: 'Conecta Business Central con DHL, FedEx, Estafeta y otras paqueterías para generar guías, rastrear envíos y calcular costos automáticamente.',
+    description: 'Conecta Business Central con DHL, FedEx, Estafeta y otras paqueterías para generar guías, rastrear envíos y calcular costos.',
     color: 'amber',
+  },
+  {
+    icon: BarChart3,
+    title: 'Predictor de Demanda con IA',
+    description: 'Extensión que analiza historial de ventas y tendencias para sugerir niveles óptimos de reabastecimiento y pronósticos de demanda.',
+    color: 'emerald',
+  },
+  {
+    icon: Building2,
+    title: 'Multi-sucursal Centralizada',
+    description: 'Gestión de múltiples sucursales con consolidación automática, transferencias inter-sucursal y reportes comparativos.',
+    color: 'amber',
+  },
+]
+
+const bcBenefits = [
+  {
+    icon: Cloud,
+    title: '100% en la Nube',
+    description: 'Accede desde cualquier lugar y dispositivo. Seguridad y respaldo garantizados por Microsoft Azure.',
+  },
+  {
+    icon: Lock,
+    title: 'Seguridad Empresarial',
+    description: 'Tus datos protegidos con la seguridad y garantía de Microsoft. Cumplimiento de normativas internacionales.',
+  },
+  {
+    icon: Zap,
+    title: 'Implementación Rápida',
+    description: 'Puesta en marcha en semanas, no meses. Metodología probada para que operes lo antes posible.',
+  },
+  {
+    icon: Target,
+    title: 'Se Adapta a Tu Negocio',
+    description: 'No tú al sistema. Business Central se personaliza a tus procesos con extensiones y desarrollo a medida.',
+  },
+  {
+    icon: Lightbulb,
+    title: 'Inteligencia Integrada',
+    description: 'Sugerencias de IA, análisis predictivo y recomendaciones inteligentes para mejores decisiones.',
+  },
+  {
+    icon: Handshake,
+    title: 'Ecosistema Microsoft',
+    description: 'Integración nativa con Outlook, Excel, Word, Teams, Power BI, Power Automate y más.',
   },
 ]
 
@@ -204,6 +323,16 @@ const services = [
     title: 'Capacitación',
     description: 'Formación a tu equipo para que saque el máximo provecho de Business Central. Talleres prácticos y documentación.',
   },
+  {
+    icon: HeadphonesIcon,
+    title: 'Soporte Continuo',
+    description: 'Acompañamiento post-implementación con soporte técnico, actualizaciones y mejoras continuas.',
+  },
+  {
+    icon: Truck,
+    title: 'Migración de Datos',
+    description: 'Importamos tu información de sistemas legacy, Excel u otros ERPs a Business Central de forma segura.',
+  },
 ]
 
 const processSteps = [
@@ -216,7 +345,7 @@ const processSteps = [
   {
     step: '02',
     title: 'Propuesta',
-    description: 'Diseñamos una solución a medida con road map claro, tiempos y costos transparentes.',
+    description: 'Diseñamos una solución a medida con roadmap claro, tiempos y costos transparentes.',
     icon: ScrollText,
   },
   {
@@ -276,7 +405,15 @@ const testimonials = [
 export default function Home() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [activeTestimonial, setActiveTestimonial] = useState(0)
-  const [formStatus, setFormStatus] = useState<'idle' | 'sending' | 'sent'>('idle')
+  const [formStatus, setFormStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle')
+  const [formData, setFormData] = useState({
+    name: '',
+    company: '',
+    email: '',
+    phone: '',
+    message: '',
+  })
+  const [selectedInterests, setSelectedInterests] = useState<string[]>([])
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -285,14 +422,43 @@ export default function Home() {
     return () => clearInterval(timer)
   }, [])
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const toggleInterest = (interest: string) => {
+    setSelectedInterests(prev =>
+      prev.includes(interest)
+        ? prev.filter(i => i !== interest)
+        : [...prev, interest]
+    )
+  }
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setFormStatus('sending')
-    setTimeout(() => {
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          ...formData,
+          interests: selectedInterests,
+        }),
+      })
+
+      if (!response.ok) {
+        throw new Error('Error al enviar')
+      }
+
       setFormStatus('sent')
+      setFormData({ name: '', company: '', email: '', phone: '', message: '' })
+      setSelectedInterests([])
+      setTimeout(() => setFormStatus('idle'), 4000)
+    } catch {
+      setFormStatus('error')
       setTimeout(() => setFormStatus('idle'), 3000)
-    }, 1500)
+    }
   }
+
+  const interestOptions = ['Implementación', 'Desarrollo a medida', 'Automatización', 'Integración', 'Business Intelligence', 'Capacitación', 'Migración de datos', 'Soporte']
 
   return (
     <div className="min-h-screen flex flex-col">
@@ -310,27 +476,21 @@ export default function Home() {
             </div>
 
             <div className="hidden md:flex items-center gap-8">
-              <a href="#automatizaciones" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-                Automatizaciones
-              </a>
-              <a href="#desarrollos" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-                Desarrollos
-              </a>
-              <a href="#servicios" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-                Servicios
-              </a>
-              <a href="#proceso" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-                Proceso
-              </a>
-              <a href="#contacto" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-                Contacto
-              </a>
+              {[
+                { href: '#modulos', label: 'Módulos BC' },
+                { href: '#automatizaciones', label: 'Automatizaciones' },
+                { href: '#desarrollos', label: 'Desarrollos' },
+                { href: '#servicios', label: 'Servicios' },
+                { href: '#proceso', label: 'Proceso' },
+                { href: '#contacto', label: 'Contacto' },
+              ].map((link) => (
+                <a key={link.href} href={link.href} className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+                  {link.label}
+                </a>
+              ))}
             </div>
 
             <div className="hidden md:flex items-center gap-3">
-              <Button variant="ghost" size="sm" asChild>
-                <a href="#contacto">Agendar llamada</a>
-              </Button>
               <Button size="sm" className="bg-primary hover:bg-primary/90" asChild>
                 <a href="#contacto">
                   Cotización gratis
@@ -349,7 +509,6 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Mobile Menu */}
         <AnimatePresence>
           {mobileMenuOpen && (
             <motion.div
@@ -359,22 +518,19 @@ export default function Home() {
               className="md:hidden border-t border-border/50 bg-background/95 backdrop-blur-xl"
             >
               <div className="px-4 py-4 space-y-3">
-                {['Automatizaciones', 'Desarrollos', 'Servicios', 'Proceso', 'Contacto'].map((item) => (
+                {['Módulos BC', 'Automatizaciones', 'Desarrollos', 'Servicios', 'Proceso', 'Contacto'].map((item) => (
                   <a
                     key={item}
-                    href={`#${item.toLowerCase()}`}
+                    href={`#${item.toLowerCase().replace(' ', '-').replace('ó', 'o')}`}
                     className="block text-sm text-muted-foreground hover:text-foreground transition-colors py-1"
                     onClick={() => setMobileMenuOpen(false)}
                   >
                     {item}
                   </a>
                 ))}
-                <div className="pt-2 flex flex-col gap-2">
-                  <Button variant="outline" size="sm" asChild>
-                    <a href="#contacto">Agendar llamada</a>
-                  </Button>
-                  <Button size="sm" className="bg-primary hover:bg-primary/90" asChild>
-                    <a href="#contacto">Cotización gratis</a>
+                <div className="pt-2">
+                  <Button size="sm" className="w-full bg-primary hover:bg-primary/90" asChild>
+                    <a href="#contacto" onClick={() => setMobileMenuOpen(false)}>Cotización gratis</a>
                   </Button>
                 </div>
               </div>
@@ -385,14 +541,12 @@ export default function Home() {
 
       {/* ─── Hero Section ─── */}
       <section className="relative pt-24 pb-16 md:pt-32 md:pb-24 overflow-hidden">
-        {/* Background */}
         <div className="absolute inset-0 grid-pattern" />
         <div className="absolute top-20 left-1/4 w-96 h-96 bg-primary/5 rounded-full blur-3xl" />
         <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-accent/5 rounded-full blur-3xl" />
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
-            {/* Left Content */}
             <FadeInSection>
               <Badge variant="secondary" className="mb-6 px-3 py-1 text-xs font-medium">
                 <Sparkles className="w-3 h-3 mr-1" />
@@ -414,40 +568,26 @@ export default function Home() {
                   </a>
                 </Button>
                 <Button variant="outline" size="lg" className="text-base px-8" asChild>
-                  <a href="#automatizaciones">
-                    Ver automatizaciones
+                  <a href="#modulos">
+                    Ver módulos BC
                   </a>
                 </Button>
               </div>
-              <div className="flex items-center gap-6 mt-8 text-sm text-muted-foreground">
-                <div className="flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-primary" />
-                  <span>Sin compromiso</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-primary" />
-                  <span>Diagnóstico gratis</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <CheckCircle2 className="w-4 h-4 text-primary" />
-                  <span>Soporte incluido</span>
-                </div>
+              <div className="flex flex-wrap items-center gap-4 mt-8 text-sm text-muted-foreground">
+                {['Sin compromiso', 'Diagnóstico gratis', 'Soporte incluido'].map((text) => (
+                  <div key={text} className="flex items-center gap-2">
+                    <CheckCircle2 className="w-4 h-4 text-primary" />
+                    <span>{text}</span>
+                  </div>
+                ))}
               </div>
             </FadeInSection>
 
-            {/* Right - Dashboard Mockup with Hero Image */}
             <FadeInSection delay={0.2}>
               <div className="relative">
                 <div className="absolute -inset-4 bg-gradient-to-r from-primary/20 to-accent/20 rounded-2xl blur-2xl" />
-                {/* Hero illustration behind the dashboard */}
-                <div className="absolute inset-0 rounded-2xl overflow-hidden opacity-20">
-                  <Image
-                    src="/hero-illustration.png"
-                    alt="Business Central Automation"
-                    fill
-                    className="object-cover"
-                    priority
-                  />
+                <div className="absolute inset-0 rounded-2xl overflow-hidden opacity-15">
+                  <Image src="/hero-illustration.png" alt="Business Central Automation" fill className="object-cover" priority />
                 </div>
                 <div className="relative bg-card/95 border border-border rounded-2xl p-6 shadow-2xl backdrop-blur-sm">
                   <div className="flex items-center gap-2 mb-4">
@@ -456,8 +596,6 @@ export default function Home() {
                     <div className="w-3 h-3 rounded-full bg-emerald-400" />
                     <span className="ml-2 text-xs text-muted-foreground">Business Central — Dashboard</span>
                   </div>
-
-                  {/* Mini Dashboard */}
                   <div className="grid grid-cols-2 gap-3 mb-4">
                     {[
                       { label: 'Ingresos', value: '$2.4M', change: '+18.3%', icon: TrendingUp },
@@ -475,8 +613,6 @@ export default function Home() {
                       </div>
                     ))}
                   </div>
-
-                  {/* Mini Chart Representation */}
                   <div className="bg-muted/30 rounded-lg p-4">
                     <div className="flex items-center justify-between mb-3">
                       <span className="text-xs font-medium">Flujo de Ventas</span>
@@ -484,22 +620,14 @@ export default function Home() {
                     </div>
                     <div className="flex items-end gap-1.5 h-20">
                       {[40, 55, 35, 65, 50, 75, 60].map((h, i) => (
-                        <motion.div
-                          key={i}
-                          className="flex-1 rounded-sm bg-primary/70"
-                          initial={{ height: 0 }}
-                          animate={{ height: `${h}%` }}
-                          transition={{ delay: 0.5 + i * 0.1, duration: 0.5 }}
-                        />
+                        <motion.div key={i} className="flex-1 rounded-sm bg-primary/70" initial={{ height: 0 }} animate={{ height: `${h}%` }} transition={{ delay: 0.5 + i * 0.1, duration: 0.5 }} />
                       ))}
                     </div>
                   </div>
-
-                  {/* Automation Status */}
                   <div className="mt-4 flex items-center gap-3 bg-emerald-50 dark:bg-emerald-950/30 rounded-lg p-3">
                     <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
                     <span className="text-xs font-medium text-emerald-700 dark:text-emerald-400">12 automatizaciones activas</span>
-                    <span className="text-xs text-muted-foreground ml-auto">Última ejecución: hace 2 min</span>
+                    <span className="text-xs text-muted-foreground ml-auto">hace 2 min</span>
                   </div>
                 </div>
               </div>
@@ -508,18 +636,75 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ─── Visual Bridge Section ─── */}
+      {/* ─── Stats ─── */}
+      <section className="py-16 border-y border-border/50 bg-muted/30">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+            {[
+              { value: 150, suffix: '+', label: 'Proyectos entregados', icon: Rocket },
+              { value: 98, suffix: '%', label: 'Satisfacción del cliente', icon: CheckCircle2 },
+              { value: 40, suffix: '%', label: 'Reducción procesos manuales', icon: Zap },
+              { value: 50, suffix: '+', label: 'Integraciones realizadas', icon: Cable },
+            ].map((stat, i) => (
+              <FadeInSection key={stat.label} delay={i * 0.1}>
+                <div className="text-center">
+                  <stat.icon className="w-6 h-6 mx-auto mb-3 text-primary" />
+                  <p className="text-3xl md:text-4xl font-bold"><Counter target={stat.value} suffix={stat.suffix} /></p>
+                  <p className="text-sm text-muted-foreground mt-1">{stat.label}</p>
+                </div>
+              </FadeInSection>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ─── BC Modules Section (from erp365 inspiration) ─── */}
+      <section id="modulos" className="py-20 md:py-28">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <FadeInSection>
+            <div className="text-center mb-16">
+              <Badge variant="secondary" className="mb-4">
+                <Layers className="w-3 h-3 mr-1" />
+                Módulos de Business Central
+              </Badge>
+              <h2 className="text-3xl md:text-4xl font-bold mb-4">
+                Todo tu negocio en{' '}
+                <span className="gradient-text">un solo sistema</span>
+              </h2>
+              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+                Business Central integra finanzas, ventas, compras, inventario, producción y más. Conoce sus módulos principales.
+              </p>
+            </div>
+          </FadeInSection>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-5">
+            {bcModules.map((mod, i) => (
+              <FadeInSection key={mod.title} delay={i * 0.06}>
+                <Card className="group h-full hover:shadow-lg hover:border-primary/30 transition-all duration-300 hover:-translate-y-1">
+                  <CardContent className="p-5">
+                    <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center mb-3 group-hover:bg-primary/20 transition-colors">
+                      <mod.icon className="w-5 h-5 text-primary" />
+                    </div>
+                    <h3 className="text-base font-semibold mb-1.5 group-hover:text-primary transition-colors">{mod.title}</h3>
+                    <p className="text-xs text-muted-foreground mb-3 leading-relaxed">{mod.description}</p>
+                    <div className="flex flex-wrap gap-1.5">
+                      {mod.tags.map((tag) => (
+                        <Badge key={tag} variant="secondary" className="text-[10px] px-2 py-0.5">{tag}</Badge>
+                      ))}
+                    </div>
+                  </CardContent>
+                </Card>
+              </FadeInSection>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ─── Visual Bridge ─── */}
       <section className="py-16 relative overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="relative rounded-2xl overflow-hidden">
-            <Image
-              src="/automation-illustration.png"
-              alt="Automatización de procesos con Business Central"
-              width={1344}
-              height={768}
-              className="w-full h-auto object-cover rounded-2xl"
-              priority
-            />
+            <Image src="/automation-illustration.png" alt="Automatización con Business Central" width={1344} height={768} className="w-full h-auto object-cover rounded-2xl" priority />
             <div className="absolute inset-0 bg-gradient-to-r from-background/90 via-background/60 to-transparent rounded-2xl" />
             <div className="absolute inset-0 flex items-center p-8 md:p-12">
               <div className="max-w-md">
@@ -544,31 +729,48 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ─── Stats Section ─── */}
-      <section className="py-16 border-y border-border/50 bg-muted/30">
+      {/* ─── BC Benefits (from erp365 inspiration) ─── */}
+      <section className="py-20 md:py-28 bg-muted/30">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            {[
-              { value: 150, suffix: '+', label: 'Proyectos entregados', icon: Rocket },
-              { value: 98, suffix: '%', label: 'Satisfacción del cliente', icon: CheckCircle2 },
-              { value: 40, suffix: '%', label: 'Reducción de procesos manuales', icon: Zap },
-              { value: 50, suffix: '+', label: 'Integraciones realizadas', icon: Cable },
-            ].map((stat, i) => (
-              <FadeInSection key={stat.label} delay={i * 0.1}>
-                <div className="text-center">
-                  <stat.icon className="w-6 h-6 mx-auto mb-3 text-primary" />
-                  <p className="text-3xl md:text-4xl font-bold">
-                    <Counter target={stat.value} suffix={stat.suffix} />
-                  </p>
-                  <p className="text-sm text-muted-foreground mt-1">{stat.label}</p>
-                </div>
+          <FadeInSection>
+            <div className="text-center mb-16">
+              <Badge variant="secondary" className="mb-4">
+                <CheckCircle2 className="w-3 h-3 mr-1" />
+                ¿Por qué Business Central?
+              </Badge>
+              <h2 className="text-3xl md:text-4xl font-bold mb-4">
+                Beneficios de{' '}
+                <span className="gradient-text">Dynamics 365 BC</span>
+              </h2>
+              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+                Una plataforma completa y personalizable para mejorar la productividad de tu empresa.
+              </p>
+            </div>
+          </FadeInSection>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {bcBenefits.map((benefit, i) => (
+              <FadeInSection key={benefit.title} delay={i * 0.08}>
+                <Card className="group h-full hover:shadow-lg hover:border-primary/30 transition-all duration-300">
+                  <CardContent className="p-6">
+                    <div className="flex items-start gap-4">
+                      <div className="w-11 h-11 rounded-lg bg-primary/10 flex items-center justify-center shrink-0 group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
+                        <benefit.icon className="w-5 h-5 text-primary group-hover:text-primary-foreground transition-colors" />
+                      </div>
+                      <div>
+                        <h3 className="text-base font-semibold mb-1">{benefit.title}</h3>
+                        <p className="text-sm text-muted-foreground leading-relaxed">{benefit.description}</p>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
               </FadeInSection>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ─── Automation Ideas Section ─── */}
+      {/* ─── Automation Ideas ─── */}
       <section id="automatizaciones" className="py-20 md:py-28">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <FadeInSection>
@@ -583,30 +785,24 @@ export default function Home() {
                 hoy
               </h2>
               <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-                Estas son solo algunas de las automatizaciones que podemos implementar en tu Business Central para ahorrar tiempo y reducir errores.
+                Estas son solo algunas de las automatizaciones que podemos implementar para ahorrar tiempo y reducir errores.
               </p>
             </div>
           </FadeInSection>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-5">
             {automationIdeas.map((idea, i) => (
-              <FadeInSection key={idea.title} delay={i * 0.08}>
+              <FadeInSection key={idea.title} delay={i * 0.06}>
                 <Card className="group h-full hover:shadow-lg hover:border-primary/30 transition-all duration-300 hover:-translate-y-1">
-                  <CardContent className="p-6">
-                    <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
-                      <idea.icon className="w-6 h-6 text-primary" />
+                  <CardContent className="p-5">
+                    <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center mb-3 group-hover:bg-primary/20 transition-colors">
+                      <idea.icon className="w-5 h-5 text-primary" />
                     </div>
-                    <h3 className="text-lg font-semibold mb-2 group-hover:text-primary transition-colors">
-                      {idea.title}
-                    </h3>
-                    <p className="text-sm text-muted-foreground mb-4 leading-relaxed">
-                      {idea.description}
-                    </p>
-                    <div className="flex flex-wrap gap-2">
+                    <h3 className="text-sm font-semibold mb-1.5 group-hover:text-primary transition-colors">{idea.title}</h3>
+                    <p className="text-xs text-muted-foreground mb-3 leading-relaxed">{idea.description}</p>
+                    <div className="flex flex-wrap gap-1.5">
                       {idea.tags.map((tag) => (
-                        <Badge key={tag} variant="secondary" className="text-xs">
-                          {tag}
-                        </Badge>
+                        <Badge key={tag} variant="secondary" className="text-[10px] px-2 py-0.5">{tag}</Badge>
                       ))}
                     </div>
                   </CardContent>
@@ -617,7 +813,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ─── Development Ideas Section ─── */}
+      {/* ─── Development Ideas ─── */}
       <section id="desarrollos" className="py-20 md:py-28 bg-muted/30">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <FadeInSection>
@@ -632,31 +828,27 @@ export default function Home() {
                 en tu Business Central
               </h2>
               <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-                Más allá de automatizar, podemos crear nuevas funcionalidades que Business Central no trae por defecto y que tu negocio necesita.
+                Más allá de automatizar, podemos crear nuevas funcionalidades que Business Central no trae por defecto.
               </p>
             </div>
           </FadeInSection>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-5">
             {developmentIdeas.map((idea, i) => (
-              <FadeInSection key={idea.title} delay={i * 0.08}>
+              <FadeInSection key={idea.title} delay={i * 0.06}>
                 <Card className="group h-full hover:shadow-lg hover:border-primary/30 transition-all duration-300 hover:-translate-y-1 overflow-hidden">
                   <div className={`h-1.5 ${idea.color === 'emerald' ? 'bg-primary' : 'bg-accent'}`} />
-                  <CardContent className="p-6">
-                    <div className={`w-12 h-12 rounded-xl flex items-center justify-center mb-4 transition-colors ${
+                  <CardContent className="p-5">
+                    <div className={`w-10 h-10 rounded-xl flex items-center justify-center mb-3 transition-colors ${
                       idea.color === 'emerald' ? 'bg-primary/10 group-hover:bg-primary/20' : 'bg-accent/10 group-hover:bg-accent/20'
                     }`}>
-                      <idea.icon className={`w-6 h-6 ${idea.color === 'emerald' ? 'text-primary' : 'text-accent'}`} />
+                      <idea.icon className={`w-5 h-5 ${idea.color === 'emerald' ? 'text-primary' : 'text-accent'}`} />
                     </div>
-                    <h3 className="text-lg font-semibold mb-2">
-                      {idea.title}
-                    </h3>
-                    <p className="text-sm text-muted-foreground leading-relaxed">
-                      {idea.description}
-                    </p>
-                    <div className="mt-4 flex items-center text-sm text-primary font-medium group-hover:gap-2 transition-all">
+                    <h3 className="text-sm font-semibold mb-1.5">{idea.title}</h3>
+                    <p className="text-xs text-muted-foreground leading-relaxed">{idea.description}</p>
+                    <div className="mt-3 flex items-center text-xs text-primary font-medium group-hover:gap-2 transition-all">
                       <span>Saber más</span>
-                      <ArrowUpRight className="w-4 h-4 ml-1" />
+                      <ArrowUpRight className="w-3.5 h-3.5 ml-1" />
                     </div>
                   </CardContent>
                 </Card>
@@ -666,13 +858,13 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ─── Services Section ─── */}
+      {/* ─── Services ─── */}
       <section id="servicios" className="py-20 md:py-28">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <FadeInSection>
             <div className="text-center mb-16">
               <Badge variant="secondary" className="mb-4">
-                <Layers className="w-3 h-3 mr-1" />
+                <Settings className="w-3 h-3 mr-1" />
                 Servicios
               </Badge>
               <h2 className="text-3xl md:text-4xl font-bold mb-4">
@@ -685,20 +877,16 @@ export default function Home() {
             </div>
           </FadeInSection>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-5">
             {services.map((service, i) => (
-              <FadeInSection key={service.title} delay={i * 0.08}>
+              <FadeInSection key={service.title} delay={i * 0.06}>
                 <Card className="group h-full hover:shadow-lg hover:border-primary/30 transition-all duration-300">
-                  <CardContent className="p-6">
-                    <div className="flex items-start gap-4">
-                      <div className="w-11 h-11 rounded-lg bg-primary/10 flex items-center justify-center shrink-0 group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
-                        <service.icon className="w-5 h-5 text-primary group-hover:text-primary-foreground transition-colors" />
-                      </div>
-                      <div>
-                        <h3 className="text-lg font-semibold mb-1">{service.title}</h3>
-                        <p className="text-sm text-muted-foreground leading-relaxed">{service.description}</p>
-                      </div>
+                  <CardContent className="p-5">
+                    <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center mb-3 group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
+                      <service.icon className="w-5 h-5 text-primary group-hover:text-primary-foreground transition-colors" />
                     </div>
+                    <h3 className="text-sm font-semibold mb-1">{service.title}</h3>
+                    <p className="text-xs text-muted-foreground leading-relaxed">{service.description}</p>
                   </CardContent>
                 </Card>
               </FadeInSection>
@@ -707,7 +895,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ─── Process Section ─── */}
+      {/* ─── Process ─── */}
       <section id="proceso" className="py-20 md:py-28 bg-muted/30">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <FadeInSection>
@@ -730,7 +918,6 @@ export default function Home() {
             {processSteps.map((step, i) => (
               <FadeInSection key={step.step} delay={i * 0.15}>
                 <div className="relative text-center">
-                  {/* Connector line */}
                   {i < processSteps.length - 1 && (
                     <div className="hidden md:block absolute top-8 left-[60%] w-[80%] h-0.5 bg-gradient-to-r from-primary/30 to-primary/10" />
                   )}
@@ -747,7 +934,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ─── Testimonials Section ─── */}
+      {/* ─── Testimonials ─── */}
       <section className="py-20 md:py-28">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <FadeInSection>
@@ -786,7 +973,6 @@ export default function Home() {
               </motion.div>
             </AnimatePresence>
 
-            {/* Dots */}
             <div className="flex justify-center gap-2 mt-8">
               {testimonials.map((_, i) => (
                 <button
@@ -801,7 +987,6 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Testimonial Cards Grid */}
           <div className="grid md:grid-cols-3 gap-4 mt-12">
             {testimonials.slice(0, 3).map((t, i) => (
               <FadeInSection key={t.name} delay={i * 0.1}>
@@ -834,14 +1019,13 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ─── CTA + Contact Section ─── */}
+      {/* ─── Contact Section ─── */}
       <section id="contacto" className="py-20 md:py-28 relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5" />
         <div className="absolute inset-0 grid-pattern opacity-50" />
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-12 items-start">
-            {/* Left - CTA */}
             <FadeInSection>
               <Badge variant="secondary" className="mb-4">
                 <Mail className="w-3 h-3 mr-1" />
@@ -858,9 +1042,9 @@ export default function Home() {
 
               <div className="space-y-6">
                 {[
-                  { icon: Phone, label: '+52 (55) 1234-5678', text: 'Llámanos de Lun a Vie, 9am - 6pm' },
-                  { icon: Mail, label: 'contacto@bcforge.mx', text: 'Te respondemos en menos de 24 hrs' },
-                  { icon: MapPin, label: 'Ciudad de México, México', text: 'Servicios en toda LATAM' },
+                  { icon: CheckCircle2, label: 'Respuesta en menos de 24 horas', text: 'Revisamos tu solicitud y te contactamos personalmente' },
+                  { icon: Target, label: 'Diagnóstico sin costo', text: 'Analizamos tus procesos sin compromiso y te damos recomendaciones' },
+                  { icon: Users, label: 'Atención personalizada', text: 'Un consultor especializado te acompaña desde el día uno' },
                 ].map((item) => (
                   <div key={item.label} className="flex items-start gap-4">
                     <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
@@ -873,9 +1057,14 @@ export default function Home() {
                   </div>
                 ))}
               </div>
+
+              <div className="mt-8 p-4 bg-muted/50 rounded-lg border border-border/50">
+                <p className="text-sm text-muted-foreground">
+                  <strong className="text-foreground">¿Prefieres agendar una llamada?</strong> Completa el formulario y selecciona &ldquo;Solicito llamada&rdquo; en el mensaje. Te contactamos en tu horario preferido.
+                </p>
+              </div>
             </FadeInSection>
 
-            {/* Right - Form */}
             <FadeInSection delay={0.2}>
               <Card className="border-border/50 shadow-xl">
                 <CardContent className="p-6 md:p-8">
@@ -885,70 +1074,46 @@ export default function Home() {
                   <form onSubmit={handleSubmit} className="space-y-4">
                     <div className="grid sm:grid-cols-2 gap-4">
                       <div>
-                        <label htmlFor="name" className="text-sm font-medium mb-1.5 block">
-                          Nombre *
-                        </label>
-                        <Input id="name" placeholder="Tu nombre" required />
+                        <label htmlFor="name" className="text-sm font-medium mb-1.5 block">Nombre *</label>
+                        <Input id="name" placeholder="Tu nombre" required value={formData.name} onChange={e => setFormData(prev => ({ ...prev, name: e.target.value }))} />
                       </div>
                       <div>
-                        <label htmlFor="company" className="text-sm font-medium mb-1.5 block">
-                          Empresa
-                        </label>
-                        <Input id="company" placeholder="Tu empresa" />
+                        <label htmlFor="company" className="text-sm font-medium mb-1.5 block">Empresa</label>
+                        <Input id="company" placeholder="Tu empresa" value={formData.company} onChange={e => setFormData(prev => ({ ...prev, company: e.target.value }))} />
                       </div>
                     </div>
                     <div>
-                      <label htmlFor="email" className="text-sm font-medium mb-1.5 block">
-                        Email *
-                      </label>
-                      <Input id="email" type="email" placeholder="tu@email.com" required />
+                      <label htmlFor="email" className="text-sm font-medium mb-1.5 block">Email *</label>
+                      <Input id="email" type="email" placeholder="tu@email.com" required value={formData.email} onChange={e => setFormData(prev => ({ ...prev, email: e.target.value }))} />
                     </div>
                     <div>
-                      <label htmlFor="phone" className="text-sm font-medium mb-1.5 block">
-                        Teléfono
-                      </label>
-                      <Input id="phone" type="tel" placeholder="+52 (55) 1234-5678" />
+                      <label htmlFor="phone" className="text-sm font-medium mb-1.5 block">Teléfono</label>
+                      <Input id="phone" type="tel" placeholder="+52 (55) 1234-5678" value={formData.phone} onChange={e => setFormData(prev => ({ ...prev, phone: e.target.value }))} />
                     </div>
                     <div>
-                      <label htmlFor="service" className="text-sm font-medium mb-1.5 block">
-                        ¿Qué te interesa?
-                      </label>
+                      <label className="text-sm font-medium mb-1.5 block">¿Qué te interesa?</label>
                       <div className="grid grid-cols-2 gap-2">
-                        {['Implementación', 'Desarrollo a medida', 'Automatización', 'Integración', 'Business Intelligence', 'Capacitación'].map((s) => (
+                        {interestOptions.map((s) => (
                           <label key={s} className="flex items-center gap-2 text-sm cursor-pointer">
-                            <Checkbox />
+                            <Checkbox checked={selectedInterests.includes(s)} onCheckedChange={() => toggleInterest(s)} />
                             <span>{s}</span>
                           </label>
                         ))}
                       </div>
                     </div>
                     <div>
-                      <label htmlFor="message" className="text-sm font-medium mb-1.5 block">
-                        Cuéntanos sobre tu proyecto
-                      </label>
-                      <Textarea id="message" placeholder="Describe brevemente lo que necesitas..." rows={3} />
+                      <label htmlFor="message" className="text-sm font-medium mb-1.5 block">Cuéntanos sobre tu proyecto</label>
+                      <Textarea id="message" placeholder="Describe brevemente lo que necesitas..." rows={3} value={formData.message} onChange={e => setFormData(prev => ({ ...prev, message: e.target.value }))} />
                     </div>
-                    <Button
-                      type="submit"
-                      size="lg"
-                      className="w-full bg-primary hover:bg-primary/90"
-                      disabled={formStatus === 'sending'}
-                    >
+                    <Button type="submit" size="lg" className="w-full bg-primary hover:bg-primary/90" disabled={formStatus === 'sending'}>
                       {formStatus === 'sending' ? (
-                        <>
-                          <RefreshCw className="w-4 h-4 mr-2 animate-spin" />
-                          Enviando...
-                        </>
+                        <><RefreshCw className="w-4 h-4 mr-2 animate-spin" />Enviando...</>
                       ) : formStatus === 'sent' ? (
-                        <>
-                          <CheckCircle2 className="w-4 h-4 mr-2" />
-                          ¡Enviado con éxito!
-                        </>
+                        <><CheckCircle2 className="w-4 h-4 mr-2" />¡Enviado! Te contactamos pronto</>
+                      ) : formStatus === 'error' ? (
+                        <>Error al enviar. Intenta de nuevo.</>
                       ) : (
-                        <>
-                          Enviar solicitud
-                          <ArrowRight className="w-4 h-4 ml-2" />
-                        </>
+                        <>Enviar solicitud<ArrowRight className="w-4 h-4 ml-2" /></>
                       )}
                     </Button>
                   </form>
@@ -963,7 +1128,6 @@ export default function Home() {
       <footer className="border-t border-border/50 bg-muted/30 mt-auto">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
           <div className="grid md:grid-cols-4 gap-8">
-            {/* Brand */}
             <div className="md:col-span-1">
               <div className="flex items-center gap-2 mb-4">
                 <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center">
@@ -978,49 +1142,32 @@ export default function Home() {
               </p>
             </div>
 
-            {/* Links */}
             <div>
               <h4 className="font-semibold mb-3 text-sm">Servicios</h4>
               <ul className="space-y-2">
-                {['Implementación', 'Desarrollo a medida', 'Automatización', 'Integraciones', 'Business Intelligence', 'Capacitación'].map((item) => (
-                  <li key={item}>
-                    <a href="#servicios" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-                      {item}
-                    </a>
-                  </li>
+                {['Implementación', 'Desarrollo a medida', 'Automatización', 'Integraciones', 'Business Intelligence', 'Capacitación', 'Soporte', 'Migración'].map((item) => (
+                  <li key={item}><a href="#servicios" className="text-sm text-muted-foreground hover:text-foreground transition-colors">{item}</a></li>
                 ))}
               </ul>
             </div>
 
             <div>
-              <h4 className="font-semibold mb-3 text-sm">Soluciones</h4>
+              <h4 className="font-semibold mb-3 text-sm">Módulos BC</h4>
               <ul className="space-y-2">
-                {['Facturación electrónica', 'Sincronización inventario', 'Reportes automáticos', 'WhatsApp Business', 'Portal de proveedores', 'App móvil'].map((item) => (
-                  <li key={item}>
-                    <a href="#automatizaciones" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
-                      {item}
-                    </a>
-                  </li>
+                {['Finanzas', 'Ventas', 'Compras', 'Inventario', 'Producción', 'Logística', 'Reportes', 'Proyectos'].map((item) => (
+                  <li key={item}><a href="#modulos" className="text-sm text-muted-foreground hover:text-foreground transition-colors">{item}</a></li>
                 ))}
               </ul>
             </div>
 
             <div>
-              <h4 className="font-semibold mb-3 text-sm">Contacto</h4>
-              <ul className="space-y-2">
-                <li className="flex items-center gap-2 text-sm text-muted-foreground">
-                  <Mail className="w-4 h-4" />
-                  contacto@bcforge.mx
-                </li>
-                <li className="flex items-center gap-2 text-sm text-muted-foreground">
-                  <Phone className="w-4 h-4" />
-                  +52 (55) 1234-5678
-                </li>
-                <li className="flex items-center gap-2 text-sm text-muted-foreground">
-                  <MapPin className="w-4 h-4" />
-                  CDMX, México
-                </li>
-              </ul>
+              <h4 className="font-semibold mb-3 text-sm">Contáctanos</h4>
+              <p className="text-sm text-muted-foreground mb-3">
+                Escríbenos por el formulario y te respondemos en menos de 24 horas.
+              </p>
+              <Button size="sm" variant="outline" asChild>
+                <a href="#contacto">Ir al formulario</a>
+              </Button>
             </div>
           </div>
 
@@ -1031,13 +1178,7 @@ export default function Home() {
             <div className="flex items-center gap-4 text-xs text-muted-foreground">
               <a href="#" className="hover:text-foreground transition-colors">Aviso de privacidad</a>
               <a href="#" className="hover:text-foreground transition-colors">Términos</a>
-              <div className="flex items-center gap-1">
-                <span>Hecho con</span>
-                <svg className="w-3 h-3 text-primary fill-current" viewBox="0 0 20 20">
-                  <path d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" />
-                </svg>
-                <span>y Business Central</span>
-              </div>
+              <span>Partner certificado Microsoft</span>
             </div>
           </div>
         </div>
