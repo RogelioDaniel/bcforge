@@ -6,7 +6,6 @@ import {
   ArrowRight,
   Bot,
   Building2,
-  Cable,
   Cog,
   Database,
   FileSpreadsheet,
@@ -42,14 +41,8 @@ import {
   ShoppingCart,
   FileText,
   PieChart,
-  Cloud,
-  Lock,
-  HeadphonesIcon,
   Target,
   Lightbulb,
-  Handshake,
-  ChevronLeft,
-  ChevronRight,
   Send,
   Monitor,
   Server,
@@ -60,7 +53,6 @@ import {
   Receipt,
   FileCheck,
   ClipboardCheck,
-  UserCheck,
   GraduationCap,
   Ticket,
   Wrench,
@@ -77,6 +69,31 @@ import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { Checkbox } from '@/components/ui/checkbox'
 import Image from 'next/image'
+
+/* ─── Mouse Light Effect (Desktop only) ─── */
+function MouseLight() {
+  const [pos, setPos] = useState({ x: -500, y: -500 })
+
+  useEffect(() => {
+    if (window.innerWidth <= 1024) return
+
+    const handleMove = (e: MouseEvent) => {
+      setPos({ x: e.clientX, y: e.clientY })
+    }
+    window.addEventListener('mousemove', handleMove)
+    return () => window.removeEventListener('mousemove', handleMove)
+  }, [])
+
+  return (
+    <div
+      className="pointer-events-none fixed z-[100] w-[300px] h-[300px] rounded-full opacity-[0.07] blur-[80px] bg-white hidden lg:block transition-transform duration-75"
+      style={{
+        left: pos.x - 150,
+        top: pos.y - 150,
+      }}
+    />
+  )
+}
 
 /* ─── Animated Counter ─── */
 function Counter({ target, suffix = '', prefix = '' }: { target: number; suffix?: string; prefix?: string }) {
@@ -103,7 +120,7 @@ function Counter({ target, suffix = '', prefix = '' }: { target: number; suffix?
 
   return (
     <span ref={ref}>
-      {prefix}{count}{suffix}
+      {prefix}{count.toLocaleString()}{suffix}
     </span>
   )
 }
@@ -424,45 +441,6 @@ const processSteps = [
   },
 ]
 
-const testimonials = [
-  {
-    name: 'Miguel Ángel Vargas',
-    role: 'Director de Operaciones',
-    company: 'LogiMax',
-    text: 'BCForge automatizó todo nuestro proceso de facturación electrónica. Lo que antes nos tomaba 3 horas al día ahora se hace solo. Increíble.',
-  },
-  {
-    name: 'Carolina Mendez',
-    role: 'Gerente Financiera',
-    company: 'Distribuidora del Norte',
-    text: 'La integración con nuestro e-commerce fue impecable. Ahora el inventario se actualiza en tiempo real y los errores de existencias desaparecieron.',
-  },
-  {
-    name: 'Roberto Sánchez',
-    role: 'CEO',
-    company: 'TechParts MX',
-    text: 'El dashboard ejecutivo que nos desarrollaron cambió la forma en que tomamos decisiones. Ahora tenemos visibilidad total del negocio en una pantalla.',
-  },
-  {
-    name: 'Ana Lucía Hernández',
-    role: 'Coordinadora de Ventas',
-    company: 'Grupo Alimentos',
-    text: 'Las notificaciones automáticas por WhatsApp mejoraron nuestra atención al cliente. Los pedidos se confirman al instante sin intervención manual.',
-  },
-  {
-    name: 'Fernando Morales',
-    role: 'Director Comercial',
-    company: 'AutoPartes Express',
-    text: 'La app móvil para vendedores de campo fue un game changer. Nuestro equipo ahora captura pedidos en visita y llegan directo a Business Central.',
-  },
-  {
-    name: 'Patricia Ruiz',
-    role: 'Contralora',
-    company: 'Industrias del Bajío',
-    text: 'El sistema de costos avanzado que nos desarrollaron nos permite simular escenarios y tomar mejores decisiones financieras. Soporte de primer nivel.',
-  },
-]
-
 const migrationSources = [
   { icon: Database, label: 'NAV' },
   { icon: FileSpreadsheet, label: 'Excel' },
@@ -482,7 +460,6 @@ const migrationSteps = [
 /* ─── Main Page ─── */
 export default function Home() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-  const [activeTestimonial, setActiveTestimonial] = useState(0)
   const [formStatus, setFormStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle')
   const [formData, setFormData] = useState({
     name: '',
@@ -492,13 +469,6 @@ export default function Home() {
     message: '',
   })
   const [selectedInterests, setSelectedInterests] = useState<string[]>([])
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setActiveTestimonial((prev) => (prev + 1) % testimonials.length)
-    }, 5000)
-    return () => clearInterval(timer)
-  }, [])
 
   const toggleInterest = (interest: string) => {
     setSelectedInterests(prev =>
@@ -539,20 +509,15 @@ export default function Home() {
   const interestOptions = ['Implementación', 'Desarrollo a medida', 'Automatización', 'Integración', 'Business Intelligence', 'Capacitación', 'Migración de datos', 'Soporte']
 
   const navLinks = [
-    { href: '#modulos', label: 'Módulos' },
-    { href: '#sat', label: 'SAT' },
-    { href: '#automatizaciones', label: 'Automatizaciones' },
     { href: '#desarrollos', label: 'Desarrollos' },
-    { href: '#migraciones', label: 'Migraciones' },
-    { href: '#servicios', label: 'Servicios' },
-    { href: '#integraciones', label: 'Integraciones' },
-    { href: '#licencias', label: 'Licencias' },
-    { href: '#proceso', label: 'Proceso' },
+    { href: '#sat', label: 'SAT' },
     { href: '#contacto', label: 'Contacto' },
   ]
 
   return (
     <div className="min-h-screen flex flex-col">
+      <MouseLight />
+
       {/* ─── Navbar ─── */}
       <nav className="fixed top-0 left-0 right-0 z-50 border-b border-white/10 bg-background/70 backdrop-blur-xl">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -566,7 +531,7 @@ export default function Home() {
               </span>
             </div>
 
-            <div className="hidden lg:flex items-center gap-6">
+            <div className="hidden lg:flex items-center gap-10">
               {navLinks.map((link) => (
                 <a key={link.href} href={link.href} className="text-sm text-muted-foreground hover:text-primary transition-colors duration-300">
                   {link.label}
@@ -601,7 +566,7 @@ export default function Home() {
               exit={{ opacity: 0, height: 0 }}
               className="lg:hidden border-t border-white/10 bg-background/95 backdrop-blur-xl"
             >
-              <div className="px-4 py-4 space-y-2 max-h-96 overflow-y-auto">
+              <div className="px-4 py-4 space-y-2">
                 {navLinks.map((link) => (
                   <a
                     key={link.href}
@@ -749,7 +714,7 @@ export default function Home() {
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
             {bcModules.map((mod, i) => (
               <FadeInSection key={mod.title} delay={i * 0.06}>
-                <Card className="group h-full bg-card/60 border-white/10 backdrop-blur-sm hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5 transition-all duration-300 hover:-translate-y-1">
+                <Card className={`group h-full bg-card/60 border-white/10 backdrop-blur-sm hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5 transition-all duration-300 hover:-translate-y-1 ${i % 4 === 0 ? 'card-glow' : i % 4 === 2 ? 'card-blink' : ''}`}>
                   <CardContent className="p-5">
                     <div className="w-10 h-10 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center mb-3 group-hover:bg-primary/20 group-hover:shadow-md group-hover:shadow-primary/10 transition-all duration-300">
                       <mod.icon className="w-5 h-5 text-primary" />
@@ -919,8 +884,96 @@ export default function Home() {
         </div>
       </section>
 
+      {/* ─── Global Transactions Section ─── */}
+      <section className="py-20 md:py-28 relative overflow-hidden">
+        <div className="absolute inset-0 grid-pattern opacity-30" />
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <FadeInSection>
+            <div className="text-center mb-16">
+              <Badge variant="secondary" className="mb-4 border border-primary/20 bg-primary/5">
+                <Globe className="w-3 h-3 mr-1 text-primary" />
+                Transacciones Globales
+              </Badge>
+              <h2 className="text-3xl md:text-4xl font-bold mb-4">
+                Business Central mueve al{' '}
+                <span className="gradient-text">mundo</span>
+              </h2>
+              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+                Cada minuto, miles de empresas confían en Business Central para procesar transacciones críticas. Nuestras extensiones potencian esa operación global.
+              </p>
+            </div>
+          </FadeInSection>
+
+          <div className="grid lg:grid-cols-2 gap-10 items-center">
+            <FadeInSection>
+              <div className="relative rounded-2xl overflow-hidden border border-white/10">
+                <Image src="/world-transactions.png" alt="Transacciones globales con Business Central" width={1344} height={768} className="w-full h-auto object-cover" />
+                <div className="absolute inset-0 bg-gradient-to-r from-background/40 to-transparent" />
+                {/* Animated transaction pulses */}
+                <div className="absolute top-[30%] left-[20%] w-2 h-2 rounded-full bg-primary animate-ping-slow" />
+                <div className="absolute top-[45%] left-[55%] w-2 h-2 rounded-full bg-accent animate-ping-slow" style={{ animationDelay: '1s' }} />
+                <div className="absolute top-[25%] left-[70%] w-2 h-2 rounded-full bg-primary animate-ping-slow" style={{ animationDelay: '2s' }} />
+                <div className="absolute top-[60%] left-[35%] w-2 h-2 rounded-full bg-accent animate-ping-slow" style={{ animationDelay: '0.5s' }} />
+                <div className="absolute top-[50%] left-[80%] w-2 h-2 rounded-full bg-primary animate-ping-slow" style={{ animationDelay: '1.5s' }} />
+              </div>
+            </FadeInSection>
+
+            <FadeInSection delay={0.2}>
+              <div className="space-y-6">
+                {/* Live counter */}
+                <div className="bg-card/60 border border-white/10 backdrop-blur-sm rounded-xl p-6 card-glow">
+                  <div className="flex items-center gap-3 mb-4">
+                    <div className="w-3 h-3 rounded-full bg-primary animate-pulse" />
+                    <span className="text-sm font-medium text-primary">En tiempo real</span>
+                  </div>
+                  <p className="text-sm text-muted-foreground mb-2">Transacciones BC procesadas hoy</p>
+                  <p className="text-4xl font-bold gradient-text">
+                    <Counter target={2847} suffix="+" />
+                  </p>
+                  <p className="text-xs text-muted-foreground mt-2">Y contando... cada segundo cuenta</p>
+                </div>
+
+                {/* Stats grid */}
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="bg-card/60 border border-white/10 backdrop-blur-sm rounded-xl p-4">
+                    <p className="text-xs text-muted-foreground mb-1">Empresas activas</p>
+                    <p className="text-2xl font-bold"><Counter target={40000} suffix="+" /></p>
+                    <p className="text-[11px] text-primary">Globalmente</p>
+                  </div>
+                  <div className="bg-card/60 border border-white/10 backdrop-blur-sm rounded-xl p-4">
+                    <p className="text-xs text-muted-foreground mb-1">Países</p>
+                    <p className="text-2xl font-bold"><Counter target={175} suffix="+" /></p>
+                    <p className="text-[11px] text-primary">Con presencia BC</p>
+                  </div>
+                  <div className="bg-card/60 border border-white/10 backdrop-blur-sm rounded-xl p-4">
+                    <p className="text-xs text-muted-foreground mb-1">Disponibilidad</p>
+                    <p className="text-2xl font-bold"><Counter target={99} suffix=".9%" /></p>
+                    <p className="text-[11px] text-primary">SLA garantizado</p>
+                  </div>
+                  <div className="bg-card/60 border border-white/10 backdrop-blur-sm rounded-xl p-4">
+                    <p className="text-xs text-muted-foreground mb-1">Nuestras extensiones</p>
+                    <p className="text-2xl font-bold gradient-text">Activas</p>
+                    <p className="text-[11px] text-primary">24/7 monitoreo</p>
+                  </div>
+                </div>
+
+                <div className="bg-gradient-to-r from-primary/5 to-accent/5 border border-primary/10 rounded-xl p-5">
+                  <div className="flex items-start gap-3">
+                    <Globe className="w-5 h-5 text-primary shrink-0 mt-0.5" />
+                    <div>
+                      <p className="text-sm font-medium mb-1">Tu negocio, conectado al mundo</p>
+                      <p className="text-xs text-muted-foreground leading-relaxed">Con Business Central en la nube y nuestras extensiones, tu operación está conectada globalmente. Transacciones, reportes y automatizaciones que nunca duermen.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </FadeInSection>
+          </div>
+        </div>
+      </section>
+
       {/* ─── SAT Compliance Section ─── */}
-      <section id="sat" className="py-20 md:py-28 relative">
+      <section id="sat" className="py-20 md:py-28 bg-muted/30 relative">
         <div className="absolute inset-0 grid-pattern opacity-30" />
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <FadeInSection>
@@ -942,7 +995,7 @@ export default function Home() {
           <div className="grid lg:grid-cols-2 gap-10 items-center">
             <FadeInSection>
               <div className="relative rounded-2xl overflow-hidden border border-white/10">
-                <Image src="/sat-compliance.png" alt="Cumplimiento SAT con Business Central" width={600} height={400} className="w-full h-auto object-cover" />
+                <Image src="/sat-compliance-v2.png" alt="Cumplimiento SAT con Business Central" width={600} height={400} className="w-full h-auto object-cover" />
                 <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent" />
               </div>
             </FadeInSection>
@@ -988,7 +1041,7 @@ export default function Home() {
       </section>
 
       {/* ─── Automation Ideas ─── */}
-      <section id="automatizaciones" className="py-20 md:py-28 bg-muted/30 relative">
+      <section id="automatizaciones" className="py-20 md:py-28 relative">
         <div className="absolute inset-0 grid-pattern opacity-30" />
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <FadeInSection>
@@ -1011,7 +1064,7 @@ export default function Home() {
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
             {automationIdeas.map((idea, i) => (
               <FadeInSection key={idea.title} delay={i * 0.06}>
-                <Card className="group h-full bg-card/60 border-white/10 backdrop-blur-sm hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5 transition-all duration-300 hover:-translate-y-1">
+                <Card className={`group h-full bg-card/60 border-white/10 backdrop-blur-sm hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5 transition-all duration-300 hover:-translate-y-1 ${i % 3 === 0 ? 'card-glow' : i % 3 === 1 ? 'card-glow-amber' : ''}`}>
                   <CardContent className="p-5">
                     <div className="w-10 h-10 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center mb-3 group-hover:bg-primary/20 group-hover:shadow-md group-hover:shadow-primary/10 transition-all duration-300">
                       <idea.icon className="w-5 h-5 text-primary" />
@@ -1032,8 +1085,8 @@ export default function Home() {
       </section>
 
       {/* ─── Development Ideas ─── */}
-      <section id="desarrollos" className="py-20 md:py-28 relative">
-        <div className="absolute inset-0 grid-pattern opacity-40" />
+      <section id="desarrollos" className="py-20 md:py-28 bg-muted/30 relative">
+        <div className="absolute inset-0 grid-pattern opacity-30" />
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <FadeInSection>
             <div className="text-center mb-16">
@@ -1055,7 +1108,7 @@ export default function Home() {
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
             {developmentIdeas.map((idea, i) => (
               <FadeInSection key={idea.title} delay={i * 0.06}>
-                <Card className="group h-full bg-card/60 border-white/10 backdrop-blur-sm hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5 transition-all duration-300 hover:-translate-y-1 overflow-hidden">
+                <Card className={`group h-full bg-card/60 border-white/10 backdrop-blur-sm hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5 transition-all duration-300 hover:-translate-y-1 overflow-hidden ${i % 3 === 0 ? 'card-glow' : ''}`}>
                   <div className={`h-1 ${idea.color === 'emerald' ? 'bg-gradient-to-r from-primary/60 to-primary' : 'bg-gradient-to-r from-accent/60 to-accent'}`} />
                   <CardContent className="p-5">
                     <div className={`w-10 h-10 rounded-xl flex items-center justify-center mb-3 border transition-all duration-300 ${
@@ -1080,8 +1133,8 @@ export default function Home() {
       </section>
 
       {/* ─── Migrations & RapidStart Section ─── */}
-      <section id="migraciones" className="py-20 md:py-28 bg-muted/30 relative">
-        <div className="absolute inset-0 grid-pattern opacity-30" />
+      <section id="migraciones" className="py-20 md:py-28 relative">
+        <div className="absolute inset-0 grid-pattern opacity-40" />
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <FadeInSection>
             <div className="text-center mb-16">
@@ -1165,8 +1218,8 @@ export default function Home() {
       </section>
 
       {/* ─── Consulting Services Section ─── */}
-      <section id="servicios" className="py-20 md:py-28 relative">
-        <div className="absolute inset-0 grid-pattern opacity-40" />
+      <section id="servicios" className="py-20 md:py-28 bg-muted/30 relative">
+        <div className="absolute inset-0 grid-pattern opacity-30" />
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <FadeInSection>
             <div className="text-center mb-16">
@@ -1187,7 +1240,7 @@ export default function Home() {
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
             {consultingServices.map((service, i) => (
               <FadeInSection key={service.title} delay={i * 0.08}>
-                <Card className="group h-full bg-card/60 border-white/10 backdrop-blur-sm hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5 transition-all duration-300">
+                <Card className={`group h-full bg-card/60 border-white/10 backdrop-blur-sm hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5 transition-all duration-300 ${i % 3 === 0 ? 'card-glow' : i % 3 === 2 ? 'card-blink' : ''}`}>
                   <CardContent className="p-6">
                     <div className="w-11 h-11 rounded-lg bg-primary/10 border border-primary/20 flex items-center justify-center mb-4 group-hover:bg-primary group-hover:border-primary transition-all duration-300">
                       <service.icon className="w-5 h-5 text-primary group-hover:text-primary-foreground transition-colors duration-300" />
@@ -1208,8 +1261,8 @@ export default function Home() {
       </section>
 
       {/* ─── Integrations Section ─── */}
-      <section id="integraciones" className="py-20 md:py-28 bg-muted/30 relative">
-        <div className="absolute inset-0 grid-pattern opacity-30" />
+      <section id="integraciones" className="py-20 md:py-28 relative">
+        <div className="absolute inset-0 grid-pattern opacity-40" />
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <FadeInSection>
             <div className="text-center mb-16">
@@ -1231,7 +1284,7 @@ export default function Home() {
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
             {integrations.map((integration, i) => (
               <FadeInSection key={integration.title} delay={i * 0.08}>
-                <Card className="group h-full bg-card/60 border-white/10 backdrop-blur-sm hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5 transition-all duration-300">
+                <Card className={`group h-full bg-card/60 border-white/10 backdrop-blur-sm hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5 transition-all duration-300 ${i % 2 === 0 ? 'card-glow-amber' : i % 3 === 0 ? 'card-blink' : ''}`}>
                   <CardContent className="p-6">
                     <div className="flex items-start gap-4">
                       <div className={`w-11 h-11 rounded-lg flex items-center justify-center border shrink-0 transition-all duration-300 ${
@@ -1255,8 +1308,8 @@ export default function Home() {
       </section>
 
       {/* ─── License Pricing Section ─── */}
-      <section id="licencias" className="py-20 md:py-28 relative">
-        <div className="absolute inset-0 grid-pattern opacity-40" />
+      <section id="licencias" className="py-20 md:py-28 bg-muted/30 relative">
+        <div className="absolute inset-0 grid-pattern opacity-30" />
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <FadeInSection>
             <div className="text-center mb-16">
@@ -1329,8 +1382,8 @@ export default function Home() {
       </section>
 
       {/* ─── Process Section ─── */}
-      <section id="proceso" className="py-20 md:py-28 bg-muted/30 relative">
-        <div className="absolute inset-0 grid-pattern opacity-30" />
+      <section id="proceso" className="py-20 md:py-28 relative">
+        <div className="absolute inset-0 grid-pattern opacity-40" />
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <FadeInSection>
             <div className="text-center mb-16">
@@ -1361,94 +1414,6 @@ export default function Home() {
                   <span className="text-xs font-bold text-primary mb-1 block">{step.step}</span>
                   <h3 className="text-lg font-semibold mb-2">{step.title}</h3>
                   <p className="text-sm text-muted-foreground leading-relaxed">{step.description}</p>
-                </div>
-              </FadeInSection>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ─── Testimonials Section ─── */}
-      <section className="py-20 md:py-28 relative">
-        <div className="absolute inset-0 grid-pattern opacity-40" />
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <FadeInSection>
-            <div className="text-center mb-16">
-              <Badge variant="secondary" className="mb-4 border border-accent/20 bg-accent/5">
-                <Users className="w-3 h-3 mr-1 text-accent" />
-                Testimonios
-              </Badge>
-              <h2 className="text-3xl md:text-4xl font-bold mb-4">
-                Lo que dicen{' '}
-                <span className="gradient-text">nuestros clientes</span>
-              </h2>
-            </div>
-          </FadeInSection>
-
-          {/* Featured Testimonial Carousel */}
-          <FadeInSection>
-            <div className="relative mb-10">
-              <div className="bg-card/60 border border-white/10 backdrop-blur-sm rounded-2xl p-8 md:p-10 max-w-3xl mx-auto text-center">
-                <AnimatePresence mode="wait">
-                  <motion.div
-                    key={activeTestimonial}
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -10 }}
-                    transition={{ duration: 0.4 }}
-                  >
-                    <p className="text-lg md:text-xl leading-relaxed mb-6 text-foreground/90">&ldquo;{testimonials[activeTestimonial].text}&rdquo;</p>
-                    <div>
-                      <p className="font-semibold text-primary">{testimonials[activeTestimonial].name}</p>
-                      <p className="text-sm text-muted-foreground">{testimonials[activeTestimonial].role}, {testimonials[activeTestimonial].company}</p>
-                    </div>
-                  </motion.div>
-                </AnimatePresence>
-              </div>
-              <div className="flex items-center justify-center gap-4 mt-6">
-                <button
-                  onClick={() => setActiveTestimonial((prev) => (prev - 1 + testimonials.length) % testimonials.length)}
-                  className="w-9 h-9 rounded-lg border border-white/10 bg-card/60 flex items-center justify-center hover:border-primary/30 hover:bg-primary/10 transition-all duration-300"
-                  aria-label="Testimonio anterior"
-                >
-                  <ChevronLeft className="w-4 h-4" />
-                </button>
-                <div className="flex gap-2">
-                  {testimonials.map((_, i) => (
-                    <button
-                      key={i}
-                      onClick={() => setActiveTestimonial(i)}
-                      className={`w-2 h-2 rounded-full transition-all duration-300 ${i === activeTestimonial ? 'bg-primary w-6' : 'bg-muted-foreground/30'}`}
-                      aria-label={`Ir a testimonio ${i + 1}`}
-                    />
-                  ))}
-                </div>
-                <button
-                  onClick={() => setActiveTestimonial((prev) => (prev + 1) % testimonials.length)}
-                  className="w-9 h-9 rounded-lg border border-white/10 bg-card/60 flex items-center justify-center hover:border-primary/30 hover:bg-primary/10 transition-all duration-300"
-                  aria-label="Siguiente testimonio"
-                >
-                  <ChevronRight className="w-4 h-4" />
-                </button>
-              </div>
-            </div>
-          </FadeInSection>
-
-          {/* Testimonials Grid */}
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {testimonials.slice(0, 3).map((t, i) => (
-              <FadeInSection key={t.name} delay={i * 0.1}>
-                <div className="bg-card/60 border border-white/10 backdrop-blur-sm rounded-xl p-5 hover:border-primary/20 transition-all duration-300">
-                  <p className="text-sm text-muted-foreground leading-relaxed mb-4">&ldquo;{t.text}&rdquo;</p>
-                  <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center text-xs font-bold text-primary">
-                      {t.name.charAt(0)}
-                    </div>
-                    <div>
-                      <p className="text-xs font-semibold">{t.name}</p>
-                      <p className="text-[11px] text-muted-foreground">{t.role}, {t.company}</p>
-                    </div>
-                  </div>
                 </div>
               </FadeInSection>
             ))}
@@ -1592,6 +1557,15 @@ export default function Home() {
                         </span>
                       )}
                     </Button>
+                    <a
+                      href="https://wa.me/525617075485?text=Hola%20quiero%20una%20cotización%20para%20Business%20Central"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center justify-center gap-2 w-full mt-3 py-3 px-4 rounded-lg bg-[#25D366] hover:bg-[#20bd5a] text-white font-medium text-sm transition-all duration-300 hover:shadow-lg hover:shadow-[#25D366]/20"
+                    >
+                      <MessageSquare className="w-4 h-4" />
+                      O escríbenos por WhatsApp
+                    </a>
                   </form>
                 )}
               </div>
@@ -1636,7 +1610,7 @@ export default function Home() {
             <div>
               <h4 className="text-sm font-semibold mb-3">Empresa</h4>
               <ul className="space-y-2 text-sm text-muted-foreground">
-                {['Proceso', 'Testimonios', 'Contacto'].map((item) => (
+                {['Proceso', 'Contacto'].map((item) => (
                   <li key={item}><a href={`#${item.toLowerCase()}`} className="hover:text-primary transition-colors">{item}</a></li>
                 ))}
               </ul>
