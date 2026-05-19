@@ -48,6 +48,27 @@ import {
   Target,
   Lightbulb,
   Handshake,
+  ChevronLeft,
+  ChevronRight,
+  Send,
+  Monitor,
+  Server,
+  HardDrive,
+  ArrowRightLeft,
+  Search,
+  CreditCard,
+  Receipt,
+  FileCheck,
+  ClipboardCheck,
+  UserCheck,
+  GraduationCap,
+  Ticket,
+  Wrench,
+  Activity,
+  LineChart,
+  BarChart2,
+  Puzzle,
+  Webhook,
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
@@ -127,7 +148,7 @@ const bcModules = [
   },
   {
     icon: Database,
-    title: 'Inventario y Almacenes',
+    title: 'Inventario',
     description: 'Control de entradas y salidas en tiempo real, ubicaciones, trazabilidad, transferencias, ajustes y reservas de inventario.',
     tags: ['Stock', 'Trazabilidad', 'Almacenes'],
   },
@@ -139,19 +160,19 @@ const bcModules = [
   },
   {
     icon: Truck,
-    title: 'Logística y Envíos',
+    title: 'Logística',
     description: 'Gestión de remisiones, rastreo de envíos, integración con paqueterías, planificación de rutas y confirmación de entregas.',
     tags: ['Envíos', 'Rastreo', 'Paquetería'],
   },
   {
     icon: FileText,
-    title: 'Reportes e Inteligencia',
+    title: 'Reportes / BI',
     description: 'Análisis interactivos, KPIs en tiempo real, dashboards ejecutivos, integración nativa con Power BI y exportación automática.',
     tags: ['Power BI', 'KPIs', 'Dashboards'],
   },
   {
     icon: PieChart,
-    title: 'Gestión de Proyectos',
+    title: 'Proyectos',
     description: 'Planeación, asignación de recursos, seguimiento de tiempos y costos, facturación por proyecto y análisis de rentabilidad.',
     tags: ['Recursos', 'Tiempos', 'Rentabilidad'],
   },
@@ -161,13 +182,13 @@ const automationIdeas = [
   {
     icon: RefreshCw,
     title: 'Sincronización Automática de Inventario',
-    description: 'Conecta Business Central con tu e-commerce, marketplace o sistema de almacén para actualizar existencias en tiempo real sin intervención manual.',
+    description: 'Conecta Business Central con tu e-commerce, marketplace o sistema de almacén para actualizar existencias en tiempo real.',
     tags: ['Inventario', 'E-commerce', 'Tiempo Real'],
   },
   {
     icon: ScrollText,
     title: 'Facturación Electrónica Automática (CFDI)',
-    description: 'Genera y envía facturas electrónicas directamente desde Business Central. Cumple con requisitos fiscales del SAT de forma automática.',
+    description: 'Genera y envía facturas electrónicas directamente desde Business Central. Cumple con requisitos fiscales del SAT.',
     tags: ['Facturación', 'SAT/CFDI', 'Compliance'],
   },
   {
@@ -212,7 +233,7 @@ const developmentIdeas = [
   {
     icon: Smartphone,
     title: 'App Móvil de Campo',
-    description: 'Aplicación personalizada para vendedores o técnicos que se conecta en tiempo real con Business Central para crear pedidos, consultar inventario y registrar visitas.',
+    description: 'Aplicación personalizada para vendedores o técnicos que se conecta en tiempo real con Business Central para crear pedidos y consultar inventario.',
     color: 'emerald',
   },
   {
@@ -259,79 +280,120 @@ const developmentIdeas = [
   },
 ]
 
-const bcBenefits = [
+const consultingServices = [
   {
-    icon: Cloud,
-    title: '100% en la Nube',
-    description: 'Accede desde cualquier lugar y dispositivo. Seguridad y respaldo garantizados por Microsoft Azure.',
-  },
-  {
-    icon: Lock,
-    title: 'Seguridad Empresarial',
-    description: 'Tus datos protegidos con la seguridad y garantía de Microsoft. Cumplimiento de normativas internacionales.',
-  },
-  {
-    icon: Zap,
-    title: 'Implementación Rápida',
-    description: 'Puesta en marcha en semanas, no meses. Metodología probada para que operes lo antes posible.',
-  },
-  {
-    icon: Target,
-    title: 'Se Adapta a Tu Negocio',
-    description: 'No tú al sistema. Business Central se personaliza a tus procesos con extensiones y desarrollo a medida.',
-  },
-  {
-    icon: Lightbulb,
-    title: 'Inteligencia Integrada',
-    description: 'Sugerencias de IA, análisis predictivo y recomendaciones inteligentes para mejores decisiones.',
-  },
-  {
-    icon: Handshake,
-    title: 'Ecosistema Microsoft',
-    description: 'Integración nativa con Outlook, Excel, Word, Teams, Power BI, Power Automate y más.',
-  },
-]
-
-const services = [
-  {
-    icon: Settings,
-    title: 'Implementación',
-    description: 'Despliegue completo de Business Central adaptado a tus procesos. Desde la configuración inicial hasta la puesta en producción.',
+    icon: Search,
+    title: 'Consultoría Funcional',
+    description: 'Análisis de procesos, diseño de solución y configuración. Mapeamos tus flujos de trabajo y diseñamos la solución óptima en Business Central.',
+    tags: ['Análisis', 'Diseño', 'Configuración'],
   },
   {
     icon: Code2,
-    title: 'Desarrollo a Medida',
-    description: 'Extensiones y personalizaciones en AL que se adaptan exactamente a lo que tu negocio necesita. Sin límites.',
+    title: 'Consultoría de Desarrollo',
+    description: 'Extensiones AL, APIs e integraciones a medida. Desarrollamos funcionalidades que Business Central no trae por defecto.',
+    tags: ['AL', 'APIs', 'Integraciones'],
   },
   {
-    icon: Cable,
-    title: 'Integraciones',
-    description: 'Conecta Business Central con tus herramientas: e-commerce, CRM, bancarios, paquetería, SAT y más.',
+    icon: Shield,
+    title: 'Soporte y Garantía',
+    description: '5 meses de garantía sin costo en cada desarrollo. Acompañamos tu operación para que todo funcione de forma impecable.',
+    tags: ['5 meses', 'Sin costo', 'Incluido'],
+  },
+  {
+    icon: Ticket,
+    title: 'Servicio de Tickets',
+    description: 'Bolsa de horas con seguimiento de incidencias. Reporta problemas y recibe atención priorizada con seguimiento en tiempo real.',
+    tags: ['Bolsa de horas', 'Seguimiento', 'Prioridad'],
+  },
+  {
+    icon: Rocket,
+    title: 'Implementación Completa',
+    description: 'Despliegue completo de Business Central adaptado a tus procesos. Desde la configuración inicial hasta la puesta en producción.',
+    tags: ['End-to-end', 'Metodología', 'Producción'],
+  },
+  {
+    icon: GraduationCap,
+    title: 'Capacitación',
+    description: 'Formación a tu equipo para que saque el máximo provecho de Business Central. Talleres prácticos y documentación.',
+    tags: ['Talleres', 'Documentación', 'Práctico'],
+  },
+]
+
+const integrations = [
+  {
+    icon: BarChart3,
+    title: 'Power BI',
+    description: 'Dashboards y reportes interactivos conectados en tiempo real a tus datos de Business Central.',
+    color: 'emerald',
   },
   {
     icon: Workflow,
-    title: 'Automatización',
-    description: 'Flujos de trabajo con Power Automate que eliminan tareas repetitivas y reducen errores humanos.',
+    title: 'Power Automate',
+    description: 'Automatización de flujos de trabajo entre Business Central y cientos de aplicaciones.',
+    color: 'amber',
   },
   {
-    icon: BarChart3,
-    title: 'Business Intelligence',
-    description: 'Reportes y dashboards con Power BI conectados a Business Central para decisiones basadas en datos.',
+    icon: Smartphone,
+    title: 'Power Apps',
+    description: 'Apps personalizadas que se conectan a Business Central para necesidades específicas de tu operación.',
+    color: 'emerald',
   },
   {
     icon: Users,
-    title: 'Capacitación',
-    description: 'Formación a tu equipo para que saque el máximo provecho de Business Central. Talleres prácticos y documentación.',
+    title: 'Dynamics 365 CRM',
+    description: 'Gestión de relaciones con clientes sincronizada bidireccionalmente con Business Central.',
+    color: 'amber',
   },
   {
-    icon: HeadphonesIcon,
-    title: 'Soporte Continuo',
-    description: 'Acompañamiento post-implementación con soporte técnico, actualizaciones y mejoras continuas.',
+    icon: Mail,
+    title: 'Outlook / Teams / Excel',
+    description: 'Integración nativa con el ecosistema Microsoft que usas todos los días.',
+    color: 'emerald',
   },
   {
-    icon: Truck,
-    title: 'Migración de Datos',
-    description: 'Importamos tu información de sistemas legacy, Excel u otros ERPs a Business Central de forma segura.',
+    icon: Webhook,
+    title: 'APIs y Webhooks',
+    description: 'Conecta cualquier sistema externo a Business Central mediante APIs REST y webhooks personalizados.',
+    color: 'amber',
+  },
+]
+
+const licensePricing = [
+  {
+    name: 'Essentials',
+    price: '$80',
+    unit: 'USD/usuario/mes',
+    storage: '3GB almacenamiento',
+    description: 'Gestión financiera, ventas, compras, inventario y proyectos.',
+    features: ['Finanzas', 'Ventas', 'Compras', 'Inventario', 'Proyectos'],
+    popular: false,
+  },
+  {
+    name: 'Premium',
+    price: '$110',
+    unit: 'USD/usuario/mes',
+    storage: '5GB almacenamiento',
+    description: 'Todo lo de Essentials más manufactura y gestión de servicio.',
+    features: ['Todo Essentials', 'Manufactura', 'Servicio', 'Planificación'],
+    popular: true,
+  },
+  {
+    name: 'Team Member',
+    price: '$8',
+    unit: 'USD/usuario/mes',
+    storage: 'Acceso limitado',
+    description: 'Para usuarios que solo necesitan leer datos y aprobar documentos.',
+    features: ['Lectura', 'Aprobaciones', 'Reportes básicos'],
+    popular: false,
+  },
+  {
+    name: 'Device',
+    price: '$45',
+    unit: 'USD/dispositivo/mes',
+    storage: 'Para puntos de venta',
+    description: 'Licencia por dispositivo para puntos de venta, almacén o producción.',
+    features: ['Punto de venta', 'Almacén', 'Múltiples turnos'],
+    popular: false,
   },
 ]
 
@@ -401,6 +463,22 @@ const testimonials = [
   },
 ]
 
+const migrationSources = [
+  { icon: Database, label: 'NAV' },
+  { icon: FileSpreadsheet, label: 'Excel' },
+  { icon: Server, label: 'SAP' },
+  { icon: CreditCard, label: 'QuickBooks' },
+  { icon: Monitor, label: 'Custom' },
+]
+
+const migrationSteps = [
+  { icon: Search, label: 'Diagnóstico', desc: 'Evaluamos tu sistema actual' },
+  { icon: HardDrive, label: 'Extracción', desc: 'Exportamos tus datos' },
+  { icon: ArrowRightLeft, label: 'Transformación', desc: 'Adaptamos al formato BC' },
+  { icon: Database, label: 'Carga', desc: 'Importamos a Business Central' },
+  { icon: ClipboardCheck, label: 'Validación', desc: 'Verificamos integridad' },
+]
+
 /* ─── Main Page ─── */
 export default function Home() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
@@ -460,38 +538,44 @@ export default function Home() {
 
   const interestOptions = ['Implementación', 'Desarrollo a medida', 'Automatización', 'Integración', 'Business Intelligence', 'Capacitación', 'Migración de datos', 'Soporte']
 
+  const navLinks = [
+    { href: '#modulos', label: 'Módulos' },
+    { href: '#sat', label: 'SAT' },
+    { href: '#automatizaciones', label: 'Automatizaciones' },
+    { href: '#desarrollos', label: 'Desarrollos' },
+    { href: '#migraciones', label: 'Migraciones' },
+    { href: '#servicios', label: 'Servicios' },
+    { href: '#integraciones', label: 'Integraciones' },
+    { href: '#licencias', label: 'Licencias' },
+    { href: '#proceso', label: 'Proceso' },
+    { href: '#contacto', label: 'Contacto' },
+  ]
+
   return (
     <div className="min-h-screen flex flex-col">
       {/* ─── Navbar ─── */}
-      <nav className="fixed top-0 left-0 right-0 z-50 border-b border-border/50 bg-background/80 backdrop-blur-xl">
+      <nav className="fixed top-0 left-0 right-0 z-50 border-b border-white/10 bg-background/70 backdrop-blur-xl">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             <div className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center">
+              <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center glow-emerald">
                 <Cog className="w-5 h-5 text-primary-foreground" />
               </div>
               <span className="text-xl font-bold tracking-tight">
-                BC<span className="text-primary">Forge</span>
+                BC<span className="gradient-text">Forge</span>
               </span>
             </div>
 
-            <div className="hidden md:flex items-center gap-8">
-              {[
-                { href: '#modulos', label: 'Módulos BC' },
-                { href: '#automatizaciones', label: 'Automatizaciones' },
-                { href: '#desarrollos', label: 'Desarrollos' },
-                { href: '#servicios', label: 'Servicios' },
-                { href: '#proceso', label: 'Proceso' },
-                { href: '#contacto', label: 'Contacto' },
-              ].map((link) => (
-                <a key={link.href} href={link.href} className="text-sm text-muted-foreground hover:text-foreground transition-colors">
+            <div className="hidden lg:flex items-center gap-6">
+              {navLinks.map((link) => (
+                <a key={link.href} href={link.href} className="text-sm text-muted-foreground hover:text-primary transition-colors duration-300">
                   {link.label}
                 </a>
               ))}
             </div>
 
-            <div className="hidden md:flex items-center gap-3">
-              <Button size="sm" className="bg-primary hover:bg-primary/90" asChild>
+            <div className="hidden lg:flex items-center gap-3">
+              <Button size="sm" className="bg-primary hover:bg-primary/90 hover:shadow-lg hover:shadow-primary/20 transition-all duration-300" asChild>
                 <a href="#contacto">
                   Cotización gratis
                   <ArrowRight className="w-4 h-4 ml-1" />
@@ -500,7 +584,7 @@ export default function Home() {
             </div>
 
             <button
-              className="md:hidden p-2"
+              className="lg:hidden p-2 text-muted-foreground hover:text-foreground transition-colors"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               aria-label="Toggle menu"
             >
@@ -515,17 +599,17 @@ export default function Home() {
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: 'auto' }}
               exit={{ opacity: 0, height: 0 }}
-              className="md:hidden border-t border-border/50 bg-background/95 backdrop-blur-xl"
+              className="lg:hidden border-t border-white/10 bg-background/95 backdrop-blur-xl"
             >
-              <div className="px-4 py-4 space-y-3">
-                {['Módulos BC', 'Automatizaciones', 'Desarrollos', 'Servicios', 'Proceso', 'Contacto'].map((item) => (
+              <div className="px-4 py-4 space-y-2 max-h-96 overflow-y-auto">
+                {navLinks.map((link) => (
                   <a
-                    key={item}
-                    href={`#${item.toLowerCase().replace(' ', '-').replace('ó', 'o')}`}
-                    className="block text-sm text-muted-foreground hover:text-foreground transition-colors py-1"
+                    key={link.href}
+                    href={link.href}
+                    className="block text-sm text-muted-foreground hover:text-primary transition-colors py-1.5"
                     onClick={() => setMobileMenuOpen(false)}
                   >
-                    {item}
+                    {link.label}
                   </a>
                 ))}
                 <div className="pt-2">
@@ -540,19 +624,19 @@ export default function Home() {
       </nav>
 
       {/* ─── Hero Section ─── */}
-      <section className="relative pt-24 pb-16 md:pt-32 md:pb-24 overflow-hidden">
+      <section className="relative pt-24 pb-16 md:pt-36 md:pb-28 overflow-hidden">
         <div className="absolute inset-0 grid-pattern" />
-        <div className="absolute top-20 left-1/4 w-96 h-96 bg-primary/5 rounded-full blur-3xl" />
-        <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-accent/5 rounded-full blur-3xl" />
+        <div className="absolute top-20 left-1/4 w-[500px] h-[500px] bg-primary/8 rounded-full blur-[120px]" />
+        <div className="absolute bottom-0 right-1/4 w-[400px] h-[400px] bg-accent/8 rounded-full blur-[120px]" />
 
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <FadeInSection>
-              <Badge variant="secondary" className="mb-6 px-3 py-1 text-xs font-medium">
-                <Sparkles className="w-3 h-3 mr-1" />
+              <Badge variant="secondary" className="mb-6 px-3 py-1.5 text-xs font-medium border border-primary/20 bg-primary/5">
+                <Sparkles className="w-3 h-3 mr-1 text-primary" />
                 Consultoría Business Central
               </Badge>
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight leading-tight mb-6">
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight leading-[1.1] mb-6">
                 Forjamos la{' '}
                 <span className="gradient-text">automatización</span>{' '}
                 que tu negocio necesita
@@ -561,13 +645,13 @@ export default function Home() {
                 Consultoría especializada en Microsoft Business Central. Automatizamos procesos, desarrollamos soluciones a medida e integramos las herramientas que tu empresa usa todos los días.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
-                <Button size="lg" className="bg-primary hover:bg-primary/90 text-base px-8" asChild>
+                <Button size="lg" className="bg-primary hover:bg-primary/90 hover:shadow-lg hover:shadow-primary/20 text-base px-8 transition-all duration-300" asChild>
                   <a href="#contacto">
                     Comenzar ahora
                     <ArrowRight className="w-5 h-5 ml-2" />
                   </a>
                 </Button>
-                <Button variant="outline" size="lg" className="text-base px-8" asChild>
+                <Button variant="outline" size="lg" className="text-base px-8 border-primary/20 hover:border-primary/40 hover:bg-primary/5 transition-all duration-300" asChild>
                   <a href="#modulos">
                     Ver módulos BC
                   </a>
@@ -586,14 +670,14 @@ export default function Home() {
             <FadeInSection delay={0.2}>
               <div className="relative">
                 <div className="absolute -inset-4 bg-gradient-to-r from-primary/20 to-accent/20 rounded-2xl blur-2xl" />
-                <div className="absolute inset-0 rounded-2xl overflow-hidden opacity-15">
+                <div className="absolute inset-0 rounded-2xl overflow-hidden opacity-10">
                   <Image src="/hero-illustration.png" alt="Business Central Automation" fill className="object-cover" priority />
                 </div>
-                <div className="relative bg-card/95 border border-border rounded-2xl p-6 shadow-2xl backdrop-blur-sm">
+                <div className="relative bg-card/80 border border-white/10 rounded-2xl p-6 shadow-2xl backdrop-blur-md">
                   <div className="flex items-center gap-2 mb-4">
-                    <div className="w-3 h-3 rounded-full bg-red-400" />
-                    <div className="w-3 h-3 rounded-full bg-amber-400" />
-                    <div className="w-3 h-3 rounded-full bg-emerald-400" />
+                    <div className="w-3 h-3 rounded-full bg-red-400/80" />
+                    <div className="w-3 h-3 rounded-full bg-amber-400/80" />
+                    <div className="w-3 h-3 rounded-full bg-emerald-400/80" />
                     <span className="ml-2 text-xs text-muted-foreground">Business Central — Dashboard</span>
                   </div>
                   <div className="grid grid-cols-2 gap-3 mb-4">
@@ -603,30 +687,36 @@ export default function Home() {
                       { label: 'Inventario', value: '98.2%', change: '+2.1%', icon: Database },
                       { label: 'Clientes Activos', value: '834', change: '+8.7%', icon: Users },
                     ].map((item) => (
-                      <div key={item.label} className="bg-muted/50 rounded-lg p-3">
+                      <div key={item.label} className="bg-muted/30 border border-white/5 rounded-lg p-3 backdrop-blur-sm">
                         <div className="flex items-center justify-between mb-1">
                           <span className="text-xs text-muted-foreground">{item.label}</span>
                           <item.icon className="w-3.5 h-3.5 text-primary" />
                         </div>
                         <p className="text-lg font-bold">{item.value}</p>
-                        <span className="text-xs text-emerald-600 font-medium">{item.change}</span>
+                        <span className="text-xs text-emerald-500 font-medium">{item.change}</span>
                       </div>
                     ))}
                   </div>
-                  <div className="bg-muted/30 rounded-lg p-4">
+                  <div className="bg-muted/20 border border-white/5 rounded-lg p-4">
                     <div className="flex items-center justify-between mb-3">
                       <span className="text-xs font-medium">Flujo de Ventas</span>
                       <span className="text-xs text-muted-foreground">Últimos 7 días</span>
                     </div>
                     <div className="flex items-end gap-1.5 h-20">
                       {[40, 55, 35, 65, 50, 75, 60].map((h, i) => (
-                        <motion.div key={i} className="flex-1 rounded-sm bg-primary/70" initial={{ height: 0 }} animate={{ height: `${h}%` }} transition={{ delay: 0.5 + i * 0.1, duration: 0.5 }} />
+                        <motion.div
+                          key={i}
+                          className="flex-1 rounded-sm bg-gradient-to-t from-primary/80 to-primary/40"
+                          initial={{ height: 0 }}
+                          animate={{ height: `${h}%` }}
+                          transition={{ delay: 0.5 + i * 0.1, duration: 0.5 }}
+                        />
                       ))}
                     </div>
                   </div>
-                  <div className="mt-4 flex items-center gap-3 bg-emerald-50 dark:bg-emerald-950/30 rounded-lg p-3">
-                    <div className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                    <span className="text-xs font-medium text-emerald-700 dark:text-emerald-400">12 automatizaciones activas</span>
+                  <div className="mt-4 flex items-center gap-3 bg-primary/5 border border-primary/10 rounded-lg p-3">
+                    <div className="w-2 h-2 rounded-full bg-primary animate-pulse" />
+                    <span className="text-xs font-medium text-primary">12 automatizaciones activas</span>
                     <span className="text-xs text-muted-foreground ml-auto">hace 2 min</span>
                   </div>
                 </div>
@@ -636,35 +726,14 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ─── Stats ─── */}
-      <section className="py-16 border-y border-border/50 bg-muted/30">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            {[
-              { value: 150, suffix: '+', label: 'Proyectos entregados', icon: Rocket },
-              { value: 98, suffix: '%', label: 'Satisfacción del cliente', icon: CheckCircle2 },
-              { value: 40, suffix: '%', label: 'Reducción procesos manuales', icon: Zap },
-              { value: 50, suffix: '+', label: 'Integraciones realizadas', icon: Cable },
-            ].map((stat, i) => (
-              <FadeInSection key={stat.label} delay={i * 0.1}>
-                <div className="text-center">
-                  <stat.icon className="w-6 h-6 mx-auto mb-3 text-primary" />
-                  <p className="text-3xl md:text-4xl font-bold"><Counter target={stat.value} suffix={stat.suffix} /></p>
-                  <p className="text-sm text-muted-foreground mt-1">{stat.label}</p>
-                </div>
-              </FadeInSection>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ─── BC Modules Section (from erp365 inspiration) ─── */}
-      <section id="modulos" className="py-20 md:py-28">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* ─── BC Modules Section ─── */}
+      <section id="modulos" className="py-20 md:py-28 relative">
+        <div className="absolute inset-0 grid-pattern opacity-40" />
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <FadeInSection>
             <div className="text-center mb-16">
-              <Badge variant="secondary" className="mb-4">
-                <Layers className="w-3 h-3 mr-1" />
+              <Badge variant="secondary" className="mb-4 border border-primary/20 bg-primary/5">
+                <Layers className="w-3 h-3 mr-1 text-primary" />
                 Módulos de Business Central
               </Badge>
               <h2 className="text-3xl md:text-4xl font-bold mb-4">
@@ -677,19 +746,19 @@ export default function Home() {
             </div>
           </FadeInSection>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-5">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
             {bcModules.map((mod, i) => (
               <FadeInSection key={mod.title} delay={i * 0.06}>
-                <Card className="group h-full hover:shadow-lg hover:border-primary/30 transition-all duration-300 hover:-translate-y-1">
+                <Card className="group h-full bg-card/60 border-white/10 backdrop-blur-sm hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5 transition-all duration-300 hover:-translate-y-1">
                   <CardContent className="p-5">
-                    <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center mb-3 group-hover:bg-primary/20 transition-colors">
+                    <div className="w-10 h-10 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center mb-3 group-hover:bg-primary/20 group-hover:shadow-md group-hover:shadow-primary/10 transition-all duration-300">
                       <mod.icon className="w-5 h-5 text-primary" />
                     </div>
                     <h3 className="text-base font-semibold mb-1.5 group-hover:text-primary transition-colors">{mod.title}</h3>
                     <p className="text-xs text-muted-foreground mb-3 leading-relaxed">{mod.description}</p>
                     <div className="flex flex-wrap gap-1.5">
                       {mod.tags.map((tag) => (
-                        <Badge key={tag} variant="secondary" className="text-[10px] px-2 py-0.5">{tag}</Badge>
+                        <Badge key={tag} variant="secondary" className="text-[10px] px-2 py-0.5 bg-primary/5 border border-primary/10">{tag}</Badge>
                       ))}
                     </div>
                   </CardContent>
@@ -700,83 +769,232 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ─── Visual Bridge ─── */}
-      <section className="py-16 relative overflow-hidden">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="relative rounded-2xl overflow-hidden">
-            <Image src="/automation-illustration.png" alt="Automatización con Business Central" width={1344} height={768} className="w-full h-auto object-cover rounded-2xl" priority />
-            <div className="absolute inset-0 bg-gradient-to-r from-background/90 via-background/60 to-transparent rounded-2xl" />
-            <div className="absolute inset-0 flex items-center p-8 md:p-12">
-              <div className="max-w-md">
-                <FadeInSection>
-                  <h3 className="text-2xl md:text-3xl font-bold mb-3">
-                    Tu operación puede ser{' '}
-                    <span className="gradient-text">10x más eficiente</span>
-                  </h3>
-                  <p className="text-muted-foreground mb-4">
-                    Cada proceso manual que automatizamos es tiempo que tu equipo recupera para enfocarse en lo que realmente importa.
-                  </p>
-                  <Button className="bg-primary hover:bg-primary/90" asChild>
-                    <a href="#contacto">
-                      Agenda tu diagnóstico gratis
-                      <ArrowRight className="w-4 h-4 ml-2" />
-                    </a>
-                  </Button>
-                </FadeInSection>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ─── BC Benefits (from erp365 inspiration) ─── */}
-      <section className="py-20 md:py-28 bg-muted/30">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* ─── Metrics & Customization Section ─── */}
+      <section className="py-20 md:py-28 bg-muted/30 relative">
+        <div className="absolute inset-0 grid-pattern opacity-30" />
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <FadeInSection>
             <div className="text-center mb-16">
-              <Badge variant="secondary" className="mb-4">
-                <CheckCircle2 className="w-3 h-3 mr-1" />
-                ¿Por qué Business Central?
+              <Badge variant="secondary" className="mb-4 border border-accent/20 bg-accent/5">
+                <Activity className="w-3 h-3 mr-1 text-accent" />
+                Métricas y Personalización
               </Badge>
               <h2 className="text-3xl md:text-4xl font-bold mb-4">
-                Beneficios de{' '}
-                <span className="gradient-text">Dynamics 365 BC</span>
+                Métricas que impulsan{' '}
+                <span className="gradient-text">mejores decisiones</span>
               </h2>
               <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-                Una plataforma completa y personalizable para mejorar la productividad de tu empresa.
+                Business Central te da KPIs y métricas en tiempo real para optimizar cada área de tu negocio. Cada empresa es única — BC se adapta.
               </p>
             </div>
           </FadeInSection>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {bcBenefits.map((benefit, i) => (
-              <FadeInSection key={benefit.title} delay={i * 0.08}>
-                <Card className="group h-full hover:shadow-lg hover:border-primary/30 transition-all duration-300">
-                  <CardContent className="p-6">
-                    <div className="flex items-start gap-4">
-                      <div className="w-11 h-11 rounded-lg bg-primary/10 flex items-center justify-center shrink-0 group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
-                        <benefit.icon className="w-5 h-5 text-primary group-hover:text-primary-foreground transition-colors" />
-                      </div>
-                      <div>
-                        <h3 className="text-base font-semibold mb-1">{benefit.title}</h3>
-                        <p className="text-sm text-muted-foreground leading-relaxed">{benefit.description}</p>
-                      </div>
+          <div className="grid lg:grid-cols-2 gap-8 items-center mb-12">
+            {/* Chart Mockups */}
+            <FadeInSection>
+              <div className="space-y-4">
+                {/* Bar Chart */}
+                <div className="bg-card/60 border border-white/10 backdrop-blur-sm rounded-xl p-6">
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center gap-2">
+                      <BarChart2 className="w-4 h-4 text-primary" />
+                      <span className="text-sm font-medium">Ventas por Mes</span>
                     </div>
-                  </CardContent>
-                </Card>
-              </FadeInSection>
-            ))}
+                    <Badge variant="secondary" className="text-[10px] bg-primary/10 border border-primary/20">2024</Badge>
+                  </div>
+                  <div className="flex items-end gap-2 h-32">
+                    {[45, 62, 38, 78, 55, 90, 72, 85, 60, 95, 80, 88].map((h, i) => (
+                      <motion.div
+                        key={i}
+                        className="flex-1 rounded-t bg-gradient-to-t from-primary/80 to-primary/30 hover:from-primary hover:to-primary/60 transition-colors duration-200 cursor-pointer"
+                        initial={{ height: 0 }}
+                        animate={{ height: `${h}%` }}
+                        transition={{ delay: 0.3 + i * 0.05, duration: 0.4 }}
+                        title={`Mes ${i + 1}: ${h}%`}
+                      />
+                    ))}
+                  </div>
+                  <div className="flex justify-between mt-2 text-[10px] text-muted-foreground">
+                    <span>Ene</span><span>Mar</span><span>Jun</span><span>Sep</span><span>Dic</span>
+                  </div>
+                </div>
+
+                {/* Line Chart */}
+                <div className="bg-card/60 border border-white/10 backdrop-blur-sm rounded-xl p-6">
+                  <div className="flex items-center justify-between mb-4">
+                    <div className="flex items-center gap-2">
+                      <LineChart className="w-4 h-4 text-accent" />
+                      <span className="text-sm font-medium">Tendencia de Ingresos</span>
+                    </div>
+                    <Badge variant="secondary" className="text-[10px] bg-accent/10 border border-accent/20">+23%</Badge>
+                  </div>
+                  <div className="relative h-24">
+                    <svg className="w-full h-full" viewBox="0 0 400 80" fill="none">
+                      <defs>
+                        <linearGradient id="lineGrad" x1="0" y1="0" x2="400" y2="0" gradientUnits="userSpaceOnUse">
+                          <stop offset="0%" stopColor="oklch(0.696 0.17 162.48)" />
+                          <stop offset="100%" stopColor="oklch(0.769 0.188 70.08)" />
+                        </linearGradient>
+                        <linearGradient id="areaGrad" x1="0" y1="0" x2="0" y2="80" gradientUnits="userSpaceOnUse">
+                          <stop offset="0%" stopColor="oklch(0.696 0.17 162.48 / 20%)" />
+                          <stop offset="100%" stopColor="oklch(0.696 0.17 162.48 / 0%)" />
+                        </linearGradient>
+                      </defs>
+                      <motion.path
+                        d="M0,60 C50,55 80,45 120,40 C160,35 200,50 240,30 C280,10 320,25 360,15 L400,10"
+                        stroke="url(#lineGrad)"
+                        strokeWidth="2.5"
+                        fill="none"
+                        initial={{ pathLength: 0 }}
+                        animate={{ pathLength: 1 }}
+                        transition={{ duration: 2, delay: 0.5 }}
+                      />
+                      <motion.path
+                        d="M0,60 C50,55 80,45 120,40 C160,35 200,50 240,30 C280,10 320,25 360,15 L400,10 L400,80 L0,80Z"
+                        fill="url(#areaGrad)"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ duration: 1, delay: 1 }}
+                      />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </FadeInSection>
+
+            {/* Metric Cards */}
+            <FadeInSection delay={0.2}>
+              <div className="space-y-4">
+                <div className="bg-card/60 border border-white/10 backdrop-blur-sm rounded-xl p-6 hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5 transition-all duration-300">
+                  <div className="flex items-center gap-4">
+                    <div className="w-12 h-12 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center glow-emerald">
+                      <TrendingUp className="w-6 h-6 text-primary" />
+                    </div>
+                    <div className="flex-1">
+                      <p className="text-sm text-muted-foreground">Crecimiento en Eficiencia</p>
+                      <p className="text-3xl font-bold"><Counter target={40} suffix="%" /></p>
+                    </div>
+                    <Badge className="bg-primary/10 text-primary border-primary/20">Promedio</Badge>
+                  </div>
+                </div>
+
+                <div className="bg-card/60 border border-white/10 backdrop-blur-sm rounded-xl p-6 hover:border-accent/30 hover:shadow-lg hover:shadow-accent/5 transition-all duration-300">
+                  <div className="flex items-center gap-4">
+                    <div className="w-12 h-12 rounded-xl bg-accent/10 border border-accent/20 flex items-center justify-center glow-amber">
+                      <Clock className="w-6 h-6 text-accent" />
+                    </div>
+                    <div className="flex-1">
+                      <p className="text-sm text-muted-foreground">Horas Ahorradas al Mes</p>
+                      <p className="text-3xl font-bold"><Counter target={120} suffix="hrs" /></p>
+                    </div>
+                    <Badge className="bg-accent/10 text-accent border-accent/20">Por cliente</Badge>
+                  </div>
+                </div>
+
+                <div className="bg-card/60 border border-white/10 backdrop-blur-sm rounded-xl p-6 hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5 transition-all duration-300">
+                  <div className="flex items-center gap-4">
+                    <div className="w-12 h-12 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center glow-emerald">
+                      <Target className="w-6 h-6 text-primary" />
+                    </div>
+                    <div className="flex-1">
+                      <p className="text-sm text-muted-foreground">Precisión en Datos</p>
+                      <p className="text-3xl font-bold"><Counter target={99} suffix="." /><Counter target={7} suffix="%" /></p>
+                    </div>
+                    <Badge className="bg-primary/10 text-primary border-primary/20">Sin errores</Badge>
+                  </div>
+                </div>
+
+                <div className="bg-gradient-to-r from-primary/5 to-accent/5 border border-primary/10 rounded-xl p-5">
+                  <div className="flex items-start gap-3">
+                    <Lightbulb className="w-5 h-5 text-accent shrink-0 mt-0.5" />
+                    <div>
+                      <p className="text-sm font-medium mb-1">Cada negocio es único</p>
+                      <p className="text-xs text-muted-foreground leading-relaxed">Business Central se adapta a tus procesos, no al revés. Configuramos métricas, dashboards y alertas específicas para tu industria y operación.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </FadeInSection>
+          </div>
+        </div>
+      </section>
+
+      {/* ─── SAT Compliance Section ─── */}
+      <section id="sat" className="py-20 md:py-28 relative">
+        <div className="absolute inset-0 grid-pattern opacity-30" />
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <FadeInSection>
+            <div className="text-center mb-16">
+              <Badge variant="secondary" className="mb-4 border border-destructive/20 bg-destructive/5">
+                <Shield className="w-3 h-3 mr-1 text-destructive" />
+                Cumplimiento SAT
+              </Badge>
+              <h2 className="text-3xl md:text-4xl font-bold mb-4">
+                Evita dolores de cabeza con el{' '}
+                <span className="gradient-text">SAT</span>
+              </h2>
+              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+                Automatiza tu facturación electrónica, cálculos de impuestos y reportes fiscales. Cumple sin complicaciones.
+              </p>
+            </div>
+          </FadeInSection>
+
+          <div className="grid lg:grid-cols-2 gap-10 items-center">
+            <FadeInSection>
+              <div className="relative rounded-2xl overflow-hidden border border-white/10">
+                <Image src="/sat-compliance.png" alt="Cumplimiento SAT con Business Central" width={600} height={400} className="w-full h-auto object-cover" />
+                <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent" />
+              </div>
+            </FadeInSection>
+
+            <FadeInSection delay={0.2}>
+              <div className="space-y-4">
+                {[
+                  {
+                    icon: Receipt,
+                    title: 'Facturación CFDI automática',
+                    desc: 'Genera, timbra y envía facturas electrónicas CFDI 4.0 directamente desde Business Central sin intervención manual.',
+                  },
+                  {
+                    icon: CreditCard,
+                    title: 'Cálculo de impuestos automático',
+                    desc: 'IVA, ISR, retenciones y complementos fiscales calculados automáticamente según las reglas vigentes.',
+                  },
+                  {
+                    icon: FileCheck,
+                    title: 'Reportes fiscales al instante',
+                    desc: 'Genera reportes de impuestos, declaraciones y papeles de trabajo con un clic. Listos para tu contador.',
+                  },
+                  {
+                    icon: ClipboardCheck,
+                    title: 'Auditoría siempre lista',
+                    desc: 'Trazabilidad completa de todas las transacciones. Cuando el SAT audita, tú ya tienes todo organizado.',
+                  },
+                ].map((item, i) => (
+                  <div key={item.title} className="group flex items-start gap-4 bg-card/60 border border-white/10 backdrop-blur-sm rounded-xl p-4 hover:border-primary/30 hover:shadow-md hover:shadow-primary/5 transition-all duration-300">
+                    <div className="w-10 h-10 rounded-lg bg-primary/10 border border-primary/20 flex items-center justify-center shrink-0 group-hover:bg-primary/20 transition-colors">
+                      <item.icon className="w-5 h-5 text-primary" />
+                    </div>
+                    <div>
+                      <h3 className="text-sm font-semibold mb-1 group-hover:text-primary transition-colors">{item.title}</h3>
+                      <p className="text-xs text-muted-foreground leading-relaxed">{item.desc}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </FadeInSection>
           </div>
         </div>
       </section>
 
       {/* ─── Automation Ideas ─── */}
-      <section id="automatizaciones" className="py-20 md:py-28">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section id="automatizaciones" className="py-20 md:py-28 bg-muted/30 relative">
+        <div className="absolute inset-0 grid-pattern opacity-30" />
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <FadeInSection>
             <div className="text-center mb-16">
-              <Badge variant="secondary" className="mb-4">
-                <Zap className="w-3 h-3 mr-1" />
+              <Badge variant="secondary" className="mb-4 border border-primary/20 bg-primary/5">
+                <Zap className="w-3 h-3 mr-1 text-primary" />
                 Automatizaciones
               </Badge>
               <h2 className="text-3xl md:text-4xl font-bold mb-4">
@@ -790,19 +1008,19 @@ export default function Home() {
             </div>
           </FadeInSection>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-5">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
             {automationIdeas.map((idea, i) => (
               <FadeInSection key={idea.title} delay={i * 0.06}>
-                <Card className="group h-full hover:shadow-lg hover:border-primary/30 transition-all duration-300 hover:-translate-y-1">
+                <Card className="group h-full bg-card/60 border-white/10 backdrop-blur-sm hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5 transition-all duration-300 hover:-translate-y-1">
                   <CardContent className="p-5">
-                    <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center mb-3 group-hover:bg-primary/20 transition-colors">
+                    <div className="w-10 h-10 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center mb-3 group-hover:bg-primary/20 group-hover:shadow-md group-hover:shadow-primary/10 transition-all duration-300">
                       <idea.icon className="w-5 h-5 text-primary" />
                     </div>
                     <h3 className="text-sm font-semibold mb-1.5 group-hover:text-primary transition-colors">{idea.title}</h3>
                     <p className="text-xs text-muted-foreground mb-3 leading-relaxed">{idea.description}</p>
                     <div className="flex flex-wrap gap-1.5">
                       {idea.tags.map((tag) => (
-                        <Badge key={tag} variant="secondary" className="text-[10px] px-2 py-0.5">{tag}</Badge>
+                        <Badge key={tag} variant="secondary" className="text-[10px] px-2 py-0.5 bg-primary/5 border border-primary/10">{tag}</Badge>
                       ))}
                     </div>
                   </CardContent>
@@ -814,12 +1032,13 @@ export default function Home() {
       </section>
 
       {/* ─── Development Ideas ─── */}
-      <section id="desarrollos" className="py-20 md:py-28 bg-muted/30">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <section id="desarrollos" className="py-20 md:py-28 relative">
+        <div className="absolute inset-0 grid-pattern opacity-40" />
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <FadeInSection>
             <div className="text-center mb-16">
-              <Badge variant="secondary" className="mb-4">
-                <Code2 className="w-3 h-3 mr-1" />
+              <Badge variant="secondary" className="mb-4 border border-accent/20 bg-accent/5">
+                <Code2 className="w-3 h-3 mr-1 text-accent" />
                 Desarrollos Nuevos
               </Badge>
               <h2 className="text-3xl md:text-4xl font-bold mb-4">
@@ -833,14 +1052,16 @@ export default function Home() {
             </div>
           </FadeInSection>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-5">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
             {developmentIdeas.map((idea, i) => (
               <FadeInSection key={idea.title} delay={i * 0.06}>
-                <Card className="group h-full hover:shadow-lg hover:border-primary/30 transition-all duration-300 hover:-translate-y-1 overflow-hidden">
-                  <div className={`h-1.5 ${idea.color === 'emerald' ? 'bg-primary' : 'bg-accent'}`} />
+                <Card className="group h-full bg-card/60 border-white/10 backdrop-blur-sm hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5 transition-all duration-300 hover:-translate-y-1 overflow-hidden">
+                  <div className={`h-1 ${idea.color === 'emerald' ? 'bg-gradient-to-r from-primary/60 to-primary' : 'bg-gradient-to-r from-accent/60 to-accent'}`} />
                   <CardContent className="p-5">
-                    <div className={`w-10 h-10 rounded-xl flex items-center justify-center mb-3 transition-colors ${
-                      idea.color === 'emerald' ? 'bg-primary/10 group-hover:bg-primary/20' : 'bg-accent/10 group-hover:bg-accent/20'
+                    <div className={`w-10 h-10 rounded-xl flex items-center justify-center mb-3 border transition-all duration-300 ${
+                      idea.color === 'emerald'
+                        ? 'bg-primary/10 border-primary/20 group-hover:bg-primary/20 group-hover:shadow-md group-hover:shadow-primary/10'
+                        : 'bg-accent/10 border-accent/20 group-hover:bg-accent/20 group-hover:shadow-md group-hover:shadow-accent/10'
                     }`}>
                       <idea.icon className={`w-5 h-5 ${idea.color === 'emerald' ? 'text-primary' : 'text-accent'}`} />
                     </div>
@@ -858,13 +1079,99 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ─── Services ─── */}
-      <section id="servicios" className="py-20 md:py-28">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* ─── Migrations & RapidStart Section ─── */}
+      <section id="migraciones" className="py-20 md:py-28 bg-muted/30 relative">
+        <div className="absolute inset-0 grid-pattern opacity-30" />
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <FadeInSection>
             <div className="text-center mb-16">
-              <Badge variant="secondary" className="mb-4">
-                <Settings className="w-3 h-3 mr-1" />
+              <Badge variant="secondary" className="mb-4 border border-primary/20 bg-primary/5">
+                <ArrowRightLeft className="w-3 h-3 mr-1 text-primary" />
+                Migraciones
+              </Badge>
+              <h2 className="text-3xl md:text-4xl font-bold mb-4">
+                Migra a Business Central{' '}
+                <span className="gradient-text">sin interrupciones</span>
+              </h2>
+              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+                Desde NAV, sistemas legacy o Excel — migramos tus datos de forma segura con RapidStart Services de Microsoft.
+              </p>
+            </div>
+          </FadeInSection>
+
+          {/* Migration Sources */}
+          <FadeInSection>
+            <div className="flex flex-wrap justify-center gap-4 mb-12">
+              {migrationSources.map((src) => (
+                <div key={src.label} className="flex flex-col items-center gap-2 bg-card/60 border border-white/10 backdrop-blur-sm rounded-xl px-6 py-4 hover:border-primary/30 hover:shadow-md hover:shadow-primary/5 transition-all duration-300">
+                  <src.icon className="w-6 h-6 text-primary" />
+                  <span className="text-xs font-medium text-muted-foreground">{src.label}</span>
+                </div>
+              ))}
+            </div>
+          </FadeInSection>
+
+          {/* Migration Process */}
+          <FadeInSection delay={0.1}>
+            <div className="bg-card/60 border border-white/10 backdrop-blur-sm rounded-2xl p-6 md:p-8 mb-8">
+              <div className="flex items-center gap-2 mb-6">
+                <Wrench className="w-4 h-4 text-primary" />
+                <span className="text-sm font-medium">RapidStart Services — Proceso de Migración</span>
+              </div>
+              <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+                {migrationSteps.map((step, i) => (
+                  <div key={step.label} className="text-center relative">
+                    {i < migrationSteps.length - 1 && (
+                      <div className="hidden md:block absolute top-6 left-[60%] w-[80%] h-0.5 bg-gradient-to-r from-primary/30 to-primary/10" />
+                    )}
+                    <div className="relative z-10 w-12 h-12 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center mx-auto mb-3">
+                      <step.icon className="w-5 h-5 text-primary" />
+                    </div>
+                    <h4 className="text-sm font-semibold mb-1">{step.label}</h4>
+                    <p className="text-[11px] text-muted-foreground">{step.desc}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </FadeInSection>
+
+          {/* Migration Types */}
+          <FadeInSection delay={0.2}>
+            <div className="grid md:grid-cols-3 gap-5">
+              <div className="bg-card/60 border border-white/10 backdrop-blur-sm rounded-xl p-5 hover:border-primary/30 hover:shadow-md hover:shadow-primary/5 transition-all duration-300">
+                <div className="w-10 h-10 rounded-lg bg-primary/10 border border-primary/20 flex items-center justify-center mb-3">
+                  <Database className="w-5 h-5 text-primary" />
+                </div>
+                <h3 className="text-sm font-semibold mb-2">Migración desde NAV</h3>
+                <p className="text-xs text-muted-foreground leading-relaxed">Transición completa de Dynamics NAV a Business Central con toda tu data histórica, configuraciones y personalizaciones.</p>
+              </div>
+              <div className="bg-card/60 border border-white/10 backdrop-blur-sm rounded-xl p-5 hover:border-accent/30 hover:shadow-md hover:shadow-accent/5 transition-all duration-300">
+                <div className="w-10 h-10 rounded-lg bg-accent/10 border border-accent/20 flex items-center justify-center mb-3">
+                  <FileSpreadsheet className="w-5 h-5 text-accent" />
+                </div>
+                <h3 className="text-sm font-semibold mb-2">Desde Sistemas Legacy</h3>
+                <p className="text-xs text-muted-foreground leading-relaxed">Migramos tu información de Excel, otros ERPs o bases de datos propietarias a Business Central de forma segura y validada.</p>
+              </div>
+              <div className="bg-card/60 border border-white/10 backdrop-blur-sm rounded-xl p-5 hover:border-primary/30 hover:shadow-md hover:shadow-primary/5 transition-all duration-300">
+                <div className="w-10 h-10 rounded-lg bg-primary/10 border border-primary/20 flex items-center justify-center mb-3">
+                  <Wrench className="w-5 h-5 text-primary" />
+                </div>
+                <h3 className="text-sm font-semibold mb-2">RapidStart Services</h3>
+                <p className="text-xs text-muted-foreground leading-relaxed">Herramienta oficial de Microsoft para migración de datos. Configuración, importación y validación en un proceso controlado y repetible.</p>
+              </div>
+            </div>
+          </FadeInSection>
+        </div>
+      </section>
+
+      {/* ─── Consulting Services Section ─── */}
+      <section id="servicios" className="py-20 md:py-28 relative">
+        <div className="absolute inset-0 grid-pattern opacity-40" />
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <FadeInSection>
+            <div className="text-center mb-16">
+              <Badge variant="secondary" className="mb-4 border border-primary/20 bg-primary/5">
+                <Settings className="w-3 h-3 mr-1 text-primary" />
                 Servicios
               </Badge>
               <h2 className="text-3xl md:text-4xl font-bold mb-4">
@@ -877,16 +1184,21 @@ export default function Home() {
             </div>
           </FadeInSection>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-5">
-            {services.map((service, i) => (
-              <FadeInSection key={service.title} delay={i * 0.06}>
-                <Card className="group h-full hover:shadow-lg hover:border-primary/30 transition-all duration-300">
-                  <CardContent className="p-5">
-                    <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center mb-3 group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
-                      <service.icon className="w-5 h-5 text-primary group-hover:text-primary-foreground transition-colors" />
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            {consultingServices.map((service, i) => (
+              <FadeInSection key={service.title} delay={i * 0.08}>
+                <Card className="group h-full bg-card/60 border-white/10 backdrop-blur-sm hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5 transition-all duration-300">
+                  <CardContent className="p-6">
+                    <div className="w-11 h-11 rounded-lg bg-primary/10 border border-primary/20 flex items-center justify-center mb-4 group-hover:bg-primary group-hover:border-primary transition-all duration-300">
+                      <service.icon className="w-5 h-5 text-primary group-hover:text-primary-foreground transition-colors duration-300" />
                     </div>
-                    <h3 className="text-sm font-semibold mb-1">{service.title}</h3>
-                    <p className="text-xs text-muted-foreground leading-relaxed">{service.description}</p>
+                    <h3 className="text-base font-semibold mb-2">{service.title}</h3>
+                    <p className="text-sm text-muted-foreground leading-relaxed mb-3">{service.description}</p>
+                    <div className="flex flex-wrap gap-1.5">
+                      {service.tags.map((tag) => (
+                        <Badge key={tag} variant="secondary" className="text-[10px] px-2 py-0.5 bg-primary/5 border border-primary/10">{tag}</Badge>
+                      ))}
+                    </div>
                   </CardContent>
                 </Card>
               </FadeInSection>
@@ -895,13 +1207,135 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ─── Process ─── */}
-      <section id="proceso" className="py-20 md:py-28 bg-muted/30">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* ─── Integrations Section ─── */}
+      <section id="integraciones" className="py-20 md:py-28 bg-muted/30 relative">
+        <div className="absolute inset-0 grid-pattern opacity-30" />
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <FadeInSection>
             <div className="text-center mb-16">
-              <Badge variant="secondary" className="mb-4">
-                <Clock className="w-3 h-3 mr-1" />
+              <Badge variant="secondary" className="mb-4 border border-accent/20 bg-accent/5">
+                <Puzzle className="w-3 h-3 mr-1 text-accent" />
+                Ecosistema Power Platform
+              </Badge>
+              <h2 className="text-3xl md:text-4xl font-bold mb-4">
+                Integraciones que{' '}
+                <span className="gradient-text">potencian</span>{' '}
+                tu operación
+              </h2>
+              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+                Business Central se conecta con todo el ecosistema Microsoft y más allá. La plataforma crece contigo.
+              </p>
+            </div>
+          </FadeInSection>
+
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            {integrations.map((integration, i) => (
+              <FadeInSection key={integration.title} delay={i * 0.08}>
+                <Card className="group h-full bg-card/60 border-white/10 backdrop-blur-sm hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5 transition-all duration-300">
+                  <CardContent className="p-6">
+                    <div className="flex items-start gap-4">
+                      <div className={`w-11 h-11 rounded-lg flex items-center justify-center border shrink-0 transition-all duration-300 ${
+                        integration.color === 'emerald'
+                          ? 'bg-primary/10 border-primary/20 group-hover:bg-primary/20'
+                          : 'bg-accent/10 border-accent/20 group-hover:bg-accent/20'
+                      }`}>
+                        <integration.icon className={`w-5 h-5 ${integration.color === 'emerald' ? 'text-primary' : 'text-accent'}`} />
+                      </div>
+                      <div>
+                        <h3 className="text-base font-semibold mb-1">{integration.title}</h3>
+                        <p className="text-sm text-muted-foreground leading-relaxed">{integration.description}</p>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              </FadeInSection>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ─── License Pricing Section ─── */}
+      <section id="licencias" className="py-20 md:py-28 relative">
+        <div className="absolute inset-0 grid-pattern opacity-40" />
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <FadeInSection>
+            <div className="text-center mb-16">
+              <Badge variant="secondary" className="mb-4 border border-primary/20 bg-primary/5">
+                <CreditCard className="w-3 h-3 mr-1 text-primary" />
+                Licencias
+              </Badge>
+              <h2 className="text-3xl md:text-4xl font-bold mb-4">
+                Precios de{' '}
+                <span className="gradient-text">Business Central</span>
+              </h2>
+              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+                Elige la licencia que mejor se adapte a las necesidades de tu equipo.
+              </p>
+            </div>
+          </FadeInSection>
+
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+            {licensePricing.map((plan, i) => (
+              <FadeInSection key={plan.name} delay={i * 0.08}>
+                <Card className={`group h-full border backdrop-blur-sm transition-all duration-300 relative ${
+                  plan.popular
+                    ? 'bg-card/80 border-primary/40 hover:border-primary/60 shadow-lg shadow-primary/10'
+                    : 'bg-card/60 border-white/10 hover:border-primary/30'
+                }`}>
+                  {plan.popular && (
+                    <div className="absolute -top-3 left-1/2 -translate-x-1/2">
+                      <Badge className="bg-primary text-primary-foreground px-3 py-0.5 text-[10px]">Más Popular</Badge>
+                    </div>
+                  )}
+                  <CardContent className="p-6">
+                    <h3 className="text-lg font-semibold mb-1">{plan.name}</h3>
+                    <p className="text-xs text-muted-foreground mb-4">{plan.storage}</p>
+                    <div className="mb-4">
+                      <span className="text-3xl font-bold gradient-text">{plan.price}</span>
+                      <span className="text-xs text-muted-foreground ml-1">{plan.unit}</span>
+                    </div>
+                    <p className="text-xs text-muted-foreground leading-relaxed mb-4">{plan.description}</p>
+                    <div className="space-y-2">
+                      {plan.features.map((feature) => (
+                        <div key={feature} className="flex items-center gap-2 text-xs">
+                          <CheckCircle2 className="w-3.5 h-3.5 text-primary shrink-0" />
+                          <span>{feature}</span>
+                        </div>
+                      ))}
+                    </div>
+                    <Button
+                      className={`w-full mt-5 ${
+                        plan.popular
+                          ? 'bg-primary hover:bg-primary/90 hover:shadow-lg hover:shadow-primary/20'
+                          : 'bg-muted/50 hover:bg-primary/10 border border-white/10 hover:border-primary/20'
+                      } transition-all duration-300`}
+                      variant={plan.popular ? 'default' : 'outline'}
+                      asChild
+                    >
+                      <a href="#contacto">Solicitar cotización</a>
+                    </Button>
+                  </CardContent>
+                </Card>
+              </FadeInSection>
+            ))}
+          </div>
+
+          <FadeInSection delay={0.4}>
+            <p className="text-center text-xs text-muted-foreground mt-8">
+              * Precios sujetos a cambio. Consulta con nosotros para cotización personalizada.
+            </p>
+          </FadeInSection>
+        </div>
+      </section>
+
+      {/* ─── Process Section ─── */}
+      <section id="proceso" className="py-20 md:py-28 bg-muted/30 relative">
+        <div className="absolute inset-0 grid-pattern opacity-30" />
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <FadeInSection>
+            <div className="text-center mb-16">
+              <Badge variant="secondary" className="mb-4 border border-primary/20 bg-primary/5">
+                <Clock className="w-3 h-3 mr-1 text-primary" />
                 Proceso
               </Badge>
               <h2 className="text-3xl md:text-4xl font-bold mb-4">
@@ -914,14 +1348,14 @@ export default function Home() {
             </div>
           </FadeInSection>
 
-          <div className="grid md:grid-cols-4 gap-8">
+          <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-8">
             {processSteps.map((step, i) => (
               <FadeInSection key={step.step} delay={i * 0.15}>
                 <div className="relative text-center">
                   {i < processSteps.length - 1 && (
                     <div className="hidden md:block absolute top-8 left-[60%] w-[80%] h-0.5 bg-gradient-to-r from-primary/30 to-primary/10" />
                   )}
-                  <div className="relative z-10 w-16 h-16 rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center mx-auto mb-4">
+                  <div className="relative z-10 w-16 h-16 rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center mx-auto mb-4 glow-emerald">
                     <step.icon className="w-7 h-7 text-primary" />
                   </div>
                   <span className="text-xs font-bold text-primary mb-1 block">{step.step}</span>
@@ -934,252 +1368,287 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ─── Testimonials ─── */}
-      <section className="py-20 md:py-28">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* ─── Testimonials Section ─── */}
+      <section className="py-20 md:py-28 relative">
+        <div className="absolute inset-0 grid-pattern opacity-40" />
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <FadeInSection>
             <div className="text-center mb-16">
-              <Badge variant="secondary" className="mb-4">
-                <MessageSquare className="w-3 h-3 mr-1" />
+              <Badge variant="secondary" className="mb-4 border border-accent/20 bg-accent/5">
+                <Users className="w-3 h-3 mr-1 text-accent" />
                 Testimonios
               </Badge>
               <h2 className="text-3xl md:text-4xl font-bold mb-4">
-                Lo que dicen nuestros{' '}
-                <span className="gradient-text">clientes</span>
+                Lo que dicen{' '}
+                <span className="gradient-text">nuestros clientes</span>
               </h2>
             </div>
           </FadeInSection>
 
-          <div className="max-w-3xl mx-auto">
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={activeTestimonial}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                transition={{ duration: 0.4 }}
-                className="text-center"
-              >
-                <div className="text-5xl text-primary/20 mb-4">&ldquo;</div>
-                <p className="text-lg md:text-xl text-foreground leading-relaxed mb-6 italic">
-                  {testimonials[activeTestimonial].text}
-                </p>
-                <div>
-                  <p className="font-semibold">{testimonials[activeTestimonial].name}</p>
-                  <p className="text-sm text-muted-foreground">
-                    {testimonials[activeTestimonial].role} · {testimonials[activeTestimonial].company}
-                  </p>
-                </div>
-              </motion.div>
-            </AnimatePresence>
-
-            <div className="flex justify-center gap-2 mt-8">
-              {testimonials.map((_, i) => (
+          {/* Featured Testimonial Carousel */}
+          <FadeInSection>
+            <div className="relative mb-10">
+              <div className="bg-card/60 border border-white/10 backdrop-blur-sm rounded-2xl p-8 md:p-10 max-w-3xl mx-auto text-center">
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={activeTestimonial}
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -10 }}
+                    transition={{ duration: 0.4 }}
+                  >
+                    <p className="text-lg md:text-xl leading-relaxed mb-6 text-foreground/90">&ldquo;{testimonials[activeTestimonial].text}&rdquo;</p>
+                    <div>
+                      <p className="font-semibold text-primary">{testimonials[activeTestimonial].name}</p>
+                      <p className="text-sm text-muted-foreground">{testimonials[activeTestimonial].role}, {testimonials[activeTestimonial].company}</p>
+                    </div>
+                  </motion.div>
+                </AnimatePresence>
+              </div>
+              <div className="flex items-center justify-center gap-4 mt-6">
                 <button
-                  key={i}
-                  onClick={() => setActiveTestimonial(i)}
-                  className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                    i === activeTestimonial ? 'w-6 bg-primary' : 'bg-muted-foreground/30 hover:bg-muted-foreground/50'
-                  }`}
-                  aria-label={`Testimonio ${i + 1}`}
-                />
-              ))}
+                  onClick={() => setActiveTestimonial((prev) => (prev - 1 + testimonials.length) % testimonials.length)}
+                  className="w-9 h-9 rounded-lg border border-white/10 bg-card/60 flex items-center justify-center hover:border-primary/30 hover:bg-primary/10 transition-all duration-300"
+                  aria-label="Testimonio anterior"
+                >
+                  <ChevronLeft className="w-4 h-4" />
+                </button>
+                <div className="flex gap-2">
+                  {testimonials.map((_, i) => (
+                    <button
+                      key={i}
+                      onClick={() => setActiveTestimonial(i)}
+                      className={`w-2 h-2 rounded-full transition-all duration-300 ${i === activeTestimonial ? 'bg-primary w-6' : 'bg-muted-foreground/30'}`}
+                      aria-label={`Ir a testimonio ${i + 1}`}
+                    />
+                  ))}
+                </div>
+                <button
+                  onClick={() => setActiveTestimonial((prev) => (prev + 1) % testimonials.length)}
+                  className="w-9 h-9 rounded-lg border border-white/10 bg-card/60 flex items-center justify-center hover:border-primary/30 hover:bg-primary/10 transition-all duration-300"
+                  aria-label="Siguiente testimonio"
+                >
+                  <ChevronRight className="w-4 h-4" />
+                </button>
+              </div>
             </div>
-          </div>
+          </FadeInSection>
 
-          <div className="grid md:grid-cols-3 gap-4 mt-12">
+          {/* Testimonials Grid */}
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {testimonials.slice(0, 3).map((t, i) => (
               <FadeInSection key={t.name} delay={i * 0.1}>
-                <Card className="h-full">
-                  <CardContent className="p-5">
-                    <div className="flex items-center gap-1 mb-3">
-                      {[...Array(5)].map((_, j) => (
-                        <svg key={j} className="w-4 h-4 text-amber-400 fill-current" viewBox="0 0 20 20">
-                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                        </svg>
-                      ))}
+                <div className="bg-card/60 border border-white/10 backdrop-blur-sm rounded-xl p-5 hover:border-primary/20 transition-all duration-300">
+                  <p className="text-sm text-muted-foreground leading-relaxed mb-4">&ldquo;{t.text}&rdquo;</p>
+                  <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 rounded-full bg-primary/10 border border-primary/20 flex items-center justify-center text-xs font-bold text-primary">
+                      {t.name.charAt(0)}
                     </div>
-                    <p className="text-sm text-muted-foreground leading-relaxed mb-3">
-                      &ldquo;{t.text}&rdquo;
-                    </p>
-                    <div className="flex items-center gap-2">
-                      <div className="w-8 h-8 rounded-full bg-primary/10 flex items-center justify-center text-xs font-bold text-primary">
-                        {t.name.charAt(0)}
-                      </div>
-                      <div>
-                        <p className="text-xs font-medium">{t.name}</p>
-                        <p className="text-xs text-muted-foreground">{t.company}</p>
-                      </div>
+                    <div>
+                      <p className="text-xs font-semibold">{t.name}</p>
+                      <p className="text-[11px] text-muted-foreground">{t.role}, {t.company}</p>
                     </div>
-                  </CardContent>
-                </Card>
+                  </div>
+                </div>
               </FadeInSection>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ─── Contact Section ─── */}
-      <section id="contacto" className="py-20 md:py-28 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5" />
-        <div className="absolute inset-0 grid-pattern opacity-50" />
-
+      {/* ─── Contact Form Section ─── */}
+      <section id="contacto" className="py-20 md:py-28 bg-muted/30 relative">
+        <div className="absolute inset-0 grid-pattern opacity-30" />
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid lg:grid-cols-2 gap-12 items-start">
-            <FadeInSection>
-              <Badge variant="secondary" className="mb-4">
-                <Mail className="w-3 h-3 mr-1" />
+          <FadeInSection>
+            <div className="text-center mb-16">
+              <Badge variant="secondary" className="mb-4 border border-primary/20 bg-primary/5">
+                <Mail className="w-3 h-3 mr-1 text-primary" />
                 Contacto
               </Badge>
               <h2 className="text-3xl md:text-4xl font-bold mb-4">
                 ¿Listo para{' '}
                 <span className="gradient-text">transformar</span>{' '}
-                tu operación?
+                tu negocio?
               </h2>
-              <p className="text-lg text-muted-foreground mb-8 leading-relaxed">
-                Cuéntanos sobre tu negocio y te mostraremos cómo Business Central puede trabajar para ti. Diagnóstico y cotización sin compromiso.
+              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+                Cuéntanos sobre tu proyecto y te contactamos con una propuesta sin compromiso.
               </p>
+            </div>
+          </FadeInSection>
 
-              <div className="space-y-6">
-                {[
-                  { icon: CheckCircle2, label: 'Respuesta en menos de 24 horas', text: 'Revisamos tu solicitud y te contactamos personalmente' },
-                  { icon: Target, label: 'Diagnóstico sin costo', text: 'Analizamos tus procesos sin compromiso y te damos recomendaciones' },
-                  { icon: Users, label: 'Atención personalizada', text: 'Un consultor especializado te acompaña desde el día uno' },
-                ].map((item) => (
-                  <div key={item.label} className="flex items-start gap-4">
-                    <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
-                      <item.icon className="w-5 h-5 text-primary" />
+          <FadeInSection delay={0.1}>
+            <div className="max-w-2xl mx-auto">
+              <div className="bg-card/60 border border-white/10 backdrop-blur-sm rounded-2xl p-6 md:p-8">
+                {formStatus === 'sent' ? (
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    className="text-center py-10"
+                  >
+                    <div className="w-16 h-16 rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center mx-auto mb-4 glow-emerald">
+                      <CheckCircle2 className="w-8 h-8 text-primary" />
                     </div>
-                    <div>
-                      <p className="font-medium">{item.label}</p>
-                      <p className="text-sm text-muted-foreground">{item.text}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-
-              <div className="mt-8 p-4 bg-muted/50 rounded-lg border border-border/50">
-                <p className="text-sm text-muted-foreground">
-                  <strong className="text-foreground">¿Prefieres agendar una llamada?</strong> Completa el formulario y selecciona &ldquo;Solicito llamada&rdquo; en el mensaje. Te contactamos en tu horario preferido.
-                </p>
-              </div>
-            </FadeInSection>
-
-            <FadeInSection delay={0.2}>
-              <Card className="border-border/50 shadow-xl">
-                <CardContent className="p-6 md:p-8">
-                  <h3 className="text-xl font-semibold mb-1">Solicita tu cotización</h3>
-                  <p className="text-sm text-muted-foreground mb-6">Completa el formulario y te contactamos en menos de 24 horas.</p>
-
-                  <form onSubmit={handleSubmit} className="space-y-4">
+                    <h3 className="text-xl font-semibold mb-2">¡Solicitud enviada!</h3>
+                    <p className="text-muted-foreground text-sm">Nos pondremos en contacto contigo pronto.</p>
+                  </motion.div>
+                ) : (
+                  <form onSubmit={handleSubmit} className="space-y-5">
                     <div className="grid sm:grid-cols-2 gap-4">
                       <div>
-                        <label htmlFor="name" className="text-sm font-medium mb-1.5 block">Nombre *</label>
-                        <Input id="name" placeholder="Tu nombre" required value={formData.name} onChange={e => setFormData(prev => ({ ...prev, name: e.target.value }))} />
+                        <label className="text-xs font-medium mb-1.5 block">Nombre *</label>
+                        <Input
+                          required
+                          value={formData.name}
+                          onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                          placeholder="Tu nombre"
+                          className="bg-muted/30 border-white/10 focus:border-primary/40"
+                        />
                       </div>
                       <div>
-                        <label htmlFor="company" className="text-sm font-medium mb-1.5 block">Empresa</label>
-                        <Input id="company" placeholder="Tu empresa" value={formData.company} onChange={e => setFormData(prev => ({ ...prev, company: e.target.value }))} />
+                        <label className="text-xs font-medium mb-1.5 block">Empresa</label>
+                        <Input
+                          value={formData.company}
+                          onChange={(e) => setFormData({ ...formData, company: e.target.value })}
+                          placeholder="Nombre de tu empresa"
+                          className="bg-muted/30 border-white/10 focus:border-primary/40"
+                        />
+                      </div>
+                    </div>
+                    <div className="grid sm:grid-cols-2 gap-4">
+                      <div>
+                        <label className="text-xs font-medium mb-1.5 block">Email *</label>
+                        <Input
+                          required
+                          type="email"
+                          value={formData.email}
+                          onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                          placeholder="tu@email.com"
+                          className="bg-muted/30 border-white/10 focus:border-primary/40"
+                        />
+                      </div>
+                      <div>
+                        <label className="text-xs font-medium mb-1.5 block">Teléfono</label>
+                        <Input
+                          value={formData.phone}
+                          onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                          placeholder="(555) 123-4567"
+                          className="bg-muted/30 border-white/10 focus:border-primary/40"
+                        />
                       </div>
                     </div>
                     <div>
-                      <label htmlFor="email" className="text-sm font-medium mb-1.5 block">Email *</label>
-                      <Input id="email" type="email" placeholder="tu@email.com" required value={formData.email} onChange={e => setFormData(prev => ({ ...prev, email: e.target.value }))} />
+                      <label className="text-xs font-medium mb-1.5 block">Mensaje</label>
+                      <Textarea
+                        value={formData.message}
+                        onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                        placeholder="Cuéntanos sobre tu proyecto o necesidad..."
+                        rows={4}
+                        className="bg-muted/30 border-white/10 focus:border-primary/40 resize-none"
+                      />
                     </div>
                     <div>
-                      <label htmlFor="phone" className="text-sm font-medium mb-1.5 block">Teléfono</label>
-                      <Input id="phone" type="tel" placeholder="+52 (55) 1234-5678" value={formData.phone} onChange={e => setFormData(prev => ({ ...prev, phone: e.target.value }))} />
-                    </div>
-                    <div>
-                      <label className="text-sm font-medium mb-1.5 block">¿Qué te interesa?</label>
+                      <label className="text-xs font-medium mb-3 block">¿En qué estás interesado?</label>
                       <div className="grid grid-cols-2 gap-2">
-                        {interestOptions.map((s) => (
-                          <label key={s} className="flex items-center gap-2 text-sm cursor-pointer">
-                            <Checkbox checked={selectedInterests.includes(s)} onCheckedChange={() => toggleInterest(s)} />
-                            <span>{s}</span>
+                        {interestOptions.map((interest) => (
+                          <label
+                            key={interest}
+                            className={`flex items-center gap-2 text-xs px-3 py-2 rounded-lg border cursor-pointer transition-all duration-200 ${
+                              selectedInterests.includes(interest)
+                                ? 'bg-primary/10 border-primary/30 text-primary'
+                                : 'bg-muted/20 border-white/10 text-muted-foreground hover:border-primary/20'
+                            }`}
+                          >
+                            <Checkbox
+                              checked={selectedInterests.includes(interest)}
+                              onCheckedChange={() => toggleInterest(interest)}
+                              className="border-primary/30"
+                            />
+                            {interest}
                           </label>
                         ))}
                       </div>
                     </div>
-                    <div>
-                      <label htmlFor="message" className="text-sm font-medium mb-1.5 block">Cuéntanos sobre tu proyecto</label>
-                      <Textarea id="message" placeholder="Describe brevemente lo que necesitas..." rows={3} value={formData.message} onChange={e => setFormData(prev => ({ ...prev, message: e.target.value }))} />
-                    </div>
-                    <Button type="submit" size="lg" className="w-full bg-primary hover:bg-primary/90" disabled={formStatus === 'sending'}>
+                    {formStatus === 'error' && (
+                      <div className="text-sm text-destructive bg-destructive/10 border border-destructive/20 rounded-lg px-4 py-2">
+                        Error al enviar. Intenta de nuevo.
+                      </div>
+                    )}
+                    <Button
+                      type="submit"
+                      size="lg"
+                      disabled={formStatus === 'sending'}
+                      className="w-full bg-primary hover:bg-primary/90 hover:shadow-lg hover:shadow-primary/20 transition-all duration-300"
+                    >
                       {formStatus === 'sending' ? (
-                        <><RefreshCw className="w-4 h-4 mr-2 animate-spin" />Enviando...</>
-                      ) : formStatus === 'sent' ? (
-                        <><CheckCircle2 className="w-4 h-4 mr-2" />¡Enviado! Te contactamos pronto</>
-                      ) : formStatus === 'error' ? (
-                        <>Error al enviar. Intenta de nuevo.</>
+                        <span className="flex items-center gap-2">
+                          <RefreshCw className="w-4 h-4 animate-spin" />
+                          Enviando...
+                        </span>
                       ) : (
-                        <>Enviar solicitud<ArrowRight className="w-4 h-4 ml-2" /></>
+                        <span className="flex items-center gap-2">
+                          <Send className="w-4 h-4" />
+                          Enviar solicitud
+                        </span>
                       )}
                     </Button>
                   </form>
-                </CardContent>
-              </Card>
-            </FadeInSection>
-          </div>
+                )}
+              </div>
+            </div>
+          </FadeInSection>
         </div>
       </section>
 
       {/* ─── Footer ─── */}
-      <footer className="border-t border-border/50 bg-muted/30 mt-auto">
+      <footer className="border-t border-white/10 bg-card/40 mt-auto">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-          <div className="grid md:grid-cols-4 gap-8">
-            <div className="md:col-span-1">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
+            <div>
               <div className="flex items-center gap-2 mb-4">
-                <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center">
-                  <Cog className="w-5 h-5 text-primary-foreground" />
+                <div className="w-7 h-7 rounded-lg bg-primary flex items-center justify-center">
+                  <Cog className="w-4 h-4 text-primary-foreground" />
                 </div>
-                <span className="text-xl font-bold tracking-tight">
-                  BC<span className="text-primary">Forge</span>
+                <span className="text-lg font-bold">
+                  BC<span className="gradient-text">Forge</span>
                 </span>
               </div>
               <p className="text-sm text-muted-foreground leading-relaxed">
                 Consultoría especializada en Microsoft Business Central. Automatización, desarrollo e integraciones.
               </p>
             </div>
-
             <div>
-              <h4 className="font-semibold mb-3 text-sm">Servicios</h4>
-              <ul className="space-y-2">
-                {['Implementación', 'Desarrollo a medida', 'Automatización', 'Integraciones', 'Business Intelligence', 'Capacitación', 'Soporte', 'Migración'].map((item) => (
-                  <li key={item}><a href="#servicios" className="text-sm text-muted-foreground hover:text-foreground transition-colors">{item}</a></li>
+              <h4 className="text-sm font-semibold mb-3">Servicios</h4>
+              <ul className="space-y-2 text-sm text-muted-foreground">
+                {['Implementación', 'Desarrollo a medida', 'Automatización', 'Integraciones', 'Capacitación'].map((item) => (
+                  <li key={item}><a href="#servicios" className="hover:text-primary transition-colors">{item}</a></li>
                 ))}
               </ul>
             </div>
-
             <div>
-              <h4 className="font-semibold mb-3 text-sm">Módulos BC</h4>
-              <ul className="space-y-2">
-                {['Finanzas', 'Ventas', 'Compras', 'Inventario', 'Producción', 'Logística', 'Reportes', 'Proyectos'].map((item) => (
-                  <li key={item}><a href="#modulos" className="text-sm text-muted-foreground hover:text-foreground transition-colors">{item}</a></li>
+              <h4 className="text-sm font-semibold mb-3">Soluciones</h4>
+              <ul className="space-y-2 text-sm text-muted-foreground">
+                {['Módulos BC', 'SAT / CFDI', 'Migraciones', 'Power Platform', 'Licencias'].map((item) => (
+                  <li key={item}><a href={`#${item.toLowerCase().replace(/\s+/g, '').replace('/', '')}`} className="hover:text-primary transition-colors">{item}</a></li>
                 ))}
               </ul>
             </div>
-
             <div>
-              <h4 className="font-semibold mb-3 text-sm">Contáctanos</h4>
-              <p className="text-sm text-muted-foreground mb-3">
-                Escríbenos por el formulario y te respondemos en menos de 24 horas.
-              </p>
-              <Button size="sm" variant="outline" asChild>
-                <a href="#contacto">Ir al formulario</a>
-              </Button>
+              <h4 className="text-sm font-semibold mb-3">Empresa</h4>
+              <ul className="space-y-2 text-sm text-muted-foreground">
+                {['Proceso', 'Testimonios', 'Contacto'].map((item) => (
+                  <li key={item}><a href={`#${item.toLowerCase()}`} className="hover:text-primary transition-colors">{item}</a></li>
+                ))}
+              </ul>
             </div>
           </div>
-
-          <div className="border-t border-border/50 mt-8 pt-8 flex flex-col sm:flex-row justify-between items-center gap-4">
+          <div className="border-t border-white/10 pt-6 flex flex-col sm:flex-row items-center justify-between gap-4">
             <p className="text-xs text-muted-foreground">
               © {new Date().getFullYear()} BCForge. Todos los derechos reservados.
             </p>
-            <div className="flex items-center gap-4 text-xs text-muted-foreground">
-              <a href="#" className="hover:text-foreground transition-colors">Aviso de privacidad</a>
-              <a href="#" className="hover:text-foreground transition-colors">Términos</a>
-              <span>Partner certificado Microsoft</span>
-            </div>
+            <p className="text-xs text-muted-foreground">
+              Microsoft Dynamics 365 Business Central es una marca registrada de Microsoft Corporation.
+            </p>
           </div>
         </div>
       </footer>
