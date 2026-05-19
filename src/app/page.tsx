@@ -26,13 +26,11 @@ import {
   Sparkles,
   Code2,
   BarChart3,
-  Workflow,
-  Globe,
+  Globe as GlobeIcon,
   Layers,
   Clock,
   Users,
   TrendingUp,
-  Settings,
   Plug,
   Package,
   Factory,
@@ -48,19 +46,14 @@ import {
   Server,
   HardDrive,
   ArrowRightLeft,
-  Search,
   CreditCard,
   Receipt,
   FileCheck,
   ClipboardCheck,
-  GraduationCap,
-  Ticket,
   Wrench,
   Activity,
   LineChart,
   BarChart2,
-  Puzzle,
-  Webhook,
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
@@ -68,6 +61,7 @@ import { Badge } from '@/components/ui/badge'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { Checkbox } from '@/components/ui/checkbox'
+import { Globe } from '@/components/Globe'
 import Image from 'next/image'
 
 /* ─── Mouse Light Effect (Desktop only) ─── */
@@ -278,7 +272,7 @@ const developmentIdeas = [
     color: 'emerald',
   },
   {
-    icon: Globe,
+    icon: GlobeIcon,
     title: 'Integración con Plataformas de Envío',
     description: 'Conecta Business Central con DHL, FedEx, Estafeta y otras paqueterías para generar guías, rastrear envíos y calcular costos.',
     color: 'amber',
@@ -293,84 +287,6 @@ const developmentIdeas = [
     icon: Building2,
     title: 'Multi-sucursal Centralizada',
     description: 'Gestión de múltiples sucursales con consolidación automática, transferencias inter-sucursal y reportes comparativos.',
-    color: 'amber',
-  },
-]
-
-const consultingServices = [
-  {
-    icon: Search,
-    title: 'Consultoría Funcional',
-    description: 'Análisis de procesos, diseño de solución y configuración. Mapeamos tus flujos de trabajo y diseñamos la solución óptima en Business Central.',
-    tags: ['Análisis', 'Diseño', 'Configuración'],
-  },
-  {
-    icon: Code2,
-    title: 'Consultoría de Desarrollo',
-    description: 'Extensiones AL, APIs e integraciones a medida. Desarrollamos funcionalidades que Business Central no trae por defecto.',
-    tags: ['AL', 'APIs', 'Integraciones'],
-  },
-  {
-    icon: Shield,
-    title: 'Soporte y Garantía',
-    description: '5 meses de garantía sin costo en cada desarrollo. Acompañamos tu operación para que todo funcione de forma impecable.',
-    tags: ['5 meses', 'Sin costo', 'Incluido'],
-  },
-  {
-    icon: Ticket,
-    title: 'Servicio de Tickets',
-    description: 'Bolsa de horas con seguimiento de incidencias. Reporta problemas y recibe atención priorizada con seguimiento en tiempo real.',
-    tags: ['Bolsa de horas', 'Seguimiento', 'Prioridad'],
-  },
-  {
-    icon: Rocket,
-    title: 'Implementación Completa',
-    description: 'Despliegue completo de Business Central adaptado a tus procesos. Desde la configuración inicial hasta la puesta en producción.',
-    tags: ['End-to-end', 'Metodología', 'Producción'],
-  },
-  {
-    icon: GraduationCap,
-    title: 'Capacitación',
-    description: 'Formación a tu equipo para que saque el máximo provecho de Business Central. Talleres prácticos y documentación.',
-    tags: ['Talleres', 'Documentación', 'Práctico'],
-  },
-]
-
-const integrations = [
-  {
-    icon: BarChart3,
-    title: 'Power BI',
-    description: 'Dashboards y reportes interactivos conectados en tiempo real a tus datos de Business Central.',
-    color: 'emerald',
-  },
-  {
-    icon: Workflow,
-    title: 'Power Automate',
-    description: 'Automatización de flujos de trabajo entre Business Central y cientos de aplicaciones.',
-    color: 'amber',
-  },
-  {
-    icon: Smartphone,
-    title: 'Power Apps',
-    description: 'Apps personalizadas que se conectan a Business Central para necesidades específicas de tu operación.',
-    color: 'emerald',
-  },
-  {
-    icon: Users,
-    title: 'Dynamics 365 CRM',
-    description: 'Gestión de relaciones con clientes sincronizada bidireccionalmente con Business Central.',
-    color: 'amber',
-  },
-  {
-    icon: Mail,
-    title: 'Outlook / Teams / Excel',
-    description: 'Integración nativa con el ecosistema Microsoft que usas todos los días.',
-    color: 'emerald',
-  },
-  {
-    icon: Webhook,
-    title: 'APIs y Webhooks',
-    description: 'Conecta cualquier sistema externo a Business Central mediante APIs REST y webhooks personalizados.',
     color: 'amber',
   },
 ]
@@ -450,7 +366,6 @@ const migrationSources = [
 ]
 
 const migrationSteps = [
-  { icon: Search, label: 'Diagnóstico', desc: 'Evaluamos tu sistema actual' },
   { icon: HardDrive, label: 'Extracción', desc: 'Exportamos tus datos' },
   { icon: ArrowRightLeft, label: 'Transformación', desc: 'Adaptamos al formato BC' },
   { icon: Database, label: 'Carga', desc: 'Importamos a Business Central' },
@@ -711,23 +626,28 @@ export default function Home() {
             </div>
           </FadeInSection>
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          <div className="max-w-3xl mx-auto space-y-3">
             {bcModules.map((mod, i) => (
-              <FadeInSection key={mod.title} delay={i * 0.06}>
-                <Card className={`group h-full bg-card/60 border-white/10 backdrop-blur-sm hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5 transition-all duration-300 hover:-translate-y-1 ${i % 4 === 0 ? 'card-glow' : i % 4 === 2 ? 'card-blink' : ''}`}>
-                  <CardContent className="p-5">
-                    <div className="w-10 h-10 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center mb-3 group-hover:bg-primary/20 group-hover:shadow-md group-hover:shadow-primary/10 transition-all duration-300">
-                      <mod.icon className="w-5 h-5 text-primary" />
+              <FadeInSection key={mod.title} delay={i * 0.08}>
+                <div className="group relative">
+                  <div className="absolute -left-4 top-0 bottom-0 w-1 rounded-full bg-gradient-to-b from-primary/40 to-primary/10 group-hover:from-primary group-hover:to-primary/40 transition-all duration-500" />
+                  <div className="pl-6 pr-4 py-4 bg-card/60 border border-white/10 backdrop-blur-sm rounded-xl hover:border-primary/30 hover:bg-card/80 transition-all duration-300 cursor-pointer">
+                    <div className="flex items-center gap-4">
+                      <div className="w-10 h-10 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center shrink-0 group-hover:bg-primary/20 group-hover:shadow-md group-hover:shadow-primary/10 transition-all duration-300">
+                        <mod.icon className="w-5 h-5 text-primary" />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <h3 className="text-base font-semibold group-hover:text-primary transition-colors">{mod.title}</h3>
+                        <p className="text-xs text-muted-foreground leading-relaxed mt-0.5 line-clamp-2 group-hover:line-clamp-none transition-all">{mod.description}</p>
+                      </div>
+                      <div className="flex flex-wrap gap-1.5 shrink-0">
+                        {mod.tags.map((tag) => (
+                          <Badge key={tag} variant="secondary" className="text-[10px] px-2 py-0.5 bg-primary/5 border border-primary/10">{tag}</Badge>
+                        ))}
+                      </div>
                     </div>
-                    <h3 className="text-base font-semibold mb-1.5 group-hover:text-primary transition-colors">{mod.title}</h3>
-                    <p className="text-xs text-muted-foreground mb-3 leading-relaxed">{mod.description}</p>
-                    <div className="flex flex-wrap gap-1.5">
-                      {mod.tags.map((tag) => (
-                        <Badge key={tag} variant="secondary" className="text-[10px] px-2 py-0.5 bg-primary/5 border border-primary/10">{tag}</Badge>
-                      ))}
-                    </div>
-                  </CardContent>
-                </Card>
+                  </div>
+                </div>
               </FadeInSection>
             ))}
           </div>
@@ -769,14 +689,25 @@ export default function Home() {
                   </div>
                   <div className="flex items-end gap-2 h-32">
                     {[45, 62, 38, 78, 55, 90, 72, 85, 60, 95, 80, 88].map((h, i) => (
-                      <motion.div
-                        key={i}
-                        className="flex-1 rounded-t bg-gradient-to-t from-primary/80 to-primary/30 hover:from-primary hover:to-primary/60 transition-colors duration-200 cursor-pointer"
-                        initial={{ height: 0 }}
-                        animate={{ height: `${h}%` }}
-                        transition={{ delay: 0.3 + i * 0.05, duration: 0.4 }}
-                        title={`Mes ${i + 1}: ${h}%`}
-                      />
+                      <div key={i} className="flex-1 relative group/bar cursor-pointer">
+                        <motion.div
+                          className="rounded-t bg-gradient-to-t from-primary/80 to-primary/30 hover:from-primary hover:to-primary/60 transition-colors duration-200 w-full"
+                          initial={{ height: 0 }}
+                          animate={{ height: `${h}%` }}
+                          transition={{ delay: 0.3 + i * 0.06, duration: 0.6, ease: 'easeOut' }}
+                          style={{ minHeight: '4px' }}
+                        />
+                        <div className="absolute -top-8 left-1/2 -translate-x-1/2 bg-card border border-primary/20 rounded px-2 py-1 text-[10px] font-medium opacity-0 group-hover/bar:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
+                          ${h}K
+                        </div>
+                        {/* Subtle breathing animation after bar appears */}
+                        <motion.div
+                          className="absolute inset-0 rounded-t bg-primary/10"
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: [0, 0.3, 0] }}
+                          transition={{ delay: 1.5 + i * 0.1, duration: 2, repeat: Infinity, repeatDelay: 3 + i * 0.5 }}
+                        />
+                      </div>
                     ))}
                   </div>
                   <div className="flex justify-between mt-2 text-[10px] text-muted-foreground">
@@ -818,8 +749,30 @@ export default function Home() {
                         d="M0,60 C50,55 80,45 120,40 C160,35 200,50 240,30 C280,10 320,25 360,15 L400,10 L400,80 L0,80Z"
                         fill="url(#areaGrad)"
                         initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        transition={{ duration: 1, delay: 1 }}
+                        animate={{ opacity: [0, 0.15, 0.08, 0.15] }}
+                        transition={{ duration: 4, delay: 1, repeat: Infinity }}
+                      />
+                      {/* Animated dots at key points */}
+                      {[[0,60],[120,40],[240,30],[400,10]].map(([x, y], idx) => (
+                        <motion.circle
+                          key={idx}
+                          cx={x}
+                          cy={y}
+                          r="3"
+                          fill="oklch(0.769 0.188 70.08)"
+                          initial={{ opacity: 0, scale: 0 }}
+                          animate={{ opacity: 1, scale: 1 }}
+                          transition={{ delay: 2 + idx * 0.2, duration: 0.3 }}
+                        />
+                      ))}
+                      {/* Pulsing dot at end */}
+                      <motion.circle
+                        cx="400"
+                        cy="10"
+                        r="4"
+                        fill="oklch(0.769 0.188 70.08)"
+                        animate={{ r: [4, 7, 4], opacity: [1, 0.5, 1] }}
+                        transition={{ duration: 2, repeat: Infinity, delay: 3 }}
                       />
                     </svg>
                   </div>
@@ -889,9 +842,9 @@ export default function Home() {
         <div className="absolute inset-0 grid-pattern opacity-30" />
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <FadeInSection>
-            <div className="text-center mb-16">
+            <div className="text-center mb-12">
               <Badge variant="secondary" className="mb-4 border border-primary/20 bg-primary/5">
-                <Globe className="w-3 h-3 mr-1 text-primary" />
+                <GlobeIcon className="w-3 h-3 mr-1 text-primary" />
                 Transacciones Globales
               </Badge>
               <h2 className="text-3xl md:text-4xl font-bold mb-4">
@@ -904,71 +857,36 @@ export default function Home() {
             </div>
           </FadeInSection>
 
-          <div className="grid lg:grid-cols-2 gap-10 items-center">
-            <FadeInSection>
-              <div className="relative rounded-2xl overflow-hidden border border-white/10">
-                <Image src="/world-transactions.png" alt="Transacciones globales con Business Central" width={1344} height={768} className="w-full h-auto object-cover" />
-                <div className="absolute inset-0 bg-gradient-to-r from-background/40 to-transparent" />
-                {/* Animated transaction pulses */}
-                <div className="absolute top-[30%] left-[20%] w-2 h-2 rounded-full bg-primary animate-ping-slow" />
-                <div className="absolute top-[45%] left-[55%] w-2 h-2 rounded-full bg-accent animate-ping-slow" style={{ animationDelay: '1s' }} />
-                <div className="absolute top-[25%] left-[70%] w-2 h-2 rounded-full bg-primary animate-ping-slow" style={{ animationDelay: '2s' }} />
-                <div className="absolute top-[60%] left-[35%] w-2 h-2 rounded-full bg-accent animate-ping-slow" style={{ animationDelay: '0.5s' }} />
-                <div className="absolute top-[50%] left-[80%] w-2 h-2 rounded-full bg-primary animate-ping-slow" style={{ animationDelay: '1.5s' }} />
+          <FadeInSection delay={0.1}>
+            <div className="relative rounded-2xl overflow-hidden border border-white/10 bg-card/30 backdrop-blur-sm" style={{ height: '520px' }}>
+              <Globe className="w-full h-full" />
+            </div>
+          </FadeInSection>
+
+          <FadeInSection delay={0.2}>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-8">
+              <div className="bg-card/60 border border-white/10 backdrop-blur-sm rounded-xl p-4 text-center">
+                <p className="text-xs text-muted-foreground mb-1">Empresas activas</p>
+                <p className="text-2xl font-bold"><Counter target={40000} suffix="+" /></p>
+                <p className="text-[11px] text-primary">Globalmente</p>
               </div>
-            </FadeInSection>
-
-            <FadeInSection delay={0.2}>
-              <div className="space-y-6">
-                {/* Live counter */}
-                <div className="bg-card/60 border border-white/10 backdrop-blur-sm rounded-xl p-6 card-glow">
-                  <div className="flex items-center gap-3 mb-4">
-                    <div className="w-3 h-3 rounded-full bg-primary animate-pulse" />
-                    <span className="text-sm font-medium text-primary">En tiempo real</span>
-                  </div>
-                  <p className="text-sm text-muted-foreground mb-2">Transacciones BC procesadas hoy</p>
-                  <p className="text-4xl font-bold gradient-text">
-                    <Counter target={2847} suffix="+" />
-                  </p>
-                  <p className="text-xs text-muted-foreground mt-2">Y contando... cada segundo cuenta</p>
-                </div>
-
-                {/* Stats grid */}
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="bg-card/60 border border-white/10 backdrop-blur-sm rounded-xl p-4">
-                    <p className="text-xs text-muted-foreground mb-1">Empresas activas</p>
-                    <p className="text-2xl font-bold"><Counter target={40000} suffix="+" /></p>
-                    <p className="text-[11px] text-primary">Globalmente</p>
-                  </div>
-                  <div className="bg-card/60 border border-white/10 backdrop-blur-sm rounded-xl p-4">
-                    <p className="text-xs text-muted-foreground mb-1">Países</p>
-                    <p className="text-2xl font-bold"><Counter target={175} suffix="+" /></p>
-                    <p className="text-[11px] text-primary">Con presencia BC</p>
-                  </div>
-                  <div className="bg-card/60 border border-white/10 backdrop-blur-sm rounded-xl p-4">
-                    <p className="text-xs text-muted-foreground mb-1">Disponibilidad</p>
-                    <p className="text-2xl font-bold"><Counter target={99} suffix=".9%" /></p>
-                    <p className="text-[11px] text-primary">SLA garantizado</p>
-                  </div>
-                  <div className="bg-card/60 border border-white/10 backdrop-blur-sm rounded-xl p-4">
-                    <p className="text-xs text-muted-foreground mb-1">Nuestras extensiones</p>
-                    <p className="text-2xl font-bold gradient-text">Activas</p>
-                    <p className="text-[11px] text-primary">24/7 monitoreo</p>
-                  </div>
-                </div>
-
-                <div className="bg-gradient-to-r from-primary/5 to-accent/5 border border-primary/10 rounded-xl p-5">
-                  <div className="flex items-start gap-3">
-                    <Globe className="w-5 h-5 text-primary shrink-0 mt-0.5" />
-                    <div>
-                      <p className="text-sm font-medium mb-1">Tu negocio, conectado al mundo</p>
-                      <p className="text-xs text-muted-foreground leading-relaxed">Con Business Central en la nube y nuestras extensiones, tu operación está conectada globalmente. Transacciones, reportes y automatizaciones que nunca duermen.</p>
-                    </div>
-                  </div>
-                </div>
+              <div className="bg-card/60 border border-white/10 backdrop-blur-sm rounded-xl p-4 text-center">
+                <p className="text-xs text-muted-foreground mb-1">Países</p>
+                <p className="text-2xl font-bold"><Counter target={175} suffix="+" /></p>
+                <p className="text-[11px] text-primary">Con presencia BC</p>
               </div>
-            </FadeInSection>
-          </div>
+              <div className="bg-card/60 border border-white/10 backdrop-blur-sm rounded-xl p-4 text-center">
+                <p className="text-xs text-muted-foreground mb-1">Disponibilidad</p>
+                <p className="text-2xl font-bold"><Counter target={99} suffix=".9%" /></p>
+                <p className="text-[11px] text-primary">SLA garantizado</p>
+              </div>
+              <div className="bg-card/60 border border-white/10 backdrop-blur-sm rounded-xl p-4 text-center">
+                <p className="text-xs text-muted-foreground mb-1">Nuestras extensiones</p>
+                <p className="text-2xl font-bold gradient-text">Activas</p>
+                <p className="text-[11px] text-primary">24/7 monitoreo</p>
+              </div>
+            </div>
+          </FadeInSection>
         </div>
       </section>
 
@@ -1061,23 +979,21 @@ export default function Home() {
             </div>
           </FadeInSection>
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          <div className="flex gap-4 overflow-x-auto pb-4 snap-x snap-mandatory scrollbar-hide" style={{ scrollbarWidth: 'none' }}>
             {automationIdeas.map((idea, i) => (
               <FadeInSection key={idea.title} delay={i * 0.06}>
-                <Card className={`group h-full bg-card/60 border-white/10 backdrop-blur-sm hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5 transition-all duration-300 hover:-translate-y-1 ${i % 3 === 0 ? 'card-glow' : i % 3 === 1 ? 'card-glow-amber' : ''}`}>
-                  <CardContent className="p-5">
-                    <div className="w-10 h-10 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center mb-3 group-hover:bg-primary/20 group-hover:shadow-md group-hover:shadow-primary/10 transition-all duration-300">
-                      <idea.icon className="w-5 h-5 text-primary" />
-                    </div>
-                    <h3 className="text-sm font-semibold mb-1.5 group-hover:text-primary transition-colors">{idea.title}</h3>
-                    <p className="text-xs text-muted-foreground mb-3 leading-relaxed">{idea.description}</p>
-                    <div className="flex flex-wrap gap-1.5">
-                      {idea.tags.map((tag) => (
-                        <Badge key={tag} variant="secondary" className="text-[10px] px-2 py-0.5 bg-primary/5 border border-primary/10">{tag}</Badge>
-                      ))}
-                    </div>
-                  </CardContent>
-                </Card>
+                <div className="group snap-start shrink-0 w-[280px] hover:w-[360px] bg-card/60 border border-white/10 backdrop-blur-sm rounded-xl p-5 hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5 transition-all duration-500 cursor-pointer overflow-hidden">
+                  <div className="w-10 h-10 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center mb-3 group-hover:bg-primary/20 group-hover:shadow-md group-hover:shadow-primary/10 transition-all duration-300">
+                    <idea.icon className="w-5 h-5 text-primary" />
+                  </div>
+                  <h3 className="text-sm font-semibold mb-1.5 group-hover:text-primary transition-colors whitespace-nowrap">{idea.title}</h3>
+                  <p className="text-xs text-muted-foreground leading-relaxed mb-3 line-clamp-2 group-hover:line-clamp-none transition-all duration-500">{idea.description}</p>
+                  <div className="flex flex-wrap gap-1.5">
+                    {idea.tags.map((tag) => (
+                      <Badge key={tag} variant="secondary" className="text-[10px] px-2 py-0.5 bg-primary/5 border border-primary/10">{tag}</Badge>
+                    ))}
+                  </div>
+                </div>
               </FadeInSection>
             ))}
           </div>
@@ -1105,27 +1021,30 @@ export default function Home() {
             </div>
           </FadeInSection>
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          <div className="max-w-3xl mx-auto space-y-2">
             {developmentIdeas.map((idea, i) => (
               <FadeInSection key={idea.title} delay={i * 0.06}>
-                <Card className={`group h-full bg-card/60 border-white/10 backdrop-blur-sm hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5 transition-all duration-300 hover:-translate-y-1 overflow-hidden ${i % 3 === 0 ? 'card-glow' : ''}`}>
-                  <div className={`h-1 ${idea.color === 'emerald' ? 'bg-gradient-to-r from-primary/60 to-primary' : 'bg-gradient-to-r from-accent/60 to-accent'}`} />
-                  <CardContent className="p-5">
-                    <div className={`w-10 h-10 rounded-xl flex items-center justify-center mb-3 border transition-all duration-300 ${
+                <div className={`group relative overflow-hidden rounded-xl border backdrop-blur-sm transition-all duration-500 hover:shadow-lg ${
+                  idea.color === 'emerald'
+                    ? 'bg-card/60 border-primary/10 hover:border-primary/30 hover:shadow-primary/5'
+                    : 'bg-card/60 border-accent/10 hover:border-accent/30 hover:shadow-accent/5'
+                }`}>
+                  <div className={`h-0.5 ${idea.color === 'emerald' ? 'bg-gradient-to-r from-primary/60 to-primary' : 'bg-gradient-to-r from-accent/60 to-accent'}`} />
+                  <div className="p-4 flex items-center gap-4">
+                    <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 border transition-all duration-300 ${
                       idea.color === 'emerald'
-                        ? 'bg-primary/10 border-primary/20 group-hover:bg-primary/20 group-hover:shadow-md group-hover:shadow-primary/10'
-                        : 'bg-accent/10 border-accent/20 group-hover:bg-accent/20 group-hover:shadow-md group-hover:shadow-accent/10'
+                        ? 'bg-primary/10 border-primary/20 group-hover:bg-primary/20'
+                        : 'bg-accent/10 border-accent/20 group-hover:bg-accent/20'
                     }`}>
                       <idea.icon className={`w-5 h-5 ${idea.color === 'emerald' ? 'text-primary' : 'text-accent'}`} />
                     </div>
-                    <h3 className="text-sm font-semibold mb-1.5">{idea.title}</h3>
-                    <p className="text-xs text-muted-foreground leading-relaxed">{idea.description}</p>
-                    <div className="mt-3 flex items-center text-xs text-primary font-medium group-hover:gap-2 transition-all">
-                      <span>Saber más</span>
-                      <ArrowUpRight className="w-3.5 h-3.5 ml-1" />
+                    <div className="flex-1 min-w-0">
+                      <h3 className="text-sm font-semibold">{idea.title}</h3>
+                      <p className="text-xs text-muted-foreground leading-relaxed mt-0.5 line-clamp-1 group-hover:line-clamp-none transition-all duration-300">{idea.description}</p>
                     </div>
-                  </CardContent>
-                </Card>
+                    <ArrowUpRight className={`w-4 h-4 shrink-0 ${idea.color === 'emerald' ? 'text-primary' : 'text-accent'} opacity-0 group-hover:opacity-100 transition-opacity duration-300`} />
+                  </div>
+                </div>
               </FadeInSection>
             ))}
           </div>
@@ -1166,12 +1085,12 @@ export default function Home() {
 
           {/* Migration Process */}
           <FadeInSection delay={0.1}>
-            <div className="bg-card/60 border border-white/10 backdrop-blur-sm rounded-2xl p-6 md:p-8 mb-8">
+            <div className="bg-card/60 border border-white/10 backdrop-blur-sm rounded-2xl p-6 md:p-8 mb-8 shine-sweep">
               <div className="flex items-center gap-2 mb-6">
                 <Wrench className="w-4 h-4 text-primary" />
                 <span className="text-sm font-medium">RapidStart Services — Proceso de Migración</span>
               </div>
-              <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 {migrationSteps.map((step, i) => (
                   <div key={step.label} className="text-center relative">
                     {i < migrationSteps.length - 1 && (
@@ -1214,96 +1133,6 @@ export default function Home() {
               </div>
             </div>
           </FadeInSection>
-        </div>
-      </section>
-
-      {/* ─── Consulting Services Section ─── */}
-      <section id="servicios" className="py-20 md:py-28 bg-muted/30 relative">
-        <div className="absolute inset-0 grid-pattern opacity-30" />
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <FadeInSection>
-            <div className="text-center mb-16">
-              <Badge variant="secondary" className="mb-4 border border-primary/20 bg-primary/5">
-                <Settings className="w-3 h-3 mr-1 text-primary" />
-                Servicios
-              </Badge>
-              <h2 className="text-3xl md:text-4xl font-bold mb-4">
-                Nuestros servicios de{' '}
-                <span className="gradient-text">consultoría</span>
-              </h2>
-              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-                Acompañamos tu transformación digital con Business Central de principio a fin.
-              </p>
-            </div>
-          </FadeInSection>
-
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-            {consultingServices.map((service, i) => (
-              <FadeInSection key={service.title} delay={i * 0.08}>
-                <Card className={`group h-full bg-card/60 border-white/10 backdrop-blur-sm hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5 transition-all duration-300 ${i % 3 === 0 ? 'card-glow' : i % 3 === 2 ? 'card-blink' : ''}`}>
-                  <CardContent className="p-6">
-                    <div className="w-11 h-11 rounded-lg bg-primary/10 border border-primary/20 flex items-center justify-center mb-4 group-hover:bg-primary group-hover:border-primary transition-all duration-300">
-                      <service.icon className="w-5 h-5 text-primary group-hover:text-primary-foreground transition-colors duration-300" />
-                    </div>
-                    <h3 className="text-base font-semibold mb-2">{service.title}</h3>
-                    <p className="text-sm text-muted-foreground leading-relaxed mb-3">{service.description}</p>
-                    <div className="flex flex-wrap gap-1.5">
-                      {service.tags.map((tag) => (
-                        <Badge key={tag} variant="secondary" className="text-[10px] px-2 py-0.5 bg-primary/5 border border-primary/10">{tag}</Badge>
-                      ))}
-                    </div>
-                  </CardContent>
-                </Card>
-              </FadeInSection>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ─── Integrations Section ─── */}
-      <section id="integraciones" className="py-20 md:py-28 relative">
-        <div className="absolute inset-0 grid-pattern opacity-40" />
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <FadeInSection>
-            <div className="text-center mb-16">
-              <Badge variant="secondary" className="mb-4 border border-accent/20 bg-accent/5">
-                <Puzzle className="w-3 h-3 mr-1 text-accent" />
-                Ecosistema Power Platform
-              </Badge>
-              <h2 className="text-3xl md:text-4xl font-bold mb-4">
-                Integraciones que{' '}
-                <span className="gradient-text">potencian</span>{' '}
-                tu operación
-              </h2>
-              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-                Business Central se conecta con todo el ecosistema Microsoft y más allá. La plataforma crece contigo.
-              </p>
-            </div>
-          </FadeInSection>
-
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-            {integrations.map((integration, i) => (
-              <FadeInSection key={integration.title} delay={i * 0.08}>
-                <Card className={`group h-full bg-card/60 border-white/10 backdrop-blur-sm hover:border-primary/30 hover:shadow-lg hover:shadow-primary/5 transition-all duration-300 ${i % 2 === 0 ? 'card-glow-amber' : i % 3 === 0 ? 'card-blink' : ''}`}>
-                  <CardContent className="p-6">
-                    <div className="flex items-start gap-4">
-                      <div className={`w-11 h-11 rounded-lg flex items-center justify-center border shrink-0 transition-all duration-300 ${
-                        integration.color === 'emerald'
-                          ? 'bg-primary/10 border-primary/20 group-hover:bg-primary/20'
-                          : 'bg-accent/10 border-accent/20 group-hover:bg-accent/20'
-                      }`}>
-                        <integration.icon className={`w-5 h-5 ${integration.color === 'emerald' ? 'text-primary' : 'text-accent'}`} />
-                      </div>
-                      <div>
-                        <h3 className="text-base font-semibold mb-1">{integration.title}</h3>
-                        <p className="text-sm text-muted-foreground leading-relaxed">{integration.description}</p>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              </FadeInSection>
-            ))}
-          </div>
         </div>
       </section>
 
@@ -1595,7 +1424,7 @@ export default function Home() {
               <h4 className="text-sm font-semibold mb-3">Servicios</h4>
               <ul className="space-y-2 text-sm text-muted-foreground">
                 {['Implementación', 'Desarrollo a medida', 'Automatización', 'Integraciones', 'Capacitación'].map((item) => (
-                  <li key={item}><a href="#servicios" className="hover:text-primary transition-colors">{item}</a></li>
+                  <li key={item}><a href="#desarrollos" className="hover:text-primary transition-colors">{item}</a></li>
                 ))}
               </ul>
             </div>

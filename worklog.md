@@ -100,3 +100,46 @@ Stage Summary:
 - WhatsApp contact button with pre-loaded message
 - 3 card glow/blink animations on multiple sections
 - All changes compile and lint clean
+
+---
+Task ID: 4
+Agent: Main Agent
+Task: Major UI redesign - Three.js globe, novel card layouts, section removals, enhanced animations
+
+Work Log:
+- Installed three, @react-three/fiber, @react-three/drei, @types/three
+- Created /src/components/Globe.tsx with interactive Three.js globe:
+  - 2000 fibonacci-spiral emerald dots forming globe surface
+  - 18 amber pulsing active node dots
+  - 8 curved arcs with traveling amber pulse spheres (data flow)
+  - Atmospheric glow with breathing pulse
+  - 3 tilted orbital rings
+  - 80 floating ambient particles
+  - OrbitControls with autoRotate, zoom/pan disabled
+  - Live transaction counter overlay incrementing every 80ms
+  - SSR-safe via useSyncExternalStore
+- Replaced static world image section with Three.js Globe component
+- Renamed lucide Globe to GlobeIcon to avoid import conflict
+- Redesigned BC Modules section: vertical accordion with left gradient bar, hover-expand text
+- Removed all card-glow/card-blink/card-glow-amber classes from BC Modules
+- Enhanced bar chart: stagger animations, hover tooltips ($XXK), breathing pulse overlay
+- Enhanced line chart: animated dots at key points, pulsing end dot, pulsing gradient fill
+- Redesigned Automations: horizontal scrollable panels (280px→360px on hover), snap scrolling
+- Redesigned Developments: vertically stacked expanding panels with color-coded top bars
+- Added shine-sweep CSS animation to RapidStart migration container
+- Removed Consulting Services section entirely (data array + JSX)
+- Removed Integrations section entirely (data array + JSX)
+- Removed unused imports: Settings, GraduationCap, Ticket, Search, Puzzle, Webhook, Workflow
+- Added scrollbar-hide and shine-sweep CSS classes to globals.css
+- ESLint passes, compilation successful
+
+Stage Summary:
+- Three.js interactive globe replaces static world image
+- BC Modules → accordion/stack design (no more card grid)
+- Automations → horizontal scrolling expanding panels
+- Developments → vertical expanding panels
+- Consulting Services section removed
+- Integrations section removed
+- Enhanced chart animations (breathing bars, pulsing dots)
+- RapidStart has shine sweep animation
+- All changes compile and lint clean
