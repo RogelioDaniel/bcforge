@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, useSyncExternalStore } from 'react'
 import { motion, useInView, AnimatePresence } from 'framer-motion'
 import {
   ArrowRight,
@@ -64,6 +64,15 @@ import { Checkbox } from '@/components/ui/checkbox'
 import { Globe } from '@/components/Globe'
 import Image from 'next/image'
 
+/* ─── useMounted Hook (prevents hydration mismatch) ─── */
+function useMounted(): boolean {
+  return useSyncExternalStore(
+    () => () => {},   // subscribe (no-op)
+    () => true,       // client snapshot – mounted
+    () => false       // server snapshot – not mounted
+  )
+}
+
 /* ─── Mouse Light Effect (Desktop only) ─── */
 function MouseLight() {
   const [pos, setPos] = useState({ x: -500, y: -500 })
@@ -94,6 +103,7 @@ function Counter({ target, suffix = '', prefix = '' }: { target: number; suffix?
   const [count, setCount] = useState(0)
   const ref = useRef<HTMLSpanElement>(null)
   const isInView = useInView(ref, { once: true })
+  const mounted = useMounted()
 
   useEffect(() => {
     if (!isInView) return
@@ -112,9 +122,11 @@ function Counter({ target, suffix = '', prefix = '' }: { target: number; suffix?
     return () => clearInterval(timer)
   }, [isInView, target])
 
+  // On SSR, render the final value to avoid hydration mismatch from toLocaleString()
+  const displayCount = mounted ? count : target
   return (
-    <span ref={ref}>
-      {prefix}{count.toLocaleString()}{suffix}
+    <span ref={ref} suppressHydrationWarning>
+      {prefix}{displayCount.toLocaleString()}{suffix}
     </span>
   )
 }
@@ -372,6 +384,180 @@ const migrationSteps = [
   { icon: ClipboardCheck, label: 'Validación', desc: 'Verificamos integridad' },
 ]
 
+/* ─── Sales Bar Chart (client-only animations) ─── */
+const salesData = [45, 62, 38, 78, 55, 90, 72, 85, 60, 95, 80, 88]
+const monthLabels = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic']
+
+function SalesBarChart() {
+  const mounted = useMounted()
+
+  return (
+    <div className="bg-card/60 border border-white/10 backdrop-blur-sm rounded-xl p-6">
+      <div className="flex items-center justify-between mb-4">
+        <div className="flex items-center gap-2">
+          <BarChart2 className="w-4 h-4 text-primary" />
+          <span className="text-sm font-medium">Ventas por Mes</span>
+        </div>
+        <Badge variant="secondary" className="text-[10px] bg-primary/10 border border-primary/20">2024</Badge>
+      </div>
+      <div className="flex items-end gap-2 h-32">
+        {salesData.map((h, i) => (
+          <div key={i} className="flex-1 relative group/bar cursor-pointer">
+            {mounted ? (
+              <motion.div
+                className="rounded-t bg-gradient-to-t from-primary/80 to-primary/30 hover:from-primary hover:to-primary/60 transition-colors duration-200 w-full"
+                initial={{ height: 0 }}
+                animate={{ height: `${h}%` }}
+                transition={{ delay: 0.3 + i * 0.06, duration: 0.6, ease: 'easeOut' }}
+                style={{ minHeight: '4px' }}
+              />
+            ) : (
+              <div
+                className="rounded-t bg-gradient-to-t from-primary/80 to-primary/30 w-full"
+                style={{ height: `${h}%`, minHeight: '4px' }}
+              />
+            )}
+            <div className="absolute -top-8 left-1/2 -translate-x-1/2 bg-card border border-primary/20 rounded px-2 py-1 text-[10px] font-medium opacity-0 group-hover/bar:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
+              ${h}K
+            </div>
+            {/* Subtle breathing animation after bar appears */}
+            {mounted && (
+              <motion.div
+                className="absolute inset-0 rounded-t bg-primary/10"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: [0, 0.3, 0] }}
+                transition={{ delay: 1.5 + i * 0.1, duration: 2, repeat: Infinity, repeatDelay: 3 + i * 0.5 }}
+              />
+            )}
+          </div>
+        ))}
+      </div>
+      <div className="flex justify-between mt-2 text-[10px] text-muted-foreground">
+        <span>Ene</span><span>Mar</span><span>Jun</span><span>Sep</span><span>Dic</span>
+      </div>
+    </div>
+  )
+}
+
+/* ─── Revenue Line Chart (client-only animations) ─── */
+function RevenueLineChart() {
+  const mounted = useMounted()
+
+  return (
+    <div className="bg-card/60 border border-white/10 backdrop-blur-sm rounded-xl p-6">
+      <div className="flex items-center justify-between mb-4">
+        <div className="flex items-center gap-2">
+          <LineChart className="w-4 h-4 text-accent" />
+          <span className="text-sm font-medium">Tendencia de Ingresos</span>
+        </div>
+        <Badge variant="secondary" className="text-[10px] bg-accent/10 border border-accent/20">+23%</Badge>
+      </div>
+      <div className="relative h-24">
+        <svg className="w-full h-full" viewBox="0 0 400 80" fill="none">
+          <defs>
+            <linearGradient id="lineGrad" x1="0" y1="0" x2="400" y2="0" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stopColor="oklch(0.696 0.17 162.48)" />
+              <stop offset="100%" stopColor="oklch(0.769 0.188 70.08)" />
+            </linearGradient>
+            <linearGradient id="areaGrad" x1="0" y1="0" x2="0" y2="80" gradientUnits="userSpaceOnUse">
+              <stop offset="0%" stopColor="oklch(0.696 0.17 162.48 / 20%)" />
+              <stop offset="100%" stopColor="oklch(0.696 0.17 162.48 / 0%)" />
+            </linearGradient>
+          </defs>
+          {mounted ? (
+            <>
+              <motion.path
+                d="M0,60 C50,55 80,45 120,40 C160,35 200,50 240,30 C280,10 320,25 360,15 L400,10"
+                stroke="url(#lineGrad)"
+                strokeWidth="2.5"
+                fill="none"
+                initial={{ pathLength: 0 }}
+                animate={{ pathLength: 1 }}
+                transition={{ duration: 2, delay: 0.5 }}
+              />
+              <motion.path
+                d="M0,60 C50,55 80,45 120,40 C160,35 200,50 240,30 C280,10 320,25 360,15 L400,10 L400,80 L0,80Z"
+                fill="url(#areaGrad)"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: [0, 0.15, 0.08, 0.15] }}
+                transition={{ duration: 4, delay: 1, repeat: Infinity }}
+              />
+              {/* Animated dots at key points */}
+              {[[0,60],[120,40],[240,30],[400,10]].map(([x, y], idx) => (
+                <motion.circle
+                  key={idx}
+                  cx={x}
+                  cy={y}
+                  r="3"
+                  fill="oklch(0.769 0.188 70.08)"
+                  initial={{ opacity: 0, scale: 0 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: 2 + idx * 0.2, duration: 0.3 }}
+                />
+              ))}
+              {/* Pulsing dot at end */}
+              <motion.circle
+                cx="400"
+                cy="10"
+                r="4"
+                fill="oklch(0.769 0.188 70.08)"
+                animate={{ r: [4, 7, 4], opacity: [1, 0.5, 1] }}
+                transition={{ duration: 2, repeat: Infinity, delay: 3 }}
+              />
+            </>
+          ) : (
+            <>
+              {/* Static fallback for SSR */}
+              <path
+                d="M0,60 C50,55 80,45 120,40 C160,35 200,50 240,30 C280,10 320,25 360,15 L400,10"
+                stroke="url(#lineGrad)"
+                strokeWidth="2.5"
+                fill="none"
+              />
+              <path
+                d="M0,60 C50,55 80,45 120,40 C160,35 200,50 240,30 C280,10 320,25 360,15 L400,10 L400,80 L0,80Z"
+                fill="url(#areaGrad)"
+                opacity={0.12}
+              />
+              {[[0,60],[120,40],[240,30],[400,10]].map(([x, y], idx) => (
+                <circle key={idx} cx={x} cy={y} r="3" fill="oklch(0.769 0.188 70.08)" />
+              ))}
+            </>
+          )}
+        </svg>
+      </div>
+    </div>
+  )
+}
+
+/* ─── Hero Mini Chart (client-only animations) ─── */
+function HeroMiniChart() {
+  const mounted = useMounted()
+  const bars = [40, 55, 35, 65, 50, 75, 60]
+
+  return (
+    <div className="flex items-end gap-1.5 h-20">
+      {bars.map((h, i) => (
+        mounted ? (
+          <motion.div
+            key={i}
+            className="flex-1 rounded-sm bg-gradient-to-t from-primary/80 to-primary/40"
+            initial={{ height: 0 }}
+            animate={{ height: `${h}%` }}
+            transition={{ delay: 0.5 + i * 0.1, duration: 0.5 }}
+          />
+        ) : (
+          <div
+            key={i}
+            className="flex-1 rounded-sm bg-gradient-to-t from-primary/80 to-primary/40"
+            style={{ height: `${h}%` }}
+          />
+        )
+      ))}
+    </div>
+  )
+}
+
 /* ─── Main Page ─── */
 export default function Home() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
@@ -582,17 +768,7 @@ export default function Home() {
                       <span className="text-xs font-medium">Flujo de Ventas</span>
                       <span className="text-xs text-muted-foreground">Últimos 7 días</span>
                     </div>
-                    <div className="flex items-end gap-1.5 h-20">
-                      {[40, 55, 35, 65, 50, 75, 60].map((h, i) => (
-                        <motion.div
-                          key={i}
-                          className="flex-1 rounded-sm bg-gradient-to-t from-primary/80 to-primary/40"
-                          initial={{ height: 0 }}
-                          animate={{ height: `${h}%` }}
-                          transition={{ delay: 0.5 + i * 0.1, duration: 0.5 }}
-                        />
-                      ))}
-                    </div>
+                    <HeroMiniChart />
                   </div>
                   <div className="mt-4 flex items-center gap-3 bg-primary/5 border border-primary/10 rounded-lg p-3">
                     <div className="w-2 h-2 rounded-full bg-primary animate-pulse" />
@@ -679,104 +855,10 @@ export default function Home() {
             <FadeInSection>
               <div className="space-y-4">
                 {/* Bar Chart */}
-                <div className="bg-card/60 border border-white/10 backdrop-blur-sm rounded-xl p-6">
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="flex items-center gap-2">
-                      <BarChart2 className="w-4 h-4 text-primary" />
-                      <span className="text-sm font-medium">Ventas por Mes</span>
-                    </div>
-                    <Badge variant="secondary" className="text-[10px] bg-primary/10 border border-primary/20">2024</Badge>
-                  </div>
-                  <div className="flex items-end gap-2 h-32">
-                    {[45, 62, 38, 78, 55, 90, 72, 85, 60, 95, 80, 88].map((h, i) => (
-                      <div key={i} className="flex-1 relative group/bar cursor-pointer">
-                        <motion.div
-                          className="rounded-t bg-gradient-to-t from-primary/80 to-primary/30 hover:from-primary hover:to-primary/60 transition-colors duration-200 w-full"
-                          initial={{ height: 0 }}
-                          animate={{ height: `${h}%` }}
-                          transition={{ delay: 0.3 + i * 0.06, duration: 0.6, ease: 'easeOut' }}
-                          style={{ minHeight: '4px' }}
-                        />
-                        <div className="absolute -top-8 left-1/2 -translate-x-1/2 bg-card border border-primary/20 rounded px-2 py-1 text-[10px] font-medium opacity-0 group-hover/bar:opacity-100 transition-opacity whitespace-nowrap pointer-events-none">
-                          ${h}K
-                        </div>
-                        {/* Subtle breathing animation after bar appears */}
-                        <motion.div
-                          className="absolute inset-0 rounded-t bg-primary/10"
-                          initial={{ opacity: 0 }}
-                          animate={{ opacity: [0, 0.3, 0] }}
-                          transition={{ delay: 1.5 + i * 0.1, duration: 2, repeat: Infinity, repeatDelay: 3 + i * 0.5 }}
-                        />
-                      </div>
-                    ))}
-                  </div>
-                  <div className="flex justify-between mt-2 text-[10px] text-muted-foreground">
-                    <span>Ene</span><span>Mar</span><span>Jun</span><span>Sep</span><span>Dic</span>
-                  </div>
-                </div>
+                <SalesBarChart />
 
                 {/* Line Chart */}
-                <div className="bg-card/60 border border-white/10 backdrop-blur-sm rounded-xl p-6">
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="flex items-center gap-2">
-                      <LineChart className="w-4 h-4 text-accent" />
-                      <span className="text-sm font-medium">Tendencia de Ingresos</span>
-                    </div>
-                    <Badge variant="secondary" className="text-[10px] bg-accent/10 border border-accent/20">+23%</Badge>
-                  </div>
-                  <div className="relative h-24">
-                    <svg className="w-full h-full" viewBox="0 0 400 80" fill="none">
-                      <defs>
-                        <linearGradient id="lineGrad" x1="0" y1="0" x2="400" y2="0" gradientUnits="userSpaceOnUse">
-                          <stop offset="0%" stopColor="oklch(0.696 0.17 162.48)" />
-                          <stop offset="100%" stopColor="oklch(0.769 0.188 70.08)" />
-                        </linearGradient>
-                        <linearGradient id="areaGrad" x1="0" y1="0" x2="0" y2="80" gradientUnits="userSpaceOnUse">
-                          <stop offset="0%" stopColor="oklch(0.696 0.17 162.48 / 20%)" />
-                          <stop offset="100%" stopColor="oklch(0.696 0.17 162.48 / 0%)" />
-                        </linearGradient>
-                      </defs>
-                      <motion.path
-                        d="M0,60 C50,55 80,45 120,40 C160,35 200,50 240,30 C280,10 320,25 360,15 L400,10"
-                        stroke="url(#lineGrad)"
-                        strokeWidth="2.5"
-                        fill="none"
-                        initial={{ pathLength: 0 }}
-                        animate={{ pathLength: 1 }}
-                        transition={{ duration: 2, delay: 0.5 }}
-                      />
-                      <motion.path
-                        d="M0,60 C50,55 80,45 120,40 C160,35 200,50 240,30 C280,10 320,25 360,15 L400,10 L400,80 L0,80Z"
-                        fill="url(#areaGrad)"
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: [0, 0.15, 0.08, 0.15] }}
-                        transition={{ duration: 4, delay: 1, repeat: Infinity }}
-                      />
-                      {/* Animated dots at key points */}
-                      {[[0,60],[120,40],[240,30],[400,10]].map(([x, y], idx) => (
-                        <motion.circle
-                          key={idx}
-                          cx={x}
-                          cy={y}
-                          r="3"
-                          fill="oklch(0.769 0.188 70.08)"
-                          initial={{ opacity: 0, scale: 0 }}
-                          animate={{ opacity: 1, scale: 1 }}
-                          transition={{ delay: 2 + idx * 0.2, duration: 0.3 }}
-                        />
-                      ))}
-                      {/* Pulsing dot at end */}
-                      <motion.circle
-                        cx="400"
-                        cy="10"
-                        r="4"
-                        fill="oklch(0.769 0.188 70.08)"
-                        animate={{ r: [4, 7, 4], opacity: [1, 0.5, 1] }}
-                        transition={{ duration: 2, repeat: Infinity, delay: 3 }}
-                      />
-                    </svg>
-                  </div>
-                </div>
+                <RevenueLineChart />
               </div>
             </FadeInSection>
 
