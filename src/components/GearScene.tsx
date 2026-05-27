@@ -387,12 +387,12 @@ export function GearBackground({ activeSlide }: { activeSlide: number }) {
   )
 
   if (!mounted) {
-    return <div className="fixed inset-0 bg-[#060d1b]" />
+    return <div className="fixed inset-0 bg-[#04120a]" />
   }
 
   return (
     <div className="fixed inset-0 z-0">
-      <div className="absolute inset-0 bg-gradient-to-br from-[#060d1b] via-[#0a1628] to-[#0f1d32]" />
+      <div className="absolute inset-0 bg-gradient-to-br from-[#04120a] via-[#071a10] to-[#0a2216]" />
       <Canvas
         camera={{ position: CAMERA_POSITIONS[0], fov: 50 }}
         gl={{ alpha: true, antialias: true }}

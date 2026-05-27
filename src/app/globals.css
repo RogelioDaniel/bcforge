@@ -46,21 +46,21 @@
 
 :root {
   --radius: 0.625rem;
-  /* Deep Navy + Emerald Executive Palette */
-  --background: #060d1b;
+  /* Deep Green Executive Palette */
+  --background: #04120a;
   --foreground: #f1f5f9;
-  --card: #0c1829;
+  --card: #071a10;
   --card-foreground: #f1f5f9;
-  --popover: #0c1829;
+  --popover: #071a10;
   --popover-foreground: #f1f5f9;
   --primary: #10b981;
-  --primary-foreground: #060d1b;
-  --secondary: #0f2037;
+  --primary-foreground: #04120a;
+  --secondary: #0a2216;
   --secondary-foreground: #f1f5f9;
-  --muted: #0f2037;
-  --muted-foreground: #7d8fa8;
+  --muted: #0a2216;
+  --muted-foreground: #7d9a8a;
   --accent: #34d399;
-  --accent-foreground: #060d1b;
+  --accent-foreground: #04120a;
   --destructive: #ef4444;
   --border: rgba(255, 255, 255, 0.06);
   --input: rgba(255, 255, 255, 0.08);
@@ -70,11 +70,11 @@
   --chart-3: #059669;
   --chart-4: #6ee7b7;
   --chart-5: #047857;
-  --sidebar: #0c1829;
+  --sidebar: #071a10;
   --sidebar-foreground: #f1f5f9;
   --sidebar-primary: #10b981;
   --sidebar-primary-foreground: #f1f5f9;
-  --sidebar-accent: #0f2037;
+  --sidebar-accent: #0a2216;
   --sidebar-accent-foreground: #f1f5f9;
   --sidebar-border: rgba(255, 255, 255, 0.06);
   --sidebar-ring: #10b981;
@@ -161,32 +161,32 @@
 
 /* Glass card effect */
 .glass-card {
-  background: rgba(12, 24, 41, 0.6);
-  backdrop-filter: blur(16px);
+  background: rgba(7, 26, 16, 0.35);
+  backdrop-filter: blur(12px);
   border: 1px solid rgba(255, 255, 255, 0.06);
 }
 
 /* Frosted glass overlay — vidrio templado VIP effect */
 .frosted-glass-overlay {
-  background: rgba(6, 13, 27, 0.55);
-  backdrop-filter: blur(18px) saturate(1.2) brightness(0.95);
-  -webkit-backdrop-filter: blur(18px) saturate(1.2) brightness(0.95);
-  border-bottom: 1px solid rgba(16, 185, 129, 0.06);
+  background: rgba(4, 18, 10, 0.25);
+  backdrop-filter: blur(8px) saturate(1.1) brightness(1);
+  -webkit-backdrop-filter: blur(8px) saturate(1.1) brightness(1);
+  border-bottom: 1px solid rgba(16, 185, 129, 0.08);
 }
 
 /* Stronger frosted glass for content areas */
 .frosted-glass-content {
-  background: rgba(8, 16, 32, 0.6);
-  backdrop-filter: blur(24px) saturate(1.3);
-  -webkit-backdrop-filter: blur(24px) saturate(1.3);
-  border: 1px solid rgba(255, 255, 255, 0.04);
+  background: rgba(7, 26, 16, 0.3);
+  backdrop-filter: blur(12px) saturate(1.15);
+  -webkit-backdrop-filter: blur(12px) saturate(1.15);
+  border: 1px solid rgba(255, 255, 255, 0.06);
 }
 
 /* VIP glass edge glow */
 .glass-edge-glow {
   box-shadow:
-    0 0 40px rgba(16, 185, 129, 0.04),
-    inset 0 0 60px rgba(16, 185, 129, 0.02);
+    0 0 30px rgba(16, 185, 129, 0.06),
+    inset 0 0 40px rgba(16, 185, 129, 0.03);
 }
 
 /* Animated border gradient */

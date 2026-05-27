@@ -88,12 +88,12 @@ function CostReductionChart({ animate }: { animate: boolean }) {
         <CartesianGrid strokeDasharray="3 3" stroke="rgba(16,185,129,0.06)" vertical={false} />
         <XAxis
           dataKey="category"
-          tick={{ fill: '#7d8fa8', fontSize: 9 }}
+          tick={{ fill: '#7d9a8a', fontSize: 9 }}
           axisLine={{ stroke: 'rgba(255,255,255,0.06)' }}
           tickLine={false}
         />
         <YAxis
-          tick={{ fill: '#7d8fa8', fontSize: 9 }}
+          tick={{ fill: '#7d9a8a', fontSize: 9 }}
           axisLine={false}
           tickLine={false}
           width={30}
@@ -131,7 +131,7 @@ function TimelineChart({ animate }: { animate: boolean }) {
         <CartesianGrid strokeDasharray="3 3" stroke="rgba(16,185,129,0.06)" horizontal={false} />
         <XAxis
           type="number"
-          tick={{ fill: '#7d8fa8', fontSize: 9 }}
+          tick={{ fill: '#7d9a8a', fontSize: 9 }}
           axisLine={false}
           tickLine={false}
           tickFormatter={(v) => `${v}sem`}
@@ -140,7 +140,7 @@ function TimelineChart({ animate }: { animate: boolean }) {
         <YAxis
           type="category"
           dataKey="phase"
-          tick={{ fill: '#7d8fa8', fontSize: 9 }}
+          tick={{ fill: '#7d9a8a', fontSize: 9 }}
           axisLine={{ stroke: 'rgba(255,255,255,0.06)' }}
           tickLine={false}
           width={65}
@@ -197,12 +197,12 @@ function RoiChart({ animate }: { animate: boolean }) {
         <CartesianGrid strokeDasharray="3 3" stroke="rgba(16,185,129,0.06)" vertical={false} />
         <XAxis
           dataKey="month"
-          tick={{ fill: '#7d8fa8', fontSize: 9 }}
+          tick={{ fill: '#7d9a8a', fontSize: 9 }}
           axisLine={{ stroke: 'rgba(255,255,255,0.06)' }}
           tickLine={false}
         />
         <YAxis
-          tick={{ fill: '#7d8fa8', fontSize: 9 }}
+          tick={{ fill: '#7d9a8a', fontSize: 9 }}
           axisLine={false}
           tickLine={false}
           width={35}
@@ -244,22 +244,22 @@ export function ExecutiveChartsSection() {
           <div className="flex items-center justify-between mb-4">
             <div>
               <h4 className="text-sm font-semibold text-white/90">Reducción de Costos</h4>
-              <p className="text-[10px] text-[#7d8fa8] mt-0.5">Antes vs. con implementación BCForge</p>
+              <p className="text-[10px] text-[#7d9a8a] mt-0.5">Antes vs. con implementación BCForge</p>
             </div>
             <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#10b981]/10 border border-[#10b981]/15">
               <span className="text-[10px] font-bold text-[#10b981]">-60%</span>
-              <span className="text-[9px] text-[#7d8fa8]">prom</span>
+              <span className="text-[9px] text-[#7d9a8a]">prom</span>
             </div>
           </div>
           <CostReductionChart animate={mounted} />
           <div className="flex items-center gap-4 mt-3">
             <div className="flex items-center gap-1.5">
               <div className="w-2.5 h-2.5 rounded-sm bg-white/12" />
-              <span className="text-[9px] text-[#7d8fa8]">Costo Actual</span>
+              <span className="text-[9px] text-[#7d9a8a]">Costo Actual</span>
             </div>
             <div className="flex items-center gap-1.5">
               <div className="w-2.5 h-2.5 rounded-sm bg-[#10b981]" />
-              <span className="text-[9px] text-[#7d8fa8]">Con BCForge</span>
+              <span className="text-[9px] text-[#7d9a8a]">Con BCForge</span>
             </div>
           </div>
         </motion.div>
@@ -275,22 +275,22 @@ export function ExecutiveChartsSection() {
           <div className="flex items-center justify-between mb-4">
             <div>
               <h4 className="text-sm font-semibold text-white/90">Aceleración de Tiempos</h4>
-              <p className="text-[10px] text-[#7d8fa8] mt-0.5">Semanas: Desarrollo tradicional vs. BCForge</p>
+              <p className="text-[10px] text-[#7d9a8a] mt-0.5">Semanas: Desarrollo tradicional vs. BCForge</p>
             </div>
             <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#34d399]/10 border border-[#34d399]/15">
               <span className="text-[10px] font-bold text-[#34d399]">-57%</span>
-              <span className="text-[9px] text-[#7d8fa8]">más rápido</span>
+              <span className="text-[9px] text-[#7d9a8a]">más rápido</span>
             </div>
           </div>
           <TimelineChart animate={mounted} />
           <div className="flex items-center gap-4 mt-3">
             <div className="flex items-center gap-1.5">
               <div className="w-2.5 h-2.5 rounded-sm bg-white/12" />
-              <span className="text-[9px] text-[#7d8fa8]">Tradicional</span>
+              <span className="text-[9px] text-[#7d9a8a]">Tradicional</span>
             </div>
             <div className="flex items-center gap-1.5">
               <div className="w-2.5 h-2.5 rounded-sm bg-[#34d399]" />
-              <span className="text-[9px] text-[#7d8fa8]">BCForge</span>
+              <span className="text-[9px] text-[#7d9a8a]">BCForge</span>
             </div>
           </div>
         </motion.div>
@@ -307,11 +307,11 @@ export function ExecutiveChartsSection() {
         <div className="flex items-center justify-between mb-4">
           <div>
             <h4 className="text-sm font-semibold text-white/90">Retorno de Inversión</h4>
-            <p className="text-[10px] text-[#7d8fa8] mt-0.5">Proyección ROI acumulado a 18 meses</p>
+            <p className="text-[10px] text-[#7d9a8a] mt-0.5">Proyección ROI acumulado a 18 meses</p>
           </div>
           <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#10b981]/10 border border-[#10b981]/15">
             <span className="text-[10px] font-bold text-[#10b981]">+210%</span>
-            <span className="text-[9px] text-[#7d8fa8]">a 18 meses</span>
+            <span className="text-[9px] text-[#7d9a8a]">a 18 meses</span>
           </div>
         </div>
         <RoiChart animate={mounted} />

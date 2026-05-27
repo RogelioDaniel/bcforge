@@ -88,7 +88,7 @@ function SlideExecutiveHook({ onCTA }: { onCTA: () => void }) {
     <section className="snap-section relative flex items-center justify-center overflow-hidden">
       {/* Frosted glass overlay */}
       <div className="absolute inset-0 frosted-glass-overlay glass-edge-glow" />
-      <div className="absolute inset-0 bg-gradient-to-r from-[#060d1b]/70 via-transparent to-transparent" />
+      <div className="absolute inset-0 bg-gradient-to-r from-[#04120a]/40 via-transparent to-transparent" />
 
       {/* Content */}
       <div className="relative z-10 max-w-6xl mx-auto px-6 sm:px-8 lg:px-12">
@@ -102,7 +102,7 @@ function SlideExecutiveHook({ onCTA }: { onCTA: () => void }) {
           >
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/10 bg-white/[0.05] backdrop-blur-md">
               <div className="w-1.5 h-1.5 rounded-full bg-[#10b981] animate-pulse-subtle" />
-              <span className="text-xs font-medium tracking-wider uppercase text-[#7d8fa8]">Socios Expertos Microsoft 365</span>
+              <span className="text-xs font-medium tracking-wider uppercase text-[#7d9a8a]">Socios Expertos Microsoft 365</span>
             </div>
           </motion.div>
 
@@ -123,7 +123,7 @@ function SlideExecutiveHook({ onCTA }: { onCTA: () => void }) {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6 }}
-            className="text-lg sm:text-xl text-[#7d8fa8] leading-relaxed max-w-2xl mb-10"
+            className="text-lg sm:text-xl text-[#7d9a8a] leading-relaxed max-w-2xl mb-10"
           >
             Aprovechamos IA propietaria dentro del ecosistema Microsoft 365 para acelerar implementaciones y maximizar la eficiencia financiera.
           </motion.p>
@@ -143,7 +143,7 @@ function SlideExecutiveHook({ onCTA }: { onCTA: () => void }) {
               Solicitar Evaluación Gratuita
               <ArrowRight className="w-5 h-5 ml-2" />
             </Button>
-            <div className="flex items-center gap-6 text-sm text-[#7d8fa8]">
+            <div className="flex items-center gap-6 text-sm text-[#7d9a8a]">
               <div className="flex items-center gap-2">
                 <Check className="w-4 h-4 text-[#10b981]" />
                 <span>Sin compromiso</span>
@@ -164,12 +164,12 @@ function SlideExecutiveHook({ onCTA }: { onCTA: () => void }) {
         animate={{ opacity: 1 }}
         transition={{ delay: 1.5, duration: 1 }}
       >
-        <span className="text-[10px] uppercase tracking-[0.2em] text-[#7d8fa8]/60">Desplazar</span>
+        <span className="text-[10px] uppercase tracking-[0.2em] text-[#7d9a8a]/60">Desplazar</span>
         <motion.div
           animate={{ y: [0, 6, 0] }}
           transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
         >
-          <ChevronDown className="w-4 h-4 text-[#7d8fa8]/40" />
+          <ChevronDown className="w-4 h-4 text-[#7d9a8a]/40" />
         </motion.div>
       </motion.div>
     </section>
@@ -195,13 +195,13 @@ function SlideValueProposition() {
         >
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/10 bg-white/[0.05] backdrop-blur-md mb-5">
             <Sparkles className="w-3 h-3 text-[#10b981]" />
-            <span className="text-[11px] font-medium tracking-wider uppercase text-[#7d8fa8]">Valor Estratégico</span>
+            <span className="text-[11px] font-medium tracking-wider uppercase text-[#7d9a8a]">Valor Estratégico</span>
           </div>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight mb-4">
             No solo desarrollamos.{' '}
             <span className="gradient-text">Optimizamos.</span>
           </h2>
-          <p className="text-base sm:text-lg text-[#7d8fa8] max-w-2xl mx-auto leading-relaxed">
+          <p className="text-base sm:text-lg text-[#7d9a8a] max-w-2xl mx-auto leading-relaxed">
             Nuestro framework interno impulsado por IA reduce los tiempos de proyecto tradicionales en un 50% — entregando ROI medible desde el día uno.
           </p>
         </motion.div>
@@ -223,10 +223,10 @@ function SlideValueProposition() {
                 </div>
                 <div>
                   <h3 className="text-sm font-semibold">{pillar.title}</h3>
-                  <p className="text-[10px] text-[#7d8fa8]">{pillar.subtitle}</p>
+                  <p className="text-[10px] text-[#7d9a8a]">{pillar.subtitle}</p>
                 </div>
               </div>
-              <p className="text-xs text-[#7d8fa8] leading-relaxed mb-3">{pillar.description}</p>
+              <p className="text-xs text-[#7d9a8a] leading-relaxed mb-3">{pillar.description}</p>
               <div className="flex flex-wrap gap-x-3 gap-y-1">
                 {pillar.metrics.map((metric) => (
                   <div key={metric} className="flex items-center gap-1.5">
@@ -255,7 +255,7 @@ function SlideValueProposition() {
             </div>
             <div className="flex-1">
               <h3 className="text-sm font-semibold mb-0.5">Elimina Fricción. Acelera Crecimiento.</h3>
-              <p className="text-xs text-[#7d8fa8] leading-relaxed">
+              <p className="text-xs text-[#7d9a8a] leading-relaxed">
                 Eliminamos la fricción en operaciones financieras y flujos de cumplimiento, transformando cuellos de botella administrativos en centros de ganancia optimizados.
               </p>
             </div>
@@ -315,7 +315,7 @@ function SlideCallToAction() {
     <section className="snap-section relative flex items-center justify-center overflow-hidden">
       {/* Frosted glass overlay */}
       <div className="absolute inset-0 frosted-glass-overlay glass-edge-glow" />
-      <div className="absolute inset-0 bg-gradient-to-l from-[#060d1b]/50 via-transparent to-transparent" />
+      <div className="absolute inset-0 bg-gradient-to-l from-[#04120a]/30 via-transparent to-transparent" />
 
       {/* Content */}
       <div className="relative z-10 max-w-6xl mx-auto px-6 sm:px-8 lg:px-12 w-full">
@@ -329,7 +329,7 @@ function SlideCallToAction() {
           >
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/10 bg-white/[0.05] backdrop-blur-md mb-6">
               <BarChart3 className="w-3 h-3 text-[#10b981]" />
-              <span className="text-[11px] font-medium tracking-wider uppercase text-[#7d8fa8]">Auditoría Gratuita</span>
+              <span className="text-[11px] font-medium tracking-wider uppercase text-[#7d9a8a]">Auditoría Gratuita</span>
             </div>
 
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight mb-5 leading-[1.1]">
@@ -337,7 +337,7 @@ function SlideCallToAction() {
               <span className="gradient-text">Auditoría de Automatización.</span>
             </h2>
 
-            <p className="text-base sm:text-lg text-[#7d8fa8] leading-relaxed mb-8 max-w-md">
+            <p className="text-base sm:text-lg text-[#7d9a8a] leading-relaxed mb-8 max-w-md">
               Analicemos tus requerimientos actuales de migración, automatización o integración. Descubre cómo reducir el tiempo operativo a la mitad.
             </p>
 
@@ -359,7 +359,7 @@ function SlideCallToAction() {
 
             {/* Closing statement */}
             <div className="executive-divider mb-4" />
-            <p className="text-xs font-medium tracking-wider uppercase text-[#7d8fa8]/60">
+            <p className="text-xs font-medium tracking-wider uppercase text-[#7d9a8a]/60">
               Consultoría para Eficiencia Empresarial — Socios Expertos Microsoft 365
             </p>
           </motion.div>
@@ -382,7 +382,7 @@ function SlideCallToAction() {
                     <Check className="w-7 h-7 text-[#10b981]" />
                   </div>
                   <h3 className="text-xl font-semibold mb-2">Solicitud de Evaluación Recibida</h3>
-                  <p className="text-sm text-[#7d8fa8]">Nuestro equipo se pondrá en contacto en 48 horas.</p>
+                  <p className="text-sm text-[#7d9a8a]">Nuestro equipo se pondrá en contacto en 48 horas.</p>
                 </motion.div>
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-5">
@@ -393,7 +393,7 @@ function SlideCallToAction() {
                       value={formData.name}
                       onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
                       placeholder="Juan García"
-                      className="h-11 bg-white/[0.04] border-white/[0.08] rounded-lg placeholder:text-[#7d8fa8]/40 focus:border-[#10b981]/30 focus:ring-[#10b981]/10 transition-all"
+                      className="h-11 bg-white/[0.04] border-white/[0.08] rounded-lg placeholder:text-[#7d9a8a]/40 focus:border-[#10b981]/30 focus:ring-[#10b981]/10 transition-all"
                     />
                   </div>
                   <div>
@@ -402,7 +402,7 @@ function SlideCallToAction() {
                       value={formData.company}
                       onChange={(e) => setFormData(prev => ({ ...prev, company: e.target.value }))}
                       placeholder="Mi Empresa S.A. de C.V."
-                      className="h-11 bg-white/[0.04] border-white/[0.08] rounded-lg placeholder:text-[#7d8fa8]/40 focus:border-[#10b981]/30 focus:ring-[#10b981]/10 transition-all"
+                      className="h-11 bg-white/[0.04] border-white/[0.08] rounded-lg placeholder:text-[#7d9a8a]/40 focus:border-[#10b981]/30 focus:ring-[#10b981]/10 transition-all"
                     />
                   </div>
                   <div>
@@ -413,7 +413,7 @@ function SlideCallToAction() {
                       value={formData.email}
                       onChange={(e) => setFormData(prev => ({ ...prev, email: e.target.value }))}
                       placeholder="juan@empresa.com"
-                      className="h-11 bg-white/[0.04] border-white/[0.08] rounded-lg placeholder:text-[#7d8fa8]/40 focus:border-[#10b981]/30 focus:ring-[#10b981]/10 transition-all"
+                      className="h-11 bg-white/[0.04] border-white/[0.08] rounded-lg placeholder:text-[#7d9a8a]/40 focus:border-[#10b981]/30 focus:ring-[#10b981]/10 transition-all"
                     />
                   </div>
                   <div>
@@ -423,9 +423,9 @@ function SlideCallToAction() {
                       onChange={(e) => setFormData(prev => ({ ...prev, goal: e.target.value }))}
                       className="executive-select w-full h-11 bg-white/[0.04] border border-white/[0.08] rounded-lg text-sm text-foreground focus:border-[#10b981]/30 focus:ring-1 focus:ring-[#10b981]/10 focus:outline-none transition-all"
                     >
-                      <option value="" className="bg-[#0c1829]">Selecciona tu objetivo principal</option>
+                      <option value="" className="bg-[#071a10]">Selecciona tu objetivo principal</option>
                       {goalOptions.map((opt) => (
-                        <option key={opt} value={opt} className="bg-[#0c1829]">{opt}</option>
+                        <option key={opt} value={opt} className="bg-[#071a10]">{opt}</option>
                       ))}
                     </select>
                   </div>
@@ -465,7 +465,7 @@ function SlideCallToAction() {
                     Contactar por WhatsApp
                   </a>
 
-                  <p className="text-[10px] text-[#7d8fa8]/50 text-center">
+                  <p className="text-[10px] text-[#7d9a8a]/50 text-center">
                     Al enviar, aceptas recibir comunicaciones de BCForge. Sin spam.
                   </p>
                 </form>
