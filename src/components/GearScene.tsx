@@ -11,7 +11,9 @@ import * as THREE from 'three'
 const GREEN = '#10b981'
 const GREEN_ACCENT = '#34d399'
 const GREEN_DIM = '#065f46'
-const STEEL = '#2a4a3f'
+const STEEL_GREEN = '#1a3d2e'
+const STEEL_DARK = '#0f2a1e'
+const CHROME = '#3d5c4f'
 
 // Camera positions for each slide
 const CAMERA_POSITIONS: [number, number, number][] = [
@@ -93,7 +95,11 @@ interface GearConfig {
   speed: number
   direction: 1 | -1
   color: string
+  emissiveColor: string
   emissiveIntensity: number
+  metalness: number
+  roughness: number
+  castShadow: boolean
 }
 
 const GEAR_CONFIGS: GearConfig[] = [
@@ -107,8 +113,12 @@ const GEAR_CONFIGS: GearConfig[] = [
     thickness: 0.4,
     speed: 0.3,
     direction: 1,
-    color: STEEL,
-    emissiveIntensity: 0.15,
+    color: CHROME,
+    emissiveColor: GREEN,
+    emissiveIntensity: 0.08,
+    metalness: 0.92,
+    roughness: 0.15,
+    castShadow: true,
   },
   {
     position: [2.4, 1.8, 0.1],
@@ -120,8 +130,12 @@ const GEAR_CONFIGS: GearConfig[] = [
     thickness: 0.35,
     speed: 0.45,
     direction: -1,
-    color: GREEN_DIM,
-    emissiveIntensity: 0.2,
+    color: STEEL_GREEN,
+    emissiveColor: GREEN_ACCENT,
+    emissiveIntensity: 0.12,
+    metalness: 0.9,
+    roughness: 0.18,
+    castShadow: true,
   },
   {
     position: [-2.1, -1.5, -0.2],
@@ -133,8 +147,12 @@ const GEAR_CONFIGS: GearConfig[] = [
     thickness: 0.3,
     speed: 0.6,
     direction: 1,
-    color: GREEN_DIM,
-    emissiveIntensity: 0.25,
+    color: STEEL_GREEN,
+    emissiveColor: GREEN,
+    emissiveIntensity: 0.15,
+    metalness: 0.88,
+    roughness: 0.2,
+    castShadow: true,
   },
   {
     position: [-2.8, 1.0, -0.8],
@@ -146,8 +164,12 @@ const GEAR_CONFIGS: GearConfig[] = [
     thickness: 0.35,
     speed: 0.5,
     direction: -1,
-    color: STEEL,
-    emissiveIntensity: 0.12,
+    color: CHROME,
+    emissiveColor: GREEN_DIM,
+    emissiveIntensity: 0.06,
+    metalness: 0.93,
+    roughness: 0.12,
+    castShadow: true,
   },
   {
     position: [3.6, -0.5, 0.5],
@@ -160,7 +182,11 @@ const GEAR_CONFIGS: GearConfig[] = [
     speed: 0.8,
     direction: 1,
     color: GREEN_DIM,
-    emissiveIntensity: 0.3,
+    emissiveColor: GREEN,
+    emissiveIntensity: 0.2,
+    metalness: 0.85,
+    roughness: 0.25,
+    castShadow: false,
   },
   {
     position: [4.0, 2.5, -2.5],
@@ -172,8 +198,12 @@ const GEAR_CONFIGS: GearConfig[] = [
     thickness: 0.3,
     speed: 0.2,
     direction: -1,
-    color: STEEL,
-    emissiveIntensity: 0.08,
+    color: STEEL_DARK,
+    emissiveColor: GREEN_DIM,
+    emissiveIntensity: 0.04,
+    metalness: 0.9,
+    roughness: 0.2,
+    castShadow: true,
   },
   {
     position: [-3.5, 3.0, -2.0],
@@ -185,16 +215,64 @@ const GEAR_CONFIGS: GearConfig[] = [
     thickness: 0.3,
     speed: 0.35,
     direction: 1,
-    color: STEEL,
-    emissiveIntensity: 0.1,
+    color: STEEL_DARK,
+    emissiveColor: GREEN_DIM,
+    emissiveIntensity: 0.05,
+    metalness: 0.88,
+    roughness: 0.22,
+    castShadow: true,
   },
 ]
 
 // ═══════════════════════════════════════════════════════════════════════
-// Single Gear Mesh
+// Environment map for realistic reflections
 // ═══════════════════════════════════════════════════════════════════════
 
-function GearMesh({ config }: { config: GearConfig }) {
+function createEnvMap(): THREE.CubeTexture {
+  const size = 64
+  const faces: HTMLCanvasElement[] = []
+
+  for (let f = 0; f < 6; f++) {
+    const canvas = document.createElement('canvas')
+    canvas.width = size
+    canvas.height = size
+    const ctx = canvas.getContext('2d')!
+
+    // Create dark green environment with bright spots for reflections
+    const gradient = ctx.createRadialGradient(size / 2, size / 2, 0, size / 2, size / 2, size / 2)
+    gradient.addColorStop(0, 'rgba(16, 185, 129, 0.15)')
+    gradient.addColorStop(0.3, 'rgba(6, 95, 70, 0.08)')
+    gradient.addColorStop(1, 'rgba(4, 18, 10, 0.9)')
+    ctx.fillStyle = gradient
+    ctx.fillRect(0, 0, size, size)
+
+    // Add bright spots for specular highlights
+    const spots = f < 3 ? 3 : 2
+    for (let s = 0; s < spots; s++) {
+      const sx = Math.random() * size
+      const sy = Math.random() * size * 0.6
+      const sr = 3 + Math.random() * 8
+      const spotGrad = ctx.createRadialGradient(sx, sy, 0, sx, sy, sr)
+      spotGrad.addColorStop(0, 'rgba(200, 255, 230, 0.4)')
+      spotGrad.addColorStop(0.5, 'rgba(52, 211, 153, 0.1)')
+      spotGrad.addColorStop(1, 'rgba(0, 0, 0, 0)')
+      ctx.fillStyle = spotGrad
+      ctx.fillRect(0, 0, size, size)
+    }
+
+    faces.push(canvas)
+  }
+
+  const cubeTexture = new THREE.CubeTexture(faces)
+  cubeTexture.needsUpdate = true
+  return cubeTexture
+}
+
+// ═══════════════════════════════════════════════════════════════════════
+// Single Gear Mesh — Realistic metallic
+// ═══════════════════════════════════════════════════════════════════════
+
+function GearMesh({ config, envMap }: { config: GearConfig; envMap: THREE.CubeTexture | null }) {
   const meshRef = useRef<THREE.Mesh>(null)
 
   const geometry = useMemo(() => {
@@ -207,25 +285,28 @@ function GearMesh({ config }: { config: GearConfig }) {
     const extrudeSettings: THREE.ExtrudeGeometryOptions = {
       depth: config.thickness,
       bevelEnabled: true,
-      bevelThickness: 0.02,
-      bevelSize: 0.02,
-      bevelSegments: 2,
-      curveSegments: 1,
+      bevelThickness: 0.03,
+      bevelSize: 0.03,
+      bevelSegments: 3,
+      curveSegments: 2,
     }
     return new THREE.ExtrudeGeometry(shape, extrudeSettings)
   }, [config.innerRadius, config.outerRadius, config.teeth, config.toothDepth, config.thickness])
 
   const material = useMemo(() => {
-    return new THREE.MeshStandardMaterial({
+    const mat = new THREE.MeshStandardMaterial({
       color: config.color,
-      metalness: 0.85,
-      roughness: 0.25,
-      emissive: GREEN,
+      metalness: config.metalness,
+      roughness: config.roughness,
+      emissive: config.emissiveColor,
       emissiveIntensity: config.emissiveIntensity,
       transparent: true,
-      opacity: 0.7,
+      opacity: 0.92,
+      envMap: envMap,
+      envMapIntensity: 0.6,
     })
-  }, [config.color, config.emissiveIntensity])
+    return mat
+  }, [config.color, config.emissiveColor, config.emissiveIntensity, config.metalness, config.roughness, envMap])
 
   useFrame(({ clock }) => {
     if (meshRef.current) {
@@ -242,13 +323,26 @@ function GearMesh({ config }: { config: GearConfig }) {
         geometry={geometry}
         material={material}
         position={[0, 0, offset]}
+        castShadow={config.castShadow}
+        receiveShadow
       />
+      {/* Inner ring accent glow */}
       <mesh position={[0, 0, 0]} rotation={[0, 0, 0]}>
-        <torusGeometry args={[config.innerRadius * 0.85, 0.02, 8, 32]} />
+        <torusGeometry args={[config.innerRadius * 0.85, 0.025, 8, 32]} />
         <meshBasicMaterial
           color={GREEN_ACCENT}
           transparent
-          opacity={0.3}
+          opacity={0.25}
+          blending={THREE.AdditiveBlending}
+        />
+      </mesh>
+      {/* Outer rim subtle highlight */}
+      <mesh position={[0, 0, offset + config.thickness / 2]} rotation={[0, 0, 0]}>
+        <torusGeometry args={[config.outerRadius * 0.92, 0.015, 6, 48]} />
+        <meshBasicMaterial
+          color={GREEN}
+          transparent
+          opacity={0.1}
           blending={THREE.AdditiveBlending}
         />
       </mesh>
@@ -257,39 +351,64 @@ function GearMesh({ config }: { config: GearConfig }) {
 }
 
 // ═══════════════════════════════════════════════════════════════════════
-// Floating Particles
+// Floating Particles — Green sparks
 // ═══════════════════════════════════════════════════════════════════════
 
 function GearParticles() {
   const ref = useRef<THREE.Points>(null)
-  const count = 40
+  const count = 80
 
-  const geometry = useMemo(() => {
-    const positions = new Float32Array(count * 3)
+  const { positions, velocities } = useMemo(() => {
+    const pos = new Float32Array(count * 3)
+    const vel = new Float32Array(count * 3)
     for (let i = 0; i < count; i++) {
-      positions[i * 3] = (Math.random() - 0.5) * 12
-      positions[i * 3 + 1] = (Math.random() - 0.5) * 10
-      positions[i * 3 + 2] = (Math.random() - 0.5) * 8
+      pos[i * 3] = (Math.random() - 0.5) * 14
+      pos[i * 3 + 1] = (Math.random() - 0.5) * 10
+      pos[i * 3 + 2] = (Math.random() - 0.5) * 8
+      vel[i * 3] = (Math.random() - 0.5) * 0.002
+      vel[i * 3 + 1] = (Math.random() - 0.5) * 0.002
+      vel[i * 3 + 2] = (Math.random() - 0.5) * 0.001
     }
-    const geo = new THREE.BufferGeometry()
-    geo.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3))
-    return geo
+    return { positions: pos, velocities: vel }
   }, [])
 
   useFrame(({ clock }) => {
-    if (ref.current) {
-      ref.current.rotation.y = clock.getElapsedTime() * 0.015
-      ref.current.rotation.x = Math.sin(clock.getElapsedTime() * 0.01) * 0.05
+    if (!ref.current) return
+    const posAttr = ref.current.geometry.getAttribute('position')
+    const t = clock.getElapsedTime()
+
+    for (let i = 0; i < count; i++) {
+      const i3 = i * 3
+      posAttr.array[i3] += velocities[i3] + Math.sin(t * 0.5 + i) * 0.0005
+      posAttr.array[i3 + 1] += velocities[i3 + 1] + Math.cos(t * 0.3 + i) * 0.0005
+      posAttr.array[i3 + 2] += velocities[i3 + 2]
+
+      // Wrap around
+      if (Math.abs(posAttr.array[i3]) > 7) posAttr.array[i3] *= -0.9
+      if (Math.abs(posAttr.array[i3 + 1]) > 5) posAttr.array[i3 + 1] *= -0.9
+      if (Math.abs(posAttr.array[i3 + 2]) > 4) posAttr.array[i3 + 2] *= -0.9
     }
+    posAttr.needsUpdate = true
+
+    ref.current.rotation.y = t * 0.01
+    ref.current.rotation.x = Math.sin(t * 0.008) * 0.03
   })
 
   return (
-    <points ref={ref} geometry={geometry}>
+    <points ref={ref}>
+      <bufferGeometry>
+        <bufferAttribute
+          attach="attributes-position"
+          count={count}
+          array={positions}
+          itemSize={3}
+        />
+      </bufferGeometry>
       <pointsMaterial
-        color={GREEN}
-        size={0.04}
+        color={GREEN_ACCENT}
+        size={0.03}
         transparent
-        opacity={0.2}
+        opacity={0.35}
         sizeAttenuation
         blending={THREE.AdditiveBlending}
         depthWrite={false}
@@ -330,42 +449,95 @@ function CameraController({ activeSlide }: { activeSlide: number }) {
 }
 
 // ═══════════════════════════════════════════════════════════════════════
-// Gear Scene
+// Gear Scene — Enhanced lighting + shadows
 // ═══════════════════════════════════════════════════════════════════════
 
-function GearScene({ activeSlide }: { activeSlide: number }) {
+function GearScene({ activeSlide, envMap }: { activeSlide: number; envMap: THREE.CubeTexture | null }) {
   return (
     <>
-      <ambientLight intensity={0.15} />
+      {/* Ambient fill — very subtle */}
+      <ambientLight intensity={0.08} color="#0a2a18" />
+
+      {/* Main directional light — key light with shadows */}
       <directionalLight
-        position={[5, 5, 5]}
-        intensity={0.4}
-        color="#ffffff"
+        position={[8, 6, 5]}
+        intensity={0.6}
+        color="#e8fff0"
+        castShadow
+        shadow-mapSize-width={1024}
+        shadow-mapSize-height={1024}
+        shadow-camera-far={25}
+        shadow-camera-left={-8}
+        shadow-camera-right={8}
+        shadow-camera-top={8}
+        shadow-camera-bottom={-8}
+        shadow-bias={-0.001}
       />
+
+      {/* Fill light — softer from opposite side */}
+      <directionalLight
+        position={[-6, 3, 4]}
+        intensity={0.25}
+        color="#a8f0c8"
+      />
+
+      {/* Rim light — back edge highlight for depth */}
+      <directionalLight
+        position={[0, -2, -6]}
+        intensity={0.15}
+        color="#34d399"
+      />
+
+      {/* Green point light — center glow */}
       <pointLight
         position={[0, 0, 3]}
-        intensity={0.8}
+        intensity={1.0}
         color={GREEN}
-        distance={15}
+        distance={18}
         decay={2}
       />
+
+      {/* Accent point light — top right warm green */}
       <pointLight
-        position={[-3, 2, -2]}
-        intensity={0.3}
+        position={[4, 3, 1]}
+        intensity={0.5}
         color={GREEN_ACCENT}
+        distance={14}
+        decay={2}
+      />
+
+      {/* Deep fill point light — bottom left */}
+      <pointLight
+        position={[-4, -2, 2]}
+        intensity={0.3}
+        color="#047857"
         distance={12}
         decay={2}
       />
+
+      {/* Cool rim point light — back */}
       <pointLight
-        position={[4, -1, 2]}
+        position={[0, 1, -5]}
         intensity={0.2}
-        color="#047857"
+        color="#6ee7b7"
         distance={10}
         decay={2}
       />
 
+      {/* Spot light — dramatic highlight on main gear */}
+      <spotLight
+        position={[2, 5, 4]}
+        intensity={0.4}
+        color="#d0ffe8"
+        angle={0.5}
+        penumbra={0.8}
+        distance={15}
+        decay={2}
+        castShadow
+      />
+
       {GEAR_CONFIGS.map((config, i) => (
-        <GearMesh key={i} config={config} />
+        <GearMesh key={i} config={config} envMap={envMap} />
       ))}
 
       <GearParticles />
@@ -386,19 +558,30 @@ export function GearBackground({ activeSlide }: { activeSlide: number }) {
     () => false
   )
 
+  const envMap = useMemo(() => {
+    if (typeof document === 'undefined') return null
+    return createEnvMap()
+  }, [])
+
   if (!mounted) {
     return <div className="fixed inset-0 bg-[#04120a]" />
   }
 
   return (
     <div className="fixed inset-0 z-0">
-      <div className="absolute inset-0 bg-gradient-to-br from-[#04120a] via-[#071a10] to-[#0a2216]" />
+      <div className="absolute inset-0 bg-gradient-to-br from-[#04120a] via-[#061510] to-[#0a2216]" />
       <Canvas
         camera={{ position: CAMERA_POSITIONS[0], fov: 50 }}
-        gl={{ alpha: true, antialias: true }}
+        shadows
+        gl={{
+          alpha: true,
+          antialias: true,
+          toneMapping: THREE.ACESFilmicToneMapping,
+          toneMappingExposure: 1.2,
+        }}
         style={{ background: 'transparent' }}
       >
-        <GearScene activeSlide={activeSlide} />
+        <GearScene activeSlide={activeSlide} envMap={envMap} />
       </Canvas>
     </div>
   )

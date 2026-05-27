@@ -88,7 +88,7 @@ function SlideExecutiveHook({ onCTA }: { onCTA: () => void }) {
     <section className="snap-section relative flex items-center justify-center overflow-hidden">
       {/* Frosted glass overlay */}
       <div className="absolute inset-0 frosted-glass-overlay glass-edge-glow" />
-      <div className="absolute inset-0 bg-gradient-to-r from-[#04120a]/40 via-transparent to-transparent" />
+      <div className="absolute inset-0 bg-gradient-to-r from-[#04120a]/15 via-transparent to-transparent" />
 
       {/* Content */}
       <div className="relative z-10 max-w-6xl mx-auto px-6 sm:px-8 lg:px-12">
@@ -315,7 +315,7 @@ function SlideCallToAction() {
     <section className="snap-section relative flex items-center justify-center overflow-hidden">
       {/* Frosted glass overlay */}
       <div className="absolute inset-0 frosted-glass-overlay glass-edge-glow" />
-      <div className="absolute inset-0 bg-gradient-to-l from-[#04120a]/30 via-transparent to-transparent" />
+      <div className="absolute inset-0 bg-gradient-to-l from-[#04120a]/10 via-transparent to-transparent" />
 
       {/* Content */}
       <div className="relative z-10 max-w-6xl mx-auto px-6 sm:px-8 lg:px-12 w-full">
