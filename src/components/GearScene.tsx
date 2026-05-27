@@ -569,7 +569,33 @@ export function GearBackground({ activeSlide }: { activeSlide: number }) {
 
   return (
     <div className="fixed inset-0 z-0">
-      <div className="absolute inset-0 bg-gradient-to-br from-[#04120a] via-[#061510] to-[#0a2216]" />
+      {/* Base dark green gradient */}
+      <div className="absolute inset-0 bg-gradient-to-br from-[#021008] via-[#04120a] to-[#010a05]" />
+
+      {/* Radial vignette — lighter center, darker edges */}
+      <div
+        className="absolute inset-0"
+        style={{
+          background: 'radial-gradient(ellipse 70% 60% at 50% 45%, rgba(16, 185, 129, 0.07) 0%, rgba(6, 95, 70, 0.03) 35%, rgba(4, 18, 10, 0) 60%, rgba(1, 10, 5, 0.5) 100%)',
+        }}
+      />
+
+      {/* Organic glow blob — top right */}
+      <div
+        className="absolute inset-0"
+        style={{
+          background: 'radial-gradient(ellipse 40% 35% at 75% 25%, rgba(52, 211, 153, 0.04) 0%, transparent 70%)',
+        }}
+      />
+
+      {/* Organic glow blob — bottom left */}
+      <div
+        className="absolute inset-0"
+        style={{
+          background: 'radial-gradient(ellipse 35% 30% at 20% 80%, rgba(6, 95, 70, 0.05) 0%, transparent 65%)',
+        }}
+      />
+
       <Canvas
         camera={{ position: CAMERA_POSITIONS[0], fov: 50 }}
         shadows
@@ -583,6 +609,14 @@ export function GearBackground({ activeSlide }: { activeSlide: number }) {
       >
         <GearScene activeSlide={activeSlide} envMap={envMap} />
       </Canvas>
+
+      {/* Top vignette overlay for depth */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background: 'radial-gradient(ellipse 80% 70% at 50% 50%, transparent 40%, rgba(1, 8, 4, 0.6) 100%)',
+        }}
+      />
     </div>
   )
 }
