@@ -14,34 +14,34 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "BCForge - Transforma tu negocio con Business Central",
+  title: "BCForge — Business Central Performance: Double the Velocity, Half the Cost",
   description:
-    "Consultoría especializada en Microsoft Business Central. Automatización, desarrollo personalizado e integraciones que impulsan tu operación empresarial.",
+    "Enterprise consulting for Business Central, Power Apps, and Power Automate. AI-driven framework slashes project timelines by 50%. Request your free automation audit.",
   keywords: [
     "Business Central",
-    "Microsoft Dynamics",
+    "Microsoft 365",
     "ERP",
-    "Automatización",
-    "Consultoría",
-    "Desarrollo personalizado",
-    "Integraciones",
+    "Power Automate",
+    "Power Apps",
+    "Enterprise Automation",
+    "Digital Transformation",
   ],
   authors: [{ name: "BCForge" }],
   icons: {
     icon: "/bcforge-logo.png",
   },
   openGraph: {
-    title: "BCForge - Transforma tu negocio con Business Central",
+    title: "BCForge — Double the Velocity, Half the Cost",
     description:
-      "Consultoría especializada en Microsoft Business Central. Automatización, desarrollo personalizado e integraciones que impulsan tu operación empresarial.",
+      "Enterprise consulting for Business Central, Power Apps, and Power Automate. AI-driven deployment in half the time.",
     siteName: "BCForge",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "BCForge - Transforma tu negocio con Business Central",
+    title: "BCForge — Double the Velocity, Half the Cost",
     description:
-      "Consultoría especializada en Microsoft Business Central. Automatización, desarrollo personalizado e integraciones que impulsan tu operación empresarial.",
+      "Enterprise consulting for Business Central, Power Apps, and Power Automate. AI-driven deployment in half the time.",
   },
 };
 
@@ -51,7 +51,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="es" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background text-foreground`}
       >

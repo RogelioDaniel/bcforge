@@ -6,24 +6,23 @@ import { OrbitControls, Line } from '@react-three/drei'
 import * as THREE from 'three'
 
 // ═══════════════════════════════════════════════════════════════════════
-// Constants
+// Constants — Executive Blue Palette
 // ═══════════════════════════════════════════════════════════════════════
 
 const GLOBE_RADIUS = 1.5
-const DOT_COUNT = 2000
-const NODE_COUNT = 18
-const ARC_COUNT = 8
-const PARTICLE_COUNT = 80
+const DOT_COUNT = 1800
+const NODE_COUNT = 14
+const ARC_COUNT = 6
+const PARTICLE_COUNT = 60
 
-const EMERALD = '#10b981'
-const EMERALD_DIM = '#065f46'
-const AMBER = '#f59e0b'
+const BLUE = '#4f8fff'
+const BLUE_DIM = '#1a3a6e'
+const ACCENT = '#60a5fa'
 
 // ═══════════════════════════════════════════════════════════════════════
 // Utility Functions
 // ═══════════════════════════════════════════════════════════════════════
 
-/** Generate evenly-distributed points on a sphere using Fibonacci spiral */
 function fibonacciSphere(count: number, radius: number): Float32Array {
   const positions = new Float32Array(count * 3)
   const goldenAngle = Math.PI * (3 - Math.sqrt(5))
@@ -38,7 +37,6 @@ function fibonacciSphere(count: number, radius: number): Float32Array {
   return positions
 }
 
-/** Random point on a sphere surface */
 function randomSpherePoint(radius: number): THREE.Vector3 {
   const u = Math.random()
   const v = Math.random()
@@ -51,7 +49,6 @@ function randomSpherePoint(radius: number): THREE.Vector3 {
   )
 }
 
-/** Create an arc curve elevated above the globe surface between two points */
 function createArcCurve(
   start: THREE.Vector3,
   end: THREE.Vector3,
@@ -67,7 +64,6 @@ function createArcCurve(
 // 3D Scene Components
 // ═══════════════════════════════════════════════════════════════════════
 
-/** Dot-matrix globe surface – the primary visual of the globe */
 function GlobeDots() {
   const geometry = useMemo(() => {
     const positions = fibonacciSphere(DOT_COUNT, GLOBE_RADIUS)
@@ -79,10 +75,10 @@ function GlobeDots() {
   return (
     <points geometry={geometry}>
       <pointsMaterial
-        color={EMERALD}
+        color={BLUE}
         size={0.015}
         transparent
-        opacity={0.6}
+        opacity={0.5}
         sizeAttenuation
         blending={THREE.AdditiveBlending}
         depthWrite={false}
@@ -91,16 +87,15 @@ function GlobeDots() {
   )
 }
 
-/** Subtle wireframe underneath the dots for structural depth */
 function GlobeWireframe() {
   return (
     <mesh>
       <sphereGeometry args={[GLOBE_RADIUS, 24, 24]} />
       <meshBasicMaterial
-        color={EMERALD}
+        color={BLUE}
         wireframe
         transparent
-        opacity={0.04}
+        opacity={0.03}
         blending={THREE.AdditiveBlending}
         depthWrite={false}
       />
@@ -108,7 +103,6 @@ function GlobeWireframe() {
   )
 }
 
-/** Highlighted active transaction nodes – amber pulsing dots */
 function ActiveNodes() {
   const ref = useRef<THREE.Points>(null)
 
@@ -135,10 +129,10 @@ function ActiveNodes() {
   return (
     <points ref={ref} geometry={geometry}>
       <pointsMaterial
-        color={AMBER}
-        size={0.05}
+        color={ACCENT}
+        size={0.045}
         transparent
-        opacity={0.9}
+        opacity={0.85}
         sizeAttenuation
         blending={THREE.AdditiveBlending}
         depthWrite={false}
@@ -147,8 +141,6 @@ function ActiveNodes() {
   )
 }
 
-// ─── Arc System ──────────────────────────────────────────────────────
-
 interface ArcData {
   curve: THREE.QuadraticBezierCurve3
   linePoints: [number, number, number][]
@@ -156,7 +148,6 @@ interface ArcData {
   offset: number
 }
 
-/** Single arc with a traveling pulse sphere that represents data flow */
 function ArcWithPulse({ arc }: { arc: ArcData }) {
   const pulseRef = useRef<THREE.Mesh>(null)
   const glowRef = useRef<THREE.Mesh>(null)
@@ -172,28 +163,26 @@ function ArcWithPulse({ arc }: { arc: ArcData }) {
     <>
       <Line
         points={arc.linePoints}
-        color={EMERALD}
+        color={BLUE}
         lineWidth={1}
         transparent
-        opacity={0.25}
+        opacity={0.2}
       />
-      {/* Bright core of the pulse */}
       <mesh ref={pulseRef}>
-        <sphereGeometry args={[0.02, 8, 8]} />
+        <sphereGeometry args={[0.018, 8, 8]} />
         <meshBasicMaterial
-          color={AMBER}
+          color={ACCENT}
           transparent
-          opacity={0.95}
+          opacity={0.9}
           blending={THREE.AdditiveBlending}
         />
       </mesh>
-      {/* Soft glow around the pulse */}
       <mesh ref={glowRef}>
-        <sphereGeometry args={[0.055, 8, 8]} />
+        <sphereGeometry args={[0.048, 8, 8]} />
         <meshBasicMaterial
-          color={AMBER}
+          color={ACCENT}
           transparent
-          opacity={0.2}
+          opacity={0.15}
           blending={THREE.AdditiveBlending}
         />
       </mesh>
@@ -201,7 +190,6 @@ function ArcWithPulse({ arc }: { arc: ArcData }) {
   )
 }
 
-/** Group of all data-flow arcs */
 function ArcsGroup() {
   const arcs = useMemo<ArcData[]>(() => {
     const result: ArcData[] = []
@@ -219,7 +207,7 @@ function ArcsGroup() {
       result.push({
         curve,
         linePoints,
-        speed: 0.12 + Math.random() * 0.15,
+        speed: 0.1 + Math.random() * 0.12,
         offset: Math.random(),
       })
     }
@@ -235,9 +223,6 @@ function ArcsGroup() {
   )
 }
 
-// ─── Atmosphere & Glow ───────────────────────────────────────────────
-
-/** Atmospheric glow around the globe – outer haze + inner tint */
 function GlobeGlow() {
   const outerRef = useRef<THREE.Mesh>(null)
   const innerRef = useRef<THREE.Mesh>(null)
@@ -250,25 +235,23 @@ function GlobeGlow() {
 
   return (
     <>
-      {/* Outer atmospheric haze */}
       <mesh ref={outerRef}>
         <sphereGeometry args={[GLOBE_RADIUS * 1.18, 32, 32]} />
         <meshBasicMaterial
-          color={EMERALD}
+          color={BLUE}
           transparent
-          opacity={0.035}
+          opacity={0.025}
           blending={THREE.AdditiveBlending}
           depthWrite={false}
           side={THREE.BackSide}
         />
       </mesh>
-      {/* Inner atmosphere tint */}
       <mesh ref={innerRef}>
         <sphereGeometry args={[GLOBE_RADIUS * 1.03, 32, 32]} />
         <meshBasicMaterial
-          color={EMERALD_DIM}
+          color={BLUE_DIM}
           transparent
-          opacity={0.05}
+          opacity={0.04}
           blending={THREE.AdditiveBlending}
           depthWrite={false}
           side={THREE.BackSide}
@@ -278,15 +261,14 @@ function GlobeGlow() {
   )
 }
 
-/** Orbital rings circling the globe at various tilts */
 function OrbitalRings() {
   const groupRef = useRef<THREE.Group>(null)
 
   const rings = useMemo(() => {
     const configs: { radius: number; rotation: [number, number, number]; opacity: number }[] = [
-      { radius: GLOBE_RADIUS * 1.25, rotation: [Math.PI / 6, 0, 0], opacity: 0.12 },
-      { radius: GLOBE_RADIUS * 1.32, rotation: [0, 0, Math.PI / 4], opacity: 0.08 },
-      { radius: GLOBE_RADIUS * 1.38, rotation: [Math.PI / 3, Math.PI / 5, 0], opacity: 0.06 },
+      { radius: GLOBE_RADIUS * 1.25, rotation: [Math.PI / 6, 0, 0], opacity: 0.08 },
+      { radius: GLOBE_RADIUS * 1.32, rotation: [0, 0, Math.PI / 4], opacity: 0.05 },
+      { radius: GLOBE_RADIUS * 1.38, rotation: [Math.PI / 3, Math.PI / 5, 0], opacity: 0.04 },
     ]
     return configs.map(({ radius, rotation, opacity }) => {
       const segments = 100
@@ -311,7 +293,7 @@ function OrbitalRings() {
         <group key={i} rotation={ring.rotation}>
           <Line
             points={ring.points}
-            color={EMERALD}
+            color={BLUE}
             lineWidth={1}
             transparent
             opacity={ring.opacity}
@@ -322,7 +304,6 @@ function OrbitalRings() {
   )
 }
 
-/** Ambient floating particles drifting around the globe */
 function FloatingParticles() {
   const ref = useRef<THREE.Points>(null)
 
@@ -350,10 +331,10 @@ function FloatingParticles() {
   return (
     <points ref={ref} geometry={geometry}>
       <pointsMaterial
-        color={EMERALD}
-        size={0.02}
+        color={BLUE}
+        size={0.018}
         transparent
-        opacity={0.35}
+        opacity={0.25}
         sizeAttenuation
         blending={THREE.AdditiveBlending}
         depthWrite={false}
@@ -362,9 +343,6 @@ function FloatingParticles() {
   )
 }
 
-// ─── Scene Composition ───────────────────────────────────────────────
-
-/** Complete 3D scene with all globe elements */
 function GlobeScene() {
   return (
     <>
@@ -378,7 +356,7 @@ function GlobeScene() {
       <FloatingParticles />
       <OrbitControls
         autoRotate
-        autoRotateSpeed={0.5}
+        autoRotateSpeed={0.4}
         enableZoom={false}
         enablePan={false}
         minPolarAngle={Math.PI / 4}
@@ -393,29 +371,15 @@ function GlobeScene() {
 // ═══════════════════════════════════════════════════════════════════════
 
 export function Globe({ className }: { className?: string }) {
-  // Handle SSR – only render Canvas on the client
   const mounted = useSyncExternalStore(
-    () => () => {},   // subscribe (no-op, nothing to subscribe to)
-    () => true,       // client snapshot – always mounted
-    () => false       // server snapshot – never mounted
+    () => () => {},
+    () => true,
+    () => false
   )
 
-  const [counter, setCounter] = useState(2_847_563)
-
-  // Live transaction counter – increments at irregular intervals
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCounter((c) => c + Math.floor(Math.random() * 7) + 1)
-    }, 80)
-    return () => clearInterval(interval)
-  }, [])
-
   return (
-    <div className={`relative overflow-hidden rounded-xl ${className ?? 'h-[500px]'}`}>
-      {/* Dark gradient background for the globe */}
-      <div className="absolute inset-0 bg-gradient-to-b from-gray-950 via-gray-900 to-gray-950" />
-
-      {/* 3D Globe Canvas */}
+    <div className={`relative overflow-hidden ${className ?? 'h-[500px]'}`}>
+      <div className="absolute inset-0 bg-gradient-to-b from-[#060d1b] via-[#0a1628] to-[#060d1b]" />
       {mounted && (
         <Canvas
           camera={{ position: [0, 0, 4], fov: 45 }}
@@ -425,31 +389,6 @@ export function Globe({ className }: { className?: string }) {
           <GlobeScene />
         </Canvas>
       )}
-
-      {/* Cinematic vignette overlay */}
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          background:
-            'radial-gradient(circle at center, transparent 30%, rgba(3,7,18,0.7) 100%)',
-        }}
-      />
-
-      {/* Transaction Counter Overlay */}
-      <div className="absolute bottom-6 left-0 right-0 z-10 flex flex-col items-center gap-1">
-        <span
-          className="font-mono text-3xl font-bold tracking-wider text-amber-400 sm:text-4xl"
-          style={{
-            textShadow:
-              '0 0 20px rgba(245,158,11,0.5), 0 0 40px rgba(245,158,11,0.2)',
-          }}
-        >
-          {counter.toLocaleString()}
-        </span>
-        <span className="text-[10px] font-medium uppercase tracking-[0.3em] text-emerald-400/70 sm:text-xs">
-          Transactions Processed
-        </span>
-      </div>
     </div>
   )
 }

@@ -88,8 +88,8 @@ async function sendNotification(data: ContactFormData) {
 
   const htmlBody = `
     <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; background: #f9fafb; border-radius: 8px;">
-      <div style="background: linear-gradient(135deg, #059669, #d97706); padding: 20px; border-radius: 8px 8px 0 0;">
-        <h1 style="color: white; margin: 0; font-size: 24px;">🔥 Nueva Solicitud - BCForge</h1>
+      <div style="background: linear-gradient(135deg, #1a3a6e, #4f8fff); padding: 20px; border-radius: 8px 8px 0 0;">
+        <h1 style="color: white; margin: 0; font-size: 24px;">New Evaluation Request - BCForge</h1>
       </div>
       <div style="background: white; padding: 24px; border-radius: 0 0 8px 8px; border: 1px solid #e5e7eb;">
         <h2 style="color: #111827; margin-top: 0;">Datos del contacto</h2>
