@@ -86,7 +86,7 @@ function NavDots({ active, onNavigate }: { active: number; onNavigate: (i: numbe
 function SlideExecutiveHook({ onCTA }: { onCTA: () => void }) {
   return (
     <section className="snap-section relative flex items-center justify-center overflow-hidden">
-      {/* Minimal atmospheric veil */}
+      {/* Vidrio templado — frosted glass between gears and text */}
       <div className="absolute inset-0 frosted-glass-overlay glass-edge-glow" />
 
       {/* Content */}
@@ -312,7 +312,7 @@ function SlideCallToAction() {
 
   return (
     <section className="snap-section relative flex items-center justify-center overflow-hidden">
-      {/* Minimal atmospheric veil */}
+      {/* Vidrio templado — frosted glass between gears and text */}
       <div className="absolute inset-0 frosted-glass-overlay glass-edge-glow" />
 
       {/* Content */}

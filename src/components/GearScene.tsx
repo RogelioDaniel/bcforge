@@ -11,15 +11,14 @@ import * as THREE from 'three'
 const GREEN = '#10b981'
 const GREEN_ACCENT = '#34d399'
 const GREEN_DIM = '#065f46'
-const STEEL_GREEN = '#1a3d2e'
-const STEEL_DARK = '#0f2a1e'
-const CHROME = '#3d5c4f'
+const GEAR_COLORS = [GREEN_DIM, '#1a3d2e', '#0f2a1e', '#3d5c4f', '#163828']
+const EMISSIVE_COLORS = [GREEN, GREEN_ACCENT, GREEN_DIM]
 
 // Camera positions for each slide
 const CAMERA_POSITIONS: [number, number, number][] = [
-  [0, 1.5, 7],    // Slide 0: Front-wide overview
-  [5, 2, 4],      // Slide 1: Side angle close-up
-  [-3, -1, 6],    // Slide 2: Below-left perspective
+  [0, 1.5, 7],
+  [5, 2, 4],
+  [-3, -1, 6],
 ]
 
 const CAMERA_LOOKATS: [number, number, number][] = [
@@ -81,7 +80,7 @@ function createGearShape(
 }
 
 // ═══════════════════════════════════════════════════════════════════════
-// Gear Config
+// Random Gear Config Generator
 // ═══════════════════════════════════════════════════════════════════════
 
 interface GearConfig {
@@ -102,127 +101,72 @@ interface GearConfig {
   castShadow: boolean
 }
 
-const GEAR_CONFIGS: GearConfig[] = [
-  {
-    position: [0, 0, 0],
-    rotation: [0, 0, 0],
-    innerRadius: 0.4,
-    outerRadius: 1.6,
-    teeth: 24,
-    toothDepth: 0.18,
-    thickness: 0.4,
-    speed: 0.3,
-    direction: 1,
-    color: CHROME,
-    emissiveColor: GREEN,
-    emissiveIntensity: 0.08,
-    metalness: 0.92,
-    roughness: 0.15,
+function rand(min: number, max: number): number {
+  return min + Math.random() * (max - min)
+}
+
+function pickRandom<T>(arr: T[]): T {
+  return arr[Math.floor(Math.random() * arr.length)]
+}
+
+function generateRandomGears(count: number): GearConfig[] {
+  const configs: GearConfig[] = []
+
+  // First gear is always a big central one
+  configs.push({
+    position: [rand(-1, 1), rand(-0.5, 0.5), rand(-0.5, 0.5)],
+    rotation: [rand(-0.1, 0.1), rand(-0.1, 0.1), 0],
+    innerRadius: rand(0.3, 0.6),
+    outerRadius: rand(1.2, 2.2),
+    teeth: Math.floor(rand(18, 32)),
+    toothDepth: rand(0.12, 0.22),
+    thickness: rand(0.25, 0.5),
+    speed: rand(0.15, 0.35),
+    direction: Math.random() > 0.5 ? 1 : -1,
+    color: pickRandom(GEAR_COLORS),
+    emissiveColor: pickRandom(EMISSIVE_COLORS),
+    emissiveIntensity: rand(0.04, 0.12),
+    metalness: rand(0.85, 0.95),
+    roughness: rand(0.1, 0.22),
     castShadow: true,
-  },
-  {
-    position: [2.4, 1.8, 0.1],
-    rotation: [0.1, 0, 0],
-    innerRadius: 0.25,
-    outerRadius: 0.95,
-    teeth: 16,
-    toothDepth: 0.14,
-    thickness: 0.35,
-    speed: 0.45,
-    direction: -1,
-    color: STEEL_GREEN,
-    emissiveColor: GREEN_ACCENT,
-    emissiveIntensity: 0.12,
-    metalness: 0.9,
-    roughness: 0.18,
-    castShadow: true,
-  },
-  {
-    position: [-2.1, -1.5, -0.2],
-    rotation: [-0.15, 0.1, 0],
-    innerRadius: 0.18,
-    outerRadius: 0.65,
-    teeth: 12,
-    toothDepth: 0.1,
-    thickness: 0.3,
-    speed: 0.6,
-    direction: 1,
-    color: STEEL_GREEN,
-    emissiveColor: GREEN,
-    emissiveIntensity: 0.15,
-    metalness: 0.88,
-    roughness: 0.2,
-    castShadow: true,
-  },
-  {
-    position: [-2.8, 1.0, -0.8],
-    rotation: [0.2, -0.15, 0],
-    innerRadius: 0.2,
-    outerRadius: 0.85,
-    teeth: 14,
-    toothDepth: 0.12,
-    thickness: 0.35,
-    speed: 0.5,
-    direction: -1,
-    color: CHROME,
-    emissiveColor: GREEN_DIM,
-    emissiveIntensity: 0.06,
-    metalness: 0.93,
-    roughness: 0.12,
-    castShadow: true,
-  },
-  {
-    position: [3.6, -0.5, 0.5],
-    rotation: [-0.1, 0.2, 0],
-    innerRadius: 0.12,
-    outerRadius: 0.45,
-    teeth: 10,
-    toothDepth: 0.08,
-    thickness: 0.25,
-    speed: 0.8,
-    direction: 1,
-    color: GREEN_DIM,
-    emissiveColor: GREEN,
-    emissiveIntensity: 0.2,
-    metalness: 0.85,
-    roughness: 0.25,
-    castShadow: false,
-  },
-  {
-    position: [4.0, 2.5, -2.5],
-    rotation: [0.1, 0.3, 0],
-    innerRadius: 0.5,
-    outerRadius: 2.0,
-    teeth: 28,
-    toothDepth: 0.2,
-    thickness: 0.3,
-    speed: 0.2,
-    direction: -1,
-    color: STEEL_DARK,
-    emissiveColor: GREEN_DIM,
-    emissiveIntensity: 0.04,
-    metalness: 0.9,
-    roughness: 0.2,
-    castShadow: true,
-  },
-  {
-    position: [-3.5, 3.0, -2.0],
-    rotation: [-0.2, 0.1, 0],
-    innerRadius: 0.3,
-    outerRadius: 1.1,
-    teeth: 18,
-    toothDepth: 0.15,
-    thickness: 0.3,
-    speed: 0.35,
-    direction: 1,
-    color: STEEL_DARK,
-    emissiveColor: GREEN_DIM,
-    emissiveIntensity: 0.05,
-    metalness: 0.88,
-    roughness: 0.22,
-    castShadow: true,
-  },
-]
+  })
+
+  // Generate remaining gears scattered around
+  for (let i = 1; i < count; i++) {
+    const isLarge = Math.random() > 0.7
+    const outerR = isLarge ? rand(1.0, 2.2) : rand(0.3, 1.0)
+    const innerR = outerR * rand(0.15, 0.35)
+    const teethCount = Math.max(8, Math.floor(outerR * rand(10, 16)))
+
+    configs.push({
+      position: [
+        rand(-5, 5),
+        rand(-3.5, 3.5),
+        rand(-3, 1.5),
+      ],
+      rotation: [
+        rand(-0.3, 0.3),
+        rand(-0.3, 0.3),
+        rand(-0.1, 0.1),
+      ],
+      innerRadius: innerR,
+      outerRadius: outerR,
+      teeth: teethCount,
+      toothDepth: rand(0.06, 0.2),
+      thickness: rand(0.15, 0.45),
+      speed: rand(0.1, 0.9),
+      direction: Math.random() > 0.5 ? 1 : -1,
+      color: pickRandom(GEAR_COLORS),
+      emissiveColor: pickRandom(EMISSIVE_COLORS),
+      emissiveIntensity: rand(0.02, 0.2),
+      metalness: rand(0.82, 0.95),
+      roughness: rand(0.1, 0.28),
+      castShadow: isLarge,
+    })
+  }
+
+  return configs
+}
 
 // ═══════════════════════════════════════════════════════════════════════
 // Environment map for realistic reflections
@@ -238,7 +182,6 @@ function createEnvMap(): THREE.CubeTexture {
     canvas.height = size
     const ctx = canvas.getContext('2d')!
 
-    // Create dark green environment with bright spots for reflections
     const gradient = ctx.createRadialGradient(size / 2, size / 2, 0, size / 2, size / 2, size / 2)
     gradient.addColorStop(0, 'rgba(16, 185, 129, 0.15)')
     gradient.addColorStop(0.3, 'rgba(6, 95, 70, 0.08)')
@@ -246,7 +189,6 @@ function createEnvMap(): THREE.CubeTexture {
     ctx.fillStyle = gradient
     ctx.fillRect(0, 0, size, size)
 
-    // Add bright spots for specular highlights
     const spots = f < 3 ? 3 : 2
     for (let s = 0; s < spots; s++) {
       const sx = Math.random() * size
@@ -294,7 +236,7 @@ function GearMesh({ config, envMap }: { config: GearConfig; envMap: THREE.CubeTe
   }, [config.innerRadius, config.outerRadius, config.teeth, config.toothDepth, config.thickness])
 
   const material = useMemo(() => {
-    const mat = new THREE.MeshStandardMaterial({
+    return new THREE.MeshStandardMaterial({
       color: config.color,
       metalness: config.metalness,
       roughness: config.roughness,
@@ -305,7 +247,6 @@ function GearMesh({ config, envMap }: { config: GearConfig; envMap: THREE.CubeTe
       envMap: envMap,
       envMapIntensity: 0.6,
     })
-    return mat
   }, [config.color, config.emissiveColor, config.emissiveIntensity, config.metalness, config.roughness, envMap])
 
   useFrame(({ clock }) => {
@@ -383,7 +324,6 @@ function GearParticles() {
       posAttr.array[i3 + 1] += velocities[i3 + 1] + Math.cos(t * 0.3 + i) * 0.0005
       posAttr.array[i3 + 2] += velocities[i3 + 2]
 
-      // Wrap around
       if (Math.abs(posAttr.array[i3]) > 7) posAttr.array[i3] *= -0.9
       if (Math.abs(posAttr.array[i3 + 1]) > 5) posAttr.array[i3 + 1] *= -0.9
       if (Math.abs(posAttr.array[i3 + 2]) > 4) posAttr.array[i3 + 2] *= -0.9
@@ -452,7 +392,7 @@ function CameraController({ activeSlide }: { activeSlide: number }) {
 // Gear Scene — Enhanced lighting + shadows
 // ═══════════════════════════════════════════════════════════════════════
 
-function GearScene({ activeSlide, envMap }: { activeSlide: number; envMap: THREE.CubeTexture | null }) {
+function GearScene({ activeSlide, gearConfigs, envMap }: { activeSlide: number; gearConfigs: GearConfig[]; envMap: THREE.CubeTexture | null }) {
   return (
     <>
       {/* Ambient fill — very subtle */}
@@ -536,7 +476,7 @@ function GearScene({ activeSlide, envMap }: { activeSlide: number; envMap: THREE
         castShadow
       />
 
-      {GEAR_CONFIGS.map((config, i) => (
+      {gearConfigs.map((config, i) => (
         <GearMesh key={i} config={config} envMap={envMap} />
       ))}
 
@@ -557,6 +497,12 @@ export function GearBackground({ activeSlide }: { activeSlide: number }) {
     () => true,
     () => false
   )
+
+  // Generate random gears once per mount — new config each page load
+  const gearConfigs = useMemo(() => {
+    const count = Math.floor(rand(6, 11)) // 6-10 gears
+    return generateRandomGears(count)
+  }, [])
 
   const envMap = useMemo(() => {
     if (typeof document === 'undefined') return null
@@ -607,10 +553,10 @@ export function GearBackground({ activeSlide }: { activeSlide: number }) {
         }}
         style={{ background: 'transparent' }}
       >
-        <GearScene activeSlide={activeSlide} envMap={envMap} />
+        <GearScene activeSlide={activeSlide} gearConfigs={gearConfigs} envMap={envMap} />
       </Canvas>
 
-      {/* Top vignette overlay for depth */}
+      {/* Edge vignette overlay for depth */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
