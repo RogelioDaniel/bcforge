@@ -79,7 +79,7 @@ export async function GET() {
 }
 
 async function sendNotification(data: ContactFormData) {
-  const NOTIFICATION_EMAIL = 'rogelio-daniel@hotmail.es'
+  const NOTIFICATION_EMAIL = 'bcforgesa@hotmail.com'
   const NOTIFICATION_PHONE = '5617075485'
 
   const interestsList = data.interests?.length 
@@ -88,7 +88,7 @@ async function sendNotification(data: ContactFormData) {
 
   const htmlBody = `
     <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; background: #f9fafb; border-radius: 8px;">
-      <div style="background: linear-gradient(135deg, #1a3a6e, #4f8fff); padding: 20px; border-radius: 8px 8px 0 0;">
+      <div style="background: linear-gradient(135deg, #065f46, #10b981); padding: 20px; border-radius: 8px 8px 0 0;">
         <h1 style="color: white; margin: 0; font-size: 24px;">New Evaluation Request - BCForge</h1>
       </div>
       <div style="background: white; padding: 24px; border-radius: 0 0 8px 8px; border: 1px solid #e5e7eb;">

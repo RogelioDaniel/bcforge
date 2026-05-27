@@ -14,34 +14,34 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "BCForge — Business Central Performance: Double the Velocity, Half the Cost",
+  title: "BCForge — Business Central: Doble Velocidad, Mitad de Costo",
   description:
-    "Enterprise consulting for Business Central, Power Apps, and Power Automate. AI-driven framework slashes project timelines by 50%. Request your free automation audit.",
+    "Consultoría empresarial para Business Central, Power Apps y Power Automate. Nuestro framework con IA reduce tiempos de proyecto en 50%. Solicita tu auditoría gratuita.",
   keywords: [
     "Business Central",
     "Microsoft 365",
     "ERP",
     "Power Automate",
     "Power Apps",
-    "Enterprise Automation",
-    "Digital Transformation",
+    "Automatización Empresarial",
+    "Transformación Digital",
   ],
   authors: [{ name: "BCForge" }],
   icons: {
     icon: "/bcforge-logo.png",
   },
   openGraph: {
-    title: "BCForge — Double the Velocity, Half the Cost",
+    title: "BCForge — Doble Velocidad, Mitad de Costo",
     description:
-      "Enterprise consulting for Business Central, Power Apps, and Power Automate. AI-driven deployment in half the time.",
+      "Consultoría empresarial para Business Central, Power Apps y Power Automate. Implementación con IA en la mitad del tiempo.",
     siteName: "BCForge",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "BCForge — Double the Velocity, Half the Cost",
+    title: "BCForge — Doble Velocidad, Mitad de Costo",
     description:
-      "Enterprise consulting for Business Central, Power Apps, and Power Automate. AI-driven deployment in half the time.",
+      "Consultoría empresarial para Business Central, Power Apps y Power Automate. Implementación con IA en la mitad del tiempo.",
   },
 };
 
@@ -51,7 +51,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="es" suppressHydrationWarning>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background text-foreground`}
       >

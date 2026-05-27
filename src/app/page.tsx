@@ -14,6 +14,7 @@ import {
   Shield,
   Sparkles,
   TrendingUp,
+  MessageCircle,
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -34,34 +35,36 @@ const valuePillars = [
   {
     icon: Layers,
     title: 'Business Central',
-    subtitle: 'Enterprise Resource Planning',
-    description: 'Unified financial operations, supply chain, and project management — deployed in half the time.',
-    metrics: ['50% faster deployment', 'Unified operations', 'Real-time visibility'],
+    subtitle: 'Planeación de Recursos Empresariales',
+    description: 'Operaciones financieras unificadas, cadena de suministro y gestión de proyectos — implementados en la mitad del tiempo.',
+    metrics: ['50% más rápido', 'Operaciones unificadas', 'Visibilidad en tiempo real'],
   },
   {
     icon: Workflow,
     title: 'Power Automate',
-    subtitle: 'Intelligent Workflow Automation',
-    description: 'Eliminate manual processes. Our automations convert administrative overhead into operational velocity.',
-    metrics: ['80% less manual work', 'Zero-error processing', '24/7 execution'],
+    subtitle: 'Automatización Inteligente de Flujos',
+    description: 'Elimina procesos manuales. Nuestras automatizaciones convierten carga administrativa en velocidad operacional.',
+    metrics: ['80% menos trabajo manual', 'Procesamiento sin errores', 'Ejecución 24/7'],
   },
   {
     icon: Zap,
     title: 'Power Apps',
-    subtitle: 'Custom Enterprise Applications',
-    description: 'Purpose-built apps that integrate seamlessly with your Microsoft 365 ecosystem.',
-    metrics: ['60% cost reduction', 'Rapid deployment', 'Native integration'],
+    subtitle: 'Aplicaciones Empresariales a Medida',
+    description: 'Aplicaciones purpose-built que se integran perfectamente con tu ecosistema Microsoft 365.',
+    metrics: ['60% reducción de costos', 'Despliegue rápido', 'Integración nativa'],
   },
 ]
 
 const goalOptions = [
-  'Migration to Business Central',
-  'Process Automation',
-  'System Integration',
-  'Custom Application Development',
-  'Performance Optimization',
-  'General Consultation',
+  'Migración a Business Central',
+  'Automatización de Procesos',
+  'Integración de Sistemas',
+  'Desarrollo de Aplicaciones a Medida',
+  'Optimización de Rendimiento',
+  'Consultoría General',
 ]
+
+const WHATSAPP_NUMBER = '525617075485'
 
 /* ─── Navigation Dots ─── */
 function NavDots({ active, onNavigate }: { active: number; onNavigate: (i: number) => void }) {
@@ -72,7 +75,7 @@ function NavDots({ active, onNavigate }: { active: number; onNavigate: (i: numbe
           key={i}
           className={`nav-dot ${active === i ? 'active' : ''}`}
           onClick={() => onNavigate(i)}
-          aria-label={`Go to section ${i + 1}`}
+          aria-label={`Ir a sección ${i + 1}`}
         />
       ))}
     </div>
@@ -83,9 +86,8 @@ function NavDots({ active, onNavigate }: { active: number; onNavigate: (i: numbe
 function SlideExecutiveHook({ onCTA }: { onCTA: () => void }) {
   return (
     <section className="snap-section relative flex items-center justify-center overflow-hidden">
-      {/* Frosted glass overlay — vidrio templado effect */}
+      {/* Frosted glass overlay */}
       <div className="absolute inset-0 frosted-glass-overlay glass-edge-glow" />
-      {/* Extra gradient for readability on left side */}
       <div className="absolute inset-0 bg-gradient-to-r from-[#060d1b]/70 via-transparent to-transparent" />
 
       {/* Content */}
@@ -99,8 +101,8 @@ function SlideExecutiveHook({ onCTA }: { onCTA: () => void }) {
             className="mb-8"
           >
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/10 bg-white/[0.05] backdrop-blur-md">
-              <div className="w-1.5 h-1.5 rounded-full bg-[#4f8fff] animate-pulse-subtle" />
-              <span className="text-xs font-medium tracking-wider uppercase text-[#7d8fa8]">Microsoft 365 Expert Partners</span>
+              <div className="w-1.5 h-1.5 rounded-full bg-[#10b981] animate-pulse-subtle" />
+              <span className="text-xs font-medium tracking-wider uppercase text-[#7d8fa8]">Socios Expertos Microsoft 365</span>
             </div>
           </motion.div>
 
@@ -111,9 +113,9 @@ function SlideExecutiveHook({ onCTA }: { onCTA: () => void }) {
             transition={{ duration: 0.8, delay: 0.4 }}
             className="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold tracking-tight leading-[1.08] mb-6"
           >
-            Business Central Performance:{' '}
-            <span className="gradient-text">Double the Velocity,</span>{' '}
-            Half the Cost.
+            Rendimiento Business Central:{' '}
+            <span className="gradient-text">Doble Velocidad,</span>{' '}
+            Mitad de Costo.
           </motion.h1>
 
           {/* Subheadline */}
@@ -123,7 +125,7 @@ function SlideExecutiveHook({ onCTA }: { onCTA: () => void }) {
             transition={{ duration: 0.8, delay: 0.6 }}
             className="text-lg sm:text-xl text-[#7d8fa8] leading-relaxed max-w-2xl mb-10"
           >
-            We leverage proprietary AI within the Microsoft 365 ecosystem to accelerate deployment and maximize financial efficiency.
+            Aprovechamos IA propietaria dentro del ecosistema Microsoft 365 para acelerar implementaciones y maximizar la eficiencia financiera.
           </motion.p>
 
           {/* CTA */}
@@ -136,19 +138,19 @@ function SlideExecutiveHook({ onCTA }: { onCTA: () => void }) {
             <Button
               size="lg"
               onClick={onCTA}
-              className="bg-[#4f8fff] hover:bg-[#3b7eee] text-white font-semibold text-base px-8 h-13 rounded-lg hover:shadow-lg hover:shadow-[#4f8fff]/20 transition-all duration-300"
+              className="bg-[#10b981] hover:bg-[#059669] text-white font-semibold text-base px-8 h-13 rounded-lg hover:shadow-lg hover:shadow-[#10b981]/20 transition-all duration-300"
             >
-              Request Free Project Evaluation
+              Solicitar Evaluación Gratuita
               <ArrowRight className="w-5 h-5 ml-2" />
             </Button>
             <div className="flex items-center gap-6 text-sm text-[#7d8fa8]">
               <div className="flex items-center gap-2">
-                <Check className="w-4 h-4 text-[#4f8fff]" />
-                <span>No commitment</span>
+                <Check className="w-4 h-4 text-[#10b981]" />
+                <span>Sin compromiso</span>
               </div>
               <div className="flex items-center gap-2">
-                <Check className="w-4 h-4 text-[#4f8fff]" />
-                <span>48-hour response</span>
+                <Check className="w-4 h-4 text-[#10b981]" />
+                <span>Respuesta en 48h</span>
               </div>
             </div>
           </motion.div>
@@ -162,7 +164,7 @@ function SlideExecutiveHook({ onCTA }: { onCTA: () => void }) {
         animate={{ opacity: 1 }}
         transition={{ delay: 1.5, duration: 1 }}
       >
-        <span className="text-[10px] uppercase tracking-[0.2em] text-[#7d8fa8]/60">Scroll</span>
+        <span className="text-[10px] uppercase tracking-[0.2em] text-[#7d8fa8]/60">Desplazar</span>
         <motion.div
           animate={{ y: [0, 6, 0] }}
           transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
@@ -181,7 +183,7 @@ function SlideValueProposition() {
       {/* Frosted glass overlay */}
       <div className="absolute inset-0 frosted-glass-overlay glass-edge-glow" />
 
-      {/* Content - scrollable within snap section */}
+      {/* Content */}
       <div className="relative z-10 max-w-6xl mx-auto px-6 sm:px-8 lg:px-12 w-full max-h-screen overflow-y-auto scrollbar-hide py-12">
         {/* Section Header */}
         <motion.div
@@ -192,19 +194,19 @@ function SlideValueProposition() {
           className="text-center mb-10"
         >
           <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/10 bg-white/[0.05] backdrop-blur-md mb-5">
-            <Sparkles className="w-3 h-3 text-[#4f8fff]" />
-            <span className="text-[11px] font-medium tracking-wider uppercase text-[#7d8fa8]">Strategic Value</span>
+            <Sparkles className="w-3 h-3 text-[#10b981]" />
+            <span className="text-[11px] font-medium tracking-wider uppercase text-[#7d8fa8]">Valor Estratégico</span>
           </div>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight mb-4">
-            We don&apos;t just develop.{' '}
-            <span className="gradient-text">We optimize.</span>
+            No solo desarrollamos.{' '}
+            <span className="gradient-text">Optimizamos.</span>
           </h2>
           <p className="text-base sm:text-lg text-[#7d8fa8] max-w-2xl mx-auto leading-relaxed">
-            Our internal AI-driven framework slashes traditional project timelines by 50% — delivering measurable ROI from day one.
+            Nuestro framework interno impulsado por IA reduce los tiempos de proyecto tradicionales en un 50% — entregando ROI medible desde el día uno.
           </p>
         </motion.div>
 
-        {/* Value Pillars - Compact */}
+        {/* Value Pillars */}
         <div className="grid md:grid-cols-3 gap-4 mb-8">
           {valuePillars.map((pillar, i) => (
             <motion.div
@@ -213,11 +215,11 @@ function SlideValueProposition() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: i * 0.1 }}
-              className="group frosted-glass-content rounded-xl p-5 hover:border-[#4f8fff]/20 transition-all duration-500 glass-edge-glow"
+              className="group frosted-glass-content rounded-xl p-5 hover:border-[#10b981]/20 transition-all duration-500 glass-edge-glow"
             >
               <div className="flex items-center gap-3 mb-3">
-                <div className="w-9 h-9 rounded-lg bg-[#4f8fff]/10 border border-[#4f8fff]/15 flex items-center justify-center group-hover:bg-[#4f8fff]/15 transition-colors duration-300">
-                  <pillar.icon className="w-4 h-4 text-[#4f8fff]" />
+                <div className="w-9 h-9 rounded-lg bg-[#10b981]/10 border border-[#10b981]/15 flex items-center justify-center group-hover:bg-[#10b981]/15 transition-colors duration-300">
+                  <pillar.icon className="w-4 h-4 text-[#10b981]" />
                 </div>
                 <div>
                   <h3 className="text-sm font-semibold">{pillar.title}</h3>
@@ -228,7 +230,7 @@ function SlideValueProposition() {
               <div className="flex flex-wrap gap-x-3 gap-y-1">
                 {pillar.metrics.map((metric) => (
                   <div key={metric} className="flex items-center gap-1.5">
-                    <div className="w-1 h-1 rounded-full bg-[#4f8fff]" />
+                    <div className="w-1 h-1 rounded-full bg-[#10b981]" />
                     <span className="text-[10px] font-medium text-[#94a3b8]">{metric}</span>
                   </div>
                 ))}
@@ -237,7 +239,7 @@ function SlideValueProposition() {
           ))}
         </div>
 
-        {/* Pain Point Banner - Compact */}
+        {/* Pain Point Banner */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -245,19 +247,19 @@ function SlideValueProposition() {
           transition={{ duration: 0.6, delay: 0.3 }}
           className="relative rounded-xl overflow-hidden mb-8 frosted-glass-content glass-edge-glow"
         >
-          <div className="absolute inset-0 bg-gradient-to-r from-[#4f8fff]/[0.06] to-[#60a5fa]/[0.03]" />
-          <div className="absolute inset-0 border border-[#4f8fff]/10 rounded-xl" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#10b981]/[0.06] to-[#34d399]/[0.03]" />
+          <div className="absolute inset-0 border border-[#10b981]/10 rounded-xl" />
           <div className="relative p-4 sm:p-5 flex flex-col sm:flex-row items-start sm:items-center gap-4">
-            <div className="w-10 h-10 rounded-xl bg-[#4f8fff]/10 border border-[#4f8fff]/15 flex items-center justify-center shrink-0">
-              <TrendingUp className="w-5 h-5 text-[#4f8fff]" />
+            <div className="w-10 h-10 rounded-xl bg-[#10b981]/10 border border-[#10b981]/15 flex items-center justify-center shrink-0">
+              <TrendingUp className="w-5 h-5 text-[#10b981]" />
             </div>
             <div className="flex-1">
-              <h3 className="text-sm font-semibold mb-0.5">Eliminate Friction. Accelerate Growth.</h3>
+              <h3 className="text-sm font-semibold mb-0.5">Elimina Fricción. Acelera Crecimiento.</h3>
               <p className="text-xs text-[#7d8fa8] leading-relaxed">
-                We eliminate friction in financial operations and compliance workflows, transforming administrative bottlenecks into streamlined profit centers.
+                Eliminamos la fricción en operaciones financieras y flujos de cumplimiento, transformando cuellos de botella administrativos en centros de ganancia optimizados.
               </p>
             </div>
-            <Shield className="w-6 h-6 text-[#4f8fff]/20 shrink-0 hidden sm:block" />
+            <Shield className="w-6 h-6 text-[#10b981]/20 shrink-0 hidden sm:block" />
           </div>
         </motion.div>
 
@@ -290,7 +292,7 @@ function SlideCallToAction() {
           name: formData.name,
           company: formData.company,
           email: formData.email,
-          message: formData.goal ? `Primary Goal: ${formData.goal}` : '',
+          message: formData.goal ? `Objetivo Principal: ${formData.goal}` : '',
           interests: formData.goal ? [formData.goal] : [],
         }),
       })
@@ -306,11 +308,13 @@ function SlideCallToAction() {
     }
   }
 
+  const whatsappMessage = encodeURIComponent('Hola BCForge, me gustaría solicitar una evaluación gratuita de mi proyecto de Business Central.')
+  const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${whatsappMessage}`
+
   return (
     <section className="snap-section relative flex items-center justify-center overflow-hidden">
       {/* Frosted glass overlay */}
       <div className="absolute inset-0 frosted-glass-overlay glass-edge-glow" />
-      {/* Extra gradient for form side */}
       <div className="absolute inset-0 bg-gradient-to-l from-[#060d1b]/50 via-transparent to-transparent" />
 
       {/* Content */}
@@ -324,29 +328,29 @@ function SlideCallToAction() {
             transition={{ duration: 0.6 }}
           >
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/10 bg-white/[0.05] backdrop-blur-md mb-6">
-              <BarChart3 className="w-3 h-3 text-[#4f8fff]" />
-              <span className="text-[11px] font-medium tracking-wider uppercase text-[#7d8fa8]">Free Audit</span>
+              <BarChart3 className="w-3 h-3 text-[#10b981]" />
+              <span className="text-[11px] font-medium tracking-wider uppercase text-[#7d8fa8]">Auditoría Gratuita</span>
             </div>
 
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight mb-5 leading-[1.1]">
-              Secure Your Free{' '}
-              <span className="gradient-text">Automation Audit.</span>
+              Asegura Tu{' '}
+              <span className="gradient-text">Auditoría de Automatización.</span>
             </h2>
 
             <p className="text-base sm:text-lg text-[#7d8fa8] leading-relaxed mb-8 max-w-md">
-              Let&apos;s analyze your current migration, automation, or integration requirements. Discover how to cut operational time in half.
+              Analicemos tus requerimientos actuales de migración, automatización o integración. Descubre cómo reducir el tiempo operativo a la mitad.
             </p>
 
             {/* Trust indicators */}
             <div className="space-y-4 mb-8">
               {[
-                'Comprehensive process analysis within 48 hours',
-                'Actionable roadmap with measurable ROI projections',
-                'No commitment — pure strategic insight',
+                'Análisis integral de procesos en 48 horas',
+                'Hoja de ruta accionable con proyecciones de ROI medibles',
+                'Sin compromiso — pura visión estratégica',
               ].map((item) => (
                 <div key={item} className="flex items-start gap-3">
-                  <div className="w-5 h-5 rounded-full bg-[#4f8fff]/10 border border-[#4f8fff]/20 flex items-center justify-center shrink-0 mt-0.5">
-                    <Check className="w-3 h-3 text-[#4f8fff]" />
+                  <div className="w-5 h-5 rounded-full bg-[#10b981]/10 border border-[#10b981]/20 flex items-center justify-center shrink-0 mt-0.5">
+                    <Check className="w-3 h-3 text-[#10b981]" />
                   </div>
                   <span className="text-sm text-[#94a3b8]">{item}</span>
                 </div>
@@ -356,11 +360,11 @@ function SlideCallToAction() {
             {/* Closing statement */}
             <div className="executive-divider mb-4" />
             <p className="text-xs font-medium tracking-wider uppercase text-[#7d8fa8]/60">
-              Consultancy for Enterprise Efficiency — Microsoft 365 Expert Partners
+              Consultoría para Eficiencia Empresarial — Socios Expertos Microsoft 365
             </p>
           </motion.div>
 
-          {/* Right: Form */}
+          {/* Right: Form + WhatsApp */}
           <motion.div
             initial={{ opacity: 0, x: 30 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -374,52 +378,52 @@ function SlideCallToAction() {
                   animate={{ opacity: 1, scale: 1 }}
                   className="text-center py-10"
                 >
-                  <div className="w-14 h-14 rounded-xl bg-[#4f8fff]/10 border border-[#4f8fff]/20 flex items-center justify-center mx-auto mb-4">
-                    <Check className="w-7 h-7 text-[#4f8fff]" />
+                  <div className="w-14 h-14 rounded-xl bg-[#10b981]/10 border border-[#10b981]/20 flex items-center justify-center mx-auto mb-4">
+                    <Check className="w-7 h-7 text-[#10b981]" />
                   </div>
-                  <h3 className="text-xl font-semibold mb-2">Evaluation Request Received</h3>
-                  <p className="text-sm text-[#7d8fa8]">Our team will be in touch within 48 hours.</p>
+                  <h3 className="text-xl font-semibold mb-2">Solicitud de Evaluación Recibida</h3>
+                  <p className="text-sm text-[#7d8fa8]">Nuestro equipo se pondrá en contacto en 48 horas.</p>
                 </motion.div>
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-5">
                   <div>
-                    <label className="text-xs font-medium text-[#94a3b8] mb-1.5 block">Full Name *</label>
+                    <label className="text-xs font-medium text-[#94a3b8] mb-1.5 block">Nombre Completo *</label>
                     <Input
                       required
                       value={formData.name}
                       onChange={(e) => setFormData(prev => ({ ...prev, name: e.target.value }))}
-                      placeholder="John Mitchell"
-                      className="h-11 bg-white/[0.04] border-white/[0.08] rounded-lg placeholder:text-[#7d8fa8]/40 focus:border-[#4f8fff]/30 focus:ring-[#4f8fff]/10 transition-all"
+                      placeholder="Juan García"
+                      className="h-11 bg-white/[0.04] border-white/[0.08] rounded-lg placeholder:text-[#7d8fa8]/40 focus:border-[#10b981]/30 focus:ring-[#10b981]/10 transition-all"
                     />
                   </div>
                   <div>
-                    <label className="text-xs font-medium text-[#94a3b8] mb-1.5 block">Company</label>
+                    <label className="text-xs font-medium text-[#94a3b8] mb-1.5 block">Empresa</label>
                     <Input
                       value={formData.company}
                       onChange={(e) => setFormData(prev => ({ ...prev, company: e.target.value }))}
-                      placeholder="Acme Corporation"
-                      className="h-11 bg-white/[0.04] border-white/[0.08] rounded-lg placeholder:text-[#7d8fa8]/40 focus:border-[#4f8fff]/30 focus:ring-[#4f8fff]/10 transition-all"
+                      placeholder="Mi Empresa S.A. de C.V."
+                      className="h-11 bg-white/[0.04] border-white/[0.08] rounded-lg placeholder:text-[#7d8fa8]/40 focus:border-[#10b981]/30 focus:ring-[#10b981]/10 transition-all"
                     />
                   </div>
                   <div>
-                    <label className="text-xs font-medium text-[#94a3b8] mb-1.5 block">Business Email *</label>
+                    <label className="text-xs font-medium text-[#94a3b8] mb-1.5 block">Correo Corporativo *</label>
                     <Input
                       required
                       type="email"
                       value={formData.email}
                       onChange={(e) => setFormData(prev => ({ ...prev, email: e.target.value }))}
-                      placeholder="john@company.com"
-                      className="h-11 bg-white/[0.04] border-white/[0.08] rounded-lg placeholder:text-[#7d8fa8]/40 focus:border-[#4f8fff]/30 focus:ring-[#4f8fff]/10 transition-all"
+                      placeholder="juan@empresa.com"
+                      className="h-11 bg-white/[0.04] border-white/[0.08] rounded-lg placeholder:text-[#7d8fa8]/40 focus:border-[#10b981]/30 focus:ring-[#10b981]/10 transition-all"
                     />
                   </div>
                   <div>
-                    <label className="text-xs font-medium text-[#94a3b8] mb-1.5 block">Primary Goal</label>
+                    <label className="text-xs font-medium text-[#94a3b8] mb-1.5 block">Objetivo Principal</label>
                     <select
                       value={formData.goal}
                       onChange={(e) => setFormData(prev => ({ ...prev, goal: e.target.value }))}
-                      className="executive-select w-full h-11 bg-white/[0.04] border border-white/[0.08] rounded-lg text-sm text-foreground focus:border-[#4f8fff]/30 focus:ring-1 focus:ring-[#4f8fff]/10 focus:outline-none transition-all"
+                      className="executive-select w-full h-11 bg-white/[0.04] border border-white/[0.08] rounded-lg text-sm text-foreground focus:border-[#10b981]/30 focus:ring-1 focus:ring-[#10b981]/10 focus:outline-none transition-all"
                     >
-                      <option value="" className="bg-[#0c1829]">Select your primary objective</option>
+                      <option value="" className="bg-[#0c1829]">Selecciona tu objetivo principal</option>
                       {goalOptions.map((opt) => (
                         <option key={opt} value={opt} className="bg-[#0c1829]">{opt}</option>
                       ))}
@@ -429,7 +433,7 @@ function SlideCallToAction() {
                   <Button
                     type="submit"
                     disabled={formStatus === 'sending'}
-                    className="w-full h-12 bg-[#4f8fff] hover:bg-[#3b7eee] text-white font-semibold text-base rounded-lg hover:shadow-lg hover:shadow-[#4f8fff]/20 transition-all duration-300 mt-2"
+                    className="w-full h-12 bg-[#10b981] hover:bg-[#059669] text-white font-semibold text-base rounded-lg hover:shadow-lg hover:shadow-[#10b981]/20 transition-all duration-300 mt-2"
                   >
                     {formStatus === 'sending' ? (
                       <span className="flex items-center gap-2">
@@ -438,20 +442,31 @@ function SlideCallToAction() {
                           animate={{ rotate: 360 }}
                           transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
                         />
-                        Processing...
+                        Procesando...
                       </span>
                     ) : formStatus === 'error' ? (
-                      'Error — Please try again'
+                      'Error — Por favor intenta de nuevo'
                     ) : (
                       <span className="flex items-center gap-2">
-                        Request Free Audit
+                        Solicitar Auditoría Gratuita
                         <Send className="w-4 h-4" />
                       </span>
                     )}
                   </Button>
 
+                  {/* WhatsApp Button */}
+                  <a
+                    href={whatsappUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-full h-12 bg-[#25D366] hover:bg-[#1fb855] text-white font-semibold text-base rounded-lg hover:shadow-lg hover:shadow-[#25D366]/20 transition-all duration-300 mt-1 flex items-center justify-center gap-2"
+                  >
+                    <MessageCircle className="w-5 h-5" />
+                    Contactar por WhatsApp
+                  </a>
+
                   <p className="text-[10px] text-[#7d8fa8]/50 text-center">
-                    By submitting, you agree to receive communications from BCForge. No spam.
+                    Al enviar, aceptas recibir comunicaciones de BCForge. Sin spam.
                   </p>
                 </form>
               )}
@@ -478,7 +493,6 @@ export default function Home() {
     }
   }, [])
 
-  // Track active section via IntersectionObserver
   useEffect(() => {
     if (!mounted) return
     const container = containerRef.current
@@ -501,7 +515,6 @@ export default function Home() {
     return () => observer.disconnect()
   }, [mounted])
 
-  // Keyboard navigation
   useEffect(() => {
     if (!mounted) return
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -523,13 +536,8 @@ export default function Home() {
 
   return (
     <>
-      {/* Fixed Three.js Gear Background — persists across all slides */}
       <GearBackground activeSlide={activeSection} />
-
-      {/* Navigation dots */}
       {mounted && <NavDots active={activeSection} onNavigate={handleNavigate} />}
-
-      {/* Snap scroll content — each section has its own frosted glass overlay */}
       <div ref={containerRef} className="snap-container">
         <SlideExecutiveHook onCTA={handleCTA} />
         <SlideValueProposition />

@@ -10,8 +10,6 @@ import {
   CartesianGrid,
   Tooltip,
   ResponsiveContainer,
-  LineChart,
-  Line,
   Area,
   AreaChart,
 } from 'recharts'
@@ -27,7 +25,6 @@ function useMounted(): boolean {
 
 /* ─── Chart Data ─── */
 
-// Cost Reduction: Before vs After BCForge implementation
 const costData = [
   { category: 'ERP\nLicencias', before: 100, after: 52, savings: 48 },
   { category: 'Implementación', before: 85, after: 40, savings: 45 },
@@ -36,7 +33,6 @@ const costData = [
   { category: 'Cumplimiento\nSAT', before: 90, after: 18, savings: 72 },
 ]
 
-// Development Time Acceleration: Traditional vs BCForge
 const timelineData = [
   { phase: 'Análisis', traditional: 8, bcforge: 4 },
   { phase: 'Diseño', traditional: 12, bcforge: 5 },
@@ -46,7 +42,6 @@ const timelineData = [
   { phase: 'Go-Live', traditional: 4, bcforge: 2 },
 ]
 
-// ROI over time
 const roiData = [
   { month: 'Mes 1', roi: -15 },
   { month: 'Mes 3', roi: 5 },
@@ -56,7 +51,7 @@ const roiData = [
   { month: 'Mes 18', roi: 210 },
 ]
 
-/* ─── Custom Tooltip ─── */
+/* ─── Custom Tooltips ─── */
 function CustomTooltip({ active, payload, label }: { active?: boolean; payload?: Array<{ value: number; name: string; color: string }>; label?: string }) {
   if (!active || !payload) return null
   return (
@@ -90,7 +85,7 @@ function CostReductionChart({ animate }: { animate: boolean }) {
   return (
     <ResponsiveContainer width="100%" height={220}>
       <BarChart data={costData} barGap={3} barCategoryGap="20%">
-        <CartesianGrid strokeDasharray="3 3" stroke="rgba(79,143,255,0.06)" vertical={false} />
+        <CartesianGrid strokeDasharray="3 3" stroke="rgba(16,185,129,0.06)" vertical={false} />
         <XAxis
           dataKey="category"
           tick={{ fill: '#7d8fa8', fontSize: 9 }}
@@ -117,7 +112,7 @@ function CostReductionChart({ animate }: { animate: boolean }) {
         <Bar
           dataKey="after"
           name="Con BCForge"
-          fill="#4f8fff"
+          fill="#10b981"
           radius={[3, 3, 0, 0]}
           isAnimationActive={animate}
           animationDuration={1400}
@@ -133,7 +128,7 @@ function TimelineChart({ animate }: { animate: boolean }) {
   return (
     <ResponsiveContainer width="100%" height={220}>
       <BarChart data={timelineData} barGap={3} barCategoryGap="20%" layout="vertical">
-        <CartesianGrid strokeDasharray="3 3" stroke="rgba(79,143,255,0.06)" horizontal={false} />
+        <CartesianGrid strokeDasharray="3 3" stroke="rgba(16,185,129,0.06)" horizontal={false} />
         <XAxis
           type="number"
           tick={{ fill: '#7d8fa8', fontSize: 9 }}
@@ -177,7 +172,7 @@ function TimelineChart({ animate }: { animate: boolean }) {
         <Bar
           dataKey="bcforge"
           name="BCForge"
-          fill="#60a5fa"
+          fill="#34d399"
           radius={[0, 3, 3, 0]}
           isAnimationActive={animate}
           animationDuration={1400}
@@ -195,11 +190,11 @@ function RoiChart({ animate }: { animate: boolean }) {
       <AreaChart data={roiData}>
         <defs>
           <linearGradient id="roiGradient" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="#4f8fff" stopOpacity={0.25} />
-            <stop offset="100%" stopColor="#4f8fff" stopOpacity={0} />
+            <stop offset="0%" stopColor="#10b981" stopOpacity={0.25} />
+            <stop offset="100%" stopColor="#10b981" stopOpacity={0} />
           </linearGradient>
         </defs>
-        <CartesianGrid strokeDasharray="3 3" stroke="rgba(79,143,255,0.06)" vertical={false} />
+        <CartesianGrid strokeDasharray="3 3" stroke="rgba(16,185,129,0.06)" vertical={false} />
         <XAxis
           dataKey="month"
           tick={{ fill: '#7d8fa8', fontSize: 9 }}
@@ -218,7 +213,7 @@ function RoiChart({ animate }: { animate: boolean }) {
           type="monotone"
           dataKey="roi"
           name="ROI"
-          stroke="#4f8fff"
+          stroke="#10b981"
           strokeWidth={2}
           fill="url(#roiGradient)"
           isAnimationActive={animate}
@@ -251,9 +246,9 @@ export function ExecutiveChartsSection() {
               <h4 className="text-sm font-semibold text-white/90">Reducción de Costos</h4>
               <p className="text-[10px] text-[#7d8fa8] mt-0.5">Antes vs. con implementación BCForge</p>
             </div>
-            <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#4f8fff]/10 border border-[#4f8fff]/15">
-              <span className="text-[10px] font-bold text-[#4f8fff]">-60%</span>
-              <span className="text-[9px] text-[#7d8fa8]">avg</span>
+            <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#10b981]/10 border border-[#10b981]/15">
+              <span className="text-[10px] font-bold text-[#10b981]">-60%</span>
+              <span className="text-[9px] text-[#7d8fa8]">prom</span>
             </div>
           </div>
           <CostReductionChart animate={mounted} />
@@ -263,7 +258,7 @@ export function ExecutiveChartsSection() {
               <span className="text-[9px] text-[#7d8fa8]">Costo Actual</span>
             </div>
             <div className="flex items-center gap-1.5">
-              <div className="w-2.5 h-2.5 rounded-sm bg-[#4f8fff]" />
+              <div className="w-2.5 h-2.5 rounded-sm bg-[#10b981]" />
               <span className="text-[9px] text-[#7d8fa8]">Con BCForge</span>
             </div>
           </div>
@@ -282,8 +277,8 @@ export function ExecutiveChartsSection() {
               <h4 className="text-sm font-semibold text-white/90">Aceleración de Tiempos</h4>
               <p className="text-[10px] text-[#7d8fa8] mt-0.5">Semanas: Desarrollo tradicional vs. BCForge</p>
             </div>
-            <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#60a5fa]/10 border border-[#60a5fa]/15">
-              <span className="text-[10px] font-bold text-[#60a5fa]">-57%</span>
+            <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#34d399]/10 border border-[#34d399]/15">
+              <span className="text-[10px] font-bold text-[#34d399]">-57%</span>
               <span className="text-[9px] text-[#7d8fa8]">más rápido</span>
             </div>
           </div>
@@ -294,7 +289,7 @@ export function ExecutiveChartsSection() {
               <span className="text-[9px] text-[#7d8fa8]">Tradicional</span>
             </div>
             <div className="flex items-center gap-1.5">
-              <div className="w-2.5 h-2.5 rounded-sm bg-[#60a5fa]" />
+              <div className="w-2.5 h-2.5 rounded-sm bg-[#34d399]" />
               <span className="text-[9px] text-[#7d8fa8]">BCForge</span>
             </div>
           </div>
@@ -314,8 +309,8 @@ export function ExecutiveChartsSection() {
             <h4 className="text-sm font-semibold text-white/90">Retorno de Inversión</h4>
             <p className="text-[10px] text-[#7d8fa8] mt-0.5">Proyección ROI acumulado a 18 meses</p>
           </div>
-          <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-green-500/10 border border-green-500/15">
-            <span className="text-[10px] font-bold text-green-400">+210%</span>
+          <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#10b981]/10 border border-[#10b981]/15">
+            <span className="text-[10px] font-bold text-[#10b981]">+210%</span>
             <span className="text-[9px] text-[#7d8fa8]">a 18 meses</span>
           </div>
         </div>
