@@ -109,60 +109,151 @@ function pickRandom<T>(arr: T[]): T {
   return arr[Math.floor(Math.random() * arr.length)]
 }
 
+// Get the pitch radius (where teeth mesh) — outer radius + half tooth depth
+function getPitchRadius(config: { outerRadius: number; toothDepth: number }): number {
+  return config.outerRadius + config.toothDepth * 0.5
+}
+
+// Check if a new gear would overlap any existing gear (2D XY check)
+function hasOverlap(
+  newPos: [number, number, number],
+  newOuterR: number,
+  newToothDepth: number,
+  existing: GearConfig[],
+  margin: number = 0.05,
+): boolean {
+  const newPitch = newOuterR + newToothDepth * 0.5
+  for (const gear of existing) {
+    const existingPitch = getPitchRadius(gear)
+    const dx = newPos[0] - gear.position[0]
+    const dy = newPos[1] - gear.position[1]
+    const dist2D = Math.sqrt(dx * dx + dy * dy)
+    // Overlap if distance is less than sum of pitch radii minus a small gap
+    const minDist = newPitch + existingPitch - margin
+    if (dist2D < minDist) return true
+  }
+  return false
+}
+
+// Check if a position is within the visible area bounds
+function isInBounds(pos: [number, number, number], outerR: number): boolean {
+  const bound = 5.5
+  return (
+    pos[0] - outerR > -bound &&
+    pos[0] + outerR < bound &&
+    pos[1] - outerR > -bound &&
+    pos[1] + outerR < bound
+  )
+}
+
 function generateRandomGears(count: number): GearConfig[] {
   const configs: GearConfig[] = []
 
-  // First gear is always a big central one
-  configs.push({
-    position: [rand(-1, 1), rand(-0.5, 0.5), rand(-0.5, 0.5)],
-    rotation: [rand(-0.1, 0.1), rand(-0.1, 0.1), 0],
-    innerRadius: rand(0.3, 0.6),
-    outerRadius: rand(1.2, 2.2),
-    teeth: Math.floor(rand(18, 32)),
-    toothDepth: rand(0.12, 0.22),
-    thickness: rand(0.25, 0.5),
-    speed: rand(0.15, 0.35),
-    direction: Math.random() > 0.5 ? 1 : -1,
-    color: pickRandom(GEAR_COLORS),
-    emissiveColor: pickRandom(EMISSIVE_COLORS),
-    emissiveIntensity: rand(0.04, 0.12),
-    metalness: rand(0.85, 0.95),
-    roughness: rand(0.1, 0.22),
-    castShadow: true,
-  })
-
-  // Generate remaining gears scattered around
-  for (let i = 1; i < count; i++) {
-    const isLarge = Math.random() > 0.7
-    const outerR = isLarge ? rand(1.0, 2.2) : rand(0.3, 1.0)
-    const innerR = outerR * rand(0.15, 0.35)
+  // Helper to create a random gear shape config
+  function makeGearShape(isLarge: boolean) {
+    const outerR = isLarge ? rand(1.0, 1.8) : rand(0.35, 0.9)
+    const innerR = outerR * rand(0.18, 0.3)
     const teethCount = Math.max(8, Math.floor(outerR * rand(10, 16)))
+    const toothDepth = isLarge ? rand(0.1, 0.18) : rand(0.05, 0.14)
+    return { innerR, outerR, teethCount, toothDepth }
+  }
 
-    configs.push({
-      position: [
-        rand(-5, 5),
-        rand(-3.5, 3.5),
-        rand(-3, 1.5),
-      ],
-      rotation: [
-        rand(-0.3, 0.3),
-        rand(-0.3, 0.3),
-        rand(-0.1, 0.1),
-      ],
-      innerRadius: innerR,
-      outerRadius: outerR,
-      teeth: teethCount,
-      toothDepth: rand(0.06, 0.2),
-      thickness: rand(0.15, 0.45),
-      speed: rand(0.1, 0.9),
-      direction: Math.random() > 0.5 ? 1 : -1,
+  // Helper to create full gear config with position
+  function makeGear(
+    shape: { innerR: number; outerR: number; teethCount: number; toothDepth: number },
+    position: [number, number, number],
+    parentDirection: 1 | -1 = 1,
+    isLarge: boolean = false,
+  ): GearConfig {
+    return {
+      position,
+      rotation: [rand(-0.2, 0.2), rand(-0.2, 0.2), 0],
+      innerRadius: shape.innerR,
+      outerRadius: shape.outerR,
+      teeth: shape.teethCount,
+      toothDepth: shape.toothDepth,
+      thickness: rand(0.2, 0.45),
+      speed: rand(0.15, 0.7),
+      direction: (parentDirection * -1) as 1 | -1, // Meshing gears rotate opposite
       color: pickRandom(GEAR_COLORS),
       emissiveColor: pickRandom(EMISSIVE_COLORS),
-      emissiveIntensity: rand(0.02, 0.2),
-      metalness: rand(0.82, 0.95),
-      roughness: rand(0.1, 0.28),
+      emissiveIntensity: rand(0.03, 0.15),
+      metalness: rand(0.84, 0.95),
+      roughness: rand(0.1, 0.25),
       castShadow: isLarge,
-    })
+    }
+  }
+
+  // ═══ Step 1: Place the central (root) gear ═══
+  const rootShape = makeGearShape(true)
+  const rootGear = makeGear(rootShape, [0, 0, rand(-0.3, 0.3)], 1, true)
+  rootGear.speed = rand(0.15, 0.3)
+  rootGear.direction = 1
+  configs.push(rootGear)
+
+  // ═══ Step 2: Grow the gear network by attaching to existing gears ═══
+  // Each new gear tries to mesh with a random existing gear at its teeth
+  const maxAttempts = 50
+
+  for (let i = 1; i < count; i++) {
+    const isLarge = Math.random() > 0.75
+    const shape = makeGearShape(isLarge)
+    const newPitch = shape.outerR + shape.toothDepth * 0.5
+
+    let placed = false
+
+    // Try multiple times to find a valid meshing position
+    for (let attempt = 0; attempt < maxAttempts; attempt++) {
+      // Pick a random existing gear to mesh with
+      const parentIdx = Math.floor(Math.random() * configs.length)
+      const parent = configs[parentIdx]
+      const parentPitch = getPitchRadius(parent)
+
+      // Ideal meshing distance: sum of pitch radii (teeth interlock)
+      // Add small random offset so teeth don't perfectly align every time
+      const meshDist = parentPitch + newPitch + rand(-0.02, 0.05)
+
+      // Random angle around the parent gear
+      const angle = rand(0, Math.PI * 2)
+
+      // Calculate position
+      const newX = parent.position[0] + Math.cos(angle) * meshDist
+      const newY = parent.position[1] + Math.sin(angle) * meshDist
+      // Slight Z offset for depth variation
+      const newZ = parent.position[2] + rand(-0.8, 0.8)
+
+      const newPos: [number, number, number] = [newX, newY, newZ]
+
+      // Check bounds
+      if (!isInBounds(newPos, shape.outerR)) continue
+
+      // Check overlap with ALL existing gears (with a small margin for the meshing gap)
+      if (hasOverlap(newPos, shape.outerR, shape.toothDepth, configs, 0.08)) continue
+
+      // Valid position found — create the gear
+      const gear = makeGear(shape, newPos, parent.direction, isLarge)
+      configs.push(gear)
+      placed = true
+      break
+    }
+
+    // If we couldn't place meshing, try a random position as fallback (sparse)
+    if (!placed) {
+      for (let attempt = 0; attempt < 30; attempt++) {
+        const fallbackPos: [number, number, number] = [
+          rand(-4.5, 4.5),
+          rand(-3.5, 3.5),
+          rand(-2, 1),
+        ]
+        if (!isInBounds(fallbackPos, shape.outerR)) continue
+        if (hasOverlap(fallbackPos, shape.outerR, shape.toothDepth, configs, 0.1)) continue
+
+        const gear = makeGear(shape, fallbackPos, 1, isLarge)
+        configs.push(gear)
+        placed = true
+        break
+      }
+    }
   }
 
   return configs
