@@ -17,7 +17,7 @@ import {
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import { MedusaWave } from '@/components/MedusaWave'
+import { GearBackground } from '@/components/GearScene'
 import { ExecutiveChartsSection } from '@/components/ExecutiveCharts'
 
 /* ─── useMounted Hook ─── */
@@ -79,22 +79,14 @@ function NavDots({ active, onNavigate }: { active: number; onNavigate: (i: numbe
   )
 }
 
-/* ─── Section 1: Executive Hook with Medusa Wave ─── */
+/* ─── Section 1: Executive Hook ─── */
 function SlideExecutiveHook({ onCTA }: { onCTA: () => void }) {
   return (
     <section className="snap-section relative flex items-center justify-center overflow-hidden">
-      {/* Background layers */}
-      <div className="absolute inset-0 bg-gradient-to-br from-[#060d1b] via-[#0a1628] to-[#0f1d32]" />
-      <div className="absolute inset-0 dot-pattern opacity-40" />
-
-      {/* Medusa Wave Background */}
-      <div className="absolute inset-0 opacity-[0.45]">
-        <MedusaWave className="w-full h-full" />
-      </div>
-
-      {/* Dark overlay for readability */}
-      <div className="absolute inset-0 bg-gradient-to-r from-[#060d1b]/90 via-[#060d1b]/60 to-[#060d1b]/40" />
-      <div className="absolute inset-0 bg-gradient-to-t from-[#060d1b] via-transparent to-[#060d1b]/40" />
+      {/* Frosted glass overlay — vidrio templado effect */}
+      <div className="absolute inset-0 frosted-glass-overlay glass-edge-glow" />
+      {/* Extra gradient for readability on left side */}
+      <div className="absolute inset-0 bg-gradient-to-r from-[#060d1b]/70 via-transparent to-transparent" />
 
       {/* Content */}
       <div className="relative z-10 max-w-6xl mx-auto px-6 sm:px-8 lg:px-12">
@@ -106,7 +98,7 @@ function SlideExecutiveHook({ onCTA }: { onCTA: () => void }) {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="mb-8"
           >
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/10 bg-white/[0.03] backdrop-blur-sm">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-white/10 bg-white/[0.05] backdrop-blur-md">
               <div className="w-1.5 h-1.5 rounded-full bg-[#4f8fff] animate-pulse-subtle" />
               <span className="text-xs font-medium tracking-wider uppercase text-[#7d8fa8]">Microsoft 365 Expert Partners</span>
             </div>
@@ -165,7 +157,7 @@ function SlideExecutiveHook({ onCTA }: { onCTA: () => void }) {
 
       {/* Scroll indicator */}
       <motion.div
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 z-10"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1.5, duration: 1 }}
@@ -186,10 +178,8 @@ function SlideExecutiveHook({ onCTA }: { onCTA: () => void }) {
 function SlideValueProposition() {
   return (
     <section className="snap-section relative flex items-center justify-center overflow-hidden">
-      {/* Background */}
-      <div className="absolute inset-0 bg-gradient-to-b from-[#060d1b] via-[#0a1628] to-[#0c1829]" />
-      <div className="absolute inset-0 grid-pattern opacity-30" />
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-[#4f8fff]/[0.03] rounded-full blur-[120px]" />
+      {/* Frosted glass overlay */}
+      <div className="absolute inset-0 frosted-glass-overlay glass-edge-glow" />
 
       {/* Content - scrollable within snap section */}
       <div className="relative z-10 max-w-6xl mx-auto px-6 sm:px-8 lg:px-12 w-full max-h-screen overflow-y-auto scrollbar-hide py-12">
@@ -201,7 +191,7 @@ function SlideValueProposition() {
           transition={{ duration: 0.6 }}
           className="text-center mb-10"
         >
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/10 bg-white/[0.03] mb-5">
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/10 bg-white/[0.05] backdrop-blur-md mb-5">
             <Sparkles className="w-3 h-3 text-[#4f8fff]" />
             <span className="text-[11px] font-medium tracking-wider uppercase text-[#7d8fa8]">Strategic Value</span>
           </div>
@@ -223,7 +213,7 @@ function SlideValueProposition() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: i * 0.1 }}
-              className="group glass-card rounded-xl p-5 hover:border-[#4f8fff]/20 transition-all duration-500"
+              className="group frosted-glass-content rounded-xl p-5 hover:border-[#4f8fff]/20 transition-all duration-500 glass-edge-glow"
             >
               <div className="flex items-center gap-3 mb-3">
                 <div className="w-9 h-9 rounded-lg bg-[#4f8fff]/10 border border-[#4f8fff]/15 flex items-center justify-center group-hover:bg-[#4f8fff]/15 transition-colors duration-300">
@@ -253,7 +243,7 @@ function SlideValueProposition() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.3 }}
-          className="relative rounded-xl overflow-hidden mb-8"
+          className="relative rounded-xl overflow-hidden mb-8 frosted-glass-content glass-edge-glow"
         >
           <div className="absolute inset-0 bg-gradient-to-r from-[#4f8fff]/[0.06] to-[#60a5fa]/[0.03]" />
           <div className="absolute inset-0 border border-[#4f8fff]/10 rounded-xl" />
@@ -318,10 +308,10 @@ function SlideCallToAction() {
 
   return (
     <section className="snap-section relative flex items-center justify-center overflow-hidden">
-      {/* Background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-[#0a1628] via-[#060d1b] to-[#0c1829]" />
-      <div className="absolute inset-0 dot-pattern opacity-20" />
-      <div className="absolute bottom-0 right-1/4 w-[600px] h-[600px] bg-[#4f8fff]/[0.03] rounded-full blur-[150px]" />
+      {/* Frosted glass overlay */}
+      <div className="absolute inset-0 frosted-glass-overlay glass-edge-glow" />
+      {/* Extra gradient for form side */}
+      <div className="absolute inset-0 bg-gradient-to-l from-[#060d1b]/50 via-transparent to-transparent" />
 
       {/* Content */}
       <div className="relative z-10 max-w-6xl mx-auto px-6 sm:px-8 lg:px-12 w-full">
@@ -333,7 +323,7 @@ function SlideCallToAction() {
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
           >
-            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/10 bg-white/[0.03] mb-6">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/10 bg-white/[0.05] backdrop-blur-md mb-6">
               <BarChart3 className="w-3 h-3 text-[#4f8fff]" />
               <span className="text-[11px] font-medium tracking-wider uppercase text-[#7d8fa8]">Free Audit</span>
             </div>
@@ -377,7 +367,7 @@ function SlideCallToAction() {
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.2 }}
           >
-            <div className="glass-card rounded-2xl p-6 sm:p-8">
+            <div className="frosted-glass-content glass-edge-glow rounded-2xl p-6 sm:p-8">
               {formStatus === 'sent' ? (
                 <motion.div
                   initial={{ opacity: 0, scale: 0.95 }}
@@ -533,8 +523,13 @@ export default function Home() {
 
   return (
     <>
+      {/* Fixed Three.js Gear Background — persists across all slides */}
+      <GearBackground activeSlide={activeSection} />
+
+      {/* Navigation dots */}
       {mounted && <NavDots active={activeSection} onNavigate={handleNavigate} />}
 
+      {/* Snap scroll content — each section has its own frosted glass overlay */}
       <div ref={containerRef} className="snap-container">
         <SlideExecutiveHook onCTA={handleCTA} />
         <SlideValueProposition />
