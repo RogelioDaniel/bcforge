@@ -1,29 +1,27 @@
 ---
 Task ID: 1
-Agent: Main
-Task: Complete executive redesign of BCForge landing page
+Agent: Main Agent
+Task: Add medusa wave animation and executive charts to BCForge landing page
 
 Work Log:
-- Analyzed user requirements for C-suite targeting (CEOs, CFOs, Sales Directors)
-- Designed Deep Navy + Steel Grey + Tech Blue accent color palette
-- Rewrote globals.css with executive corporate minimalist theme
-- Rewrote page.tsx as 3-slide snap-scroll experience:
-  - Slide 1: Executive Hook with globe background
-  - Slide 2: Strategic Value Proposition (BC, Power Automate, Power Apps)
-  - Slide 3: High-Conversion CTA with minimalist form
-- Updated Globe.tsx from emerald/green to blue accent palette
-- Updated API route email template to match new branding
-- Updated layout.tsx metadata and lang attribute
-- Added navigation dots with IntersectionObserver
-- Added keyboard navigation (Arrow Up/Down, PageUp/PageDown)
-- Removed all technical jargon, SAT references, specific country tax mentions
-- Focused copy on ROI, velocity, cost reduction, operational agility
+- Analyzed two uploaded reference images using VLM skill
+- First image: Current slide 2 design (Strategic Value Proposition)
+- Second image: Radial concentric pattern with curved white lines on dark background (medusa/jellyfish effect)
+- Created MedusaWave component (src/components/MedusaWave.tsx) - Canvas 2D animation with radial lines emanating from center, undulating like jellyfish tentacles, with concentric circles and subtle outer dots
+- Created ExecutiveCharts component (src/components/ExecutiveCharts.tsx) with three charts:
+  1. Cost Reduction Bar Chart (Before vs After BCForge implementation)
+  2. Development Time Acceleration Horizontal Bar Chart (Traditional vs BCForge timelines)
+  3. ROI Area Chart (18-month projection)
+- Updated page.tsx to replace Globe with MedusaWave on Slide 1
+- Updated page.tsx Slide 2 to include ExecutiveChartsSection below value pillars
+- Made Slide 2 content scrollable within snap section to accommodate charts
+- Compactified value pillars and pain point banner to make room for charts
+- Lint check passed with no errors
+- Dev server compiling successfully
 
 Stage Summary:
-- Complete redesign from technical landing page to executive snap-scroll experience
-- Color palette: Deep Navy (#060d1b), Steel Grey (#7d8fa8), Tech Blue (#4f8fff)
-- 3 full-screen sections with snap-scroll navigation
-- Form: Name, Company, Email, Primary Goal (dropdown)
-- Three.js globe recolored to blue and used as subtle background element
-- No hydration errors (useMounted hook pattern)
-- Linting passes with zero errors
+- MedusaWave canvas animation replaces Three.js Globe on Slide 1 background
+- Three data-driven charts added to Slide 2: Cost Reduction, Timeline Acceleration, ROI projection
+- Charts use Recharts library with custom glass-card tooltips
+- Charts show key metrics: -60% avg cost reduction, -57% faster development, +210% ROI at 18 months
+- Page compiles and runs without errors

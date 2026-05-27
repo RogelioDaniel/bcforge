@@ -1,26 +1,24 @@
 'use client'
 
 import { useState, useEffect, useRef, useCallback, useSyncExternalStore } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion } from 'framer-motion'
 import {
   ArrowRight,
   Zap,
   BarChart3,
-  ArrowRightLeft,
   ChevronDown,
   Check,
-  Cog,
   Send,
-  Globe as GlobeIcon,
-  TrendingUp,
   Workflow,
   Layers,
   Shield,
   Sparkles,
+  TrendingUp,
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import { Globe } from '@/components/Globe'
+import { MedusaWave } from '@/components/MedusaWave'
+import { ExecutiveChartsSection } from '@/components/ExecutiveCharts'
 
 /* ─── useMounted Hook ─── */
 function useMounted(): boolean {
@@ -37,21 +35,21 @@ const valuePillars = [
     icon: Layers,
     title: 'Business Central',
     subtitle: 'Enterprise Resource Planning',
-    description: 'Unified financial operations, supply chain, and project management — deployed in half the time with our AI-accelerated framework.',
+    description: 'Unified financial operations, supply chain, and project management — deployed in half the time.',
     metrics: ['50% faster deployment', 'Unified operations', 'Real-time visibility'],
   },
   {
     icon: Workflow,
     title: 'Power Automate',
     subtitle: 'Intelligent Workflow Automation',
-    description: 'Eliminate manual processes across your organization. Our automations convert administrative overhead into operational velocity.',
+    description: 'Eliminate manual processes. Our automations convert administrative overhead into operational velocity.',
     metrics: ['80% less manual work', 'Zero-error processing', '24/7 execution'],
   },
   {
     icon: Zap,
     title: 'Power Apps',
     subtitle: 'Custom Enterprise Applications',
-    description: 'Purpose-built applications that integrate seamlessly with your Microsoft 365 ecosystem — without traditional development timelines.',
+    description: 'Purpose-built apps that integrate seamlessly with your Microsoft 365 ecosystem.',
     metrics: ['60% cost reduction', 'Rapid deployment', 'Native integration'],
   },
 ]
@@ -81,28 +79,22 @@ function NavDots({ active, onNavigate }: { active: number; onNavigate: (i: numbe
   )
 }
 
-/* ─── Section 1: Executive Hook ─── */
+/* ─── Section 1: Executive Hook with Medusa Wave ─── */
 function SlideExecutiveHook({ onCTA }: { onCTA: () => void }) {
-  const mounted = useMounted()
-
   return (
     <section className="snap-section relative flex items-center justify-center overflow-hidden">
       {/* Background layers */}
       <div className="absolute inset-0 bg-gradient-to-br from-[#060d1b] via-[#0a1628] to-[#0f1d32]" />
       <div className="absolute inset-0 dot-pattern opacity-40" />
-      
-      {/* Subtle globe background */}
-      <div className="absolute inset-0 opacity-[0.35]">
-        {mounted && (
-          <div className="w-full h-full">
-            <Globe className="w-full h-full" />
-          </div>
-        )}
+
+      {/* Medusa Wave Background */}
+      <div className="absolute inset-0 opacity-[0.45]">
+        <MedusaWave className="w-full h-full" />
       </div>
 
       {/* Dark overlay for readability */}
-      <div className="absolute inset-0 bg-gradient-to-r from-[#060d1b]/90 via-[#060d1b]/70 to-[#060d1b]/50" />
-      <div className="absolute inset-0 bg-gradient-to-t from-[#060d1b] via-transparent to-[#060d1b]/50" />
+      <div className="absolute inset-0 bg-gradient-to-r from-[#060d1b]/90 via-[#060d1b]/60 to-[#060d1b]/40" />
+      <div className="absolute inset-0 bg-gradient-to-t from-[#060d1b] via-transparent to-[#060d1b]/40" />
 
       {/* Content */}
       <div className="relative z-10 max-w-6xl mx-auto px-6 sm:px-8 lg:px-12">
@@ -190,7 +182,7 @@ function SlideExecutiveHook({ onCTA }: { onCTA: () => void }) {
   )
 }
 
-/* ─── Section 2: Strategic Value Proposition ─── */
+/* ─── Section 2: Strategic Value Proposition + Charts ─── */
 function SlideValueProposition() {
   return (
     <section className="snap-section relative flex items-center justify-center overflow-hidden">
@@ -199,21 +191,21 @@ function SlideValueProposition() {
       <div className="absolute inset-0 grid-pattern opacity-30" />
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[400px] bg-[#4f8fff]/[0.03] rounded-full blur-[120px]" />
 
-      {/* Content */}
-      <div className="relative z-10 max-w-6xl mx-auto px-6 sm:px-8 lg:px-12 w-full py-16">
+      {/* Content - scrollable within snap section */}
+      <div className="relative z-10 max-w-6xl mx-auto px-6 sm:px-8 lg:px-12 w-full max-h-screen overflow-y-auto scrollbar-hide py-12">
         {/* Section Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-14"
+          className="text-center mb-10"
         >
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/10 bg-white/[0.03] mb-6">
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-white/10 bg-white/[0.03] mb-5">
             <Sparkles className="w-3 h-3 text-[#4f8fff]" />
             <span className="text-[11px] font-medium tracking-wider uppercase text-[#7d8fa8]">Strategic Value</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight mb-5">
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight mb-4">
             We don&apos;t just develop.{' '}
             <span className="gradient-text">We optimize.</span>
           </h2>
@@ -222,32 +214,32 @@ function SlideValueProposition() {
           </p>
         </motion.div>
 
-        {/* Value Pillars */}
-        <div className="grid md:grid-cols-3 gap-5 mb-12">
+        {/* Value Pillars - Compact */}
+        <div className="grid md:grid-cols-3 gap-4 mb-8">
           {valuePillars.map((pillar, i) => (
             <motion.div
               key={pillar.title}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: i * 0.15 }}
-              className="group glass-card rounded-xl p-6 hover:border-[#4f8fff]/20 transition-all duration-500"
+              transition={{ duration: 0.6, delay: i * 0.1 }}
+              className="group glass-card rounded-xl p-5 hover:border-[#4f8fff]/20 transition-all duration-500"
             >
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-10 h-10 rounded-lg bg-[#4f8fff]/10 border border-[#4f8fff]/15 flex items-center justify-center group-hover:bg-[#4f8fff]/15 transition-colors duration-300">
-                  <pillar.icon className="w-5 h-5 text-[#4f8fff]" />
+              <div className="flex items-center gap-3 mb-3">
+                <div className="w-9 h-9 rounded-lg bg-[#4f8fff]/10 border border-[#4f8fff]/15 flex items-center justify-center group-hover:bg-[#4f8fff]/15 transition-colors duration-300">
+                  <pillar.icon className="w-4 h-4 text-[#4f8fff]" />
                 </div>
                 <div>
-                  <h3 className="text-base font-semibold">{pillar.title}</h3>
-                  <p className="text-[11px] text-[#7d8fa8]">{pillar.subtitle}</p>
+                  <h3 className="text-sm font-semibold">{pillar.title}</h3>
+                  <p className="text-[10px] text-[#7d8fa8]">{pillar.subtitle}</p>
                 </div>
               </div>
-              <p className="text-sm text-[#7d8fa8] leading-relaxed mb-5">{pillar.description}</p>
-              <div className="space-y-2.5">
+              <p className="text-xs text-[#7d8fa8] leading-relaxed mb-3">{pillar.description}</p>
+              <div className="flex flex-wrap gap-x-3 gap-y-1">
                 {pillar.metrics.map((metric) => (
-                  <div key={metric} className="flex items-center gap-2.5">
+                  <div key={metric} className="flex items-center gap-1.5">
                     <div className="w-1 h-1 rounded-full bg-[#4f8fff]" />
-                    <span className="text-xs font-medium text-[#94a3b8]">{metric}</span>
+                    <span className="text-[10px] font-medium text-[#94a3b8]">{metric}</span>
                   </div>
                 ))}
               </div>
@@ -255,29 +247,32 @@ function SlideValueProposition() {
           ))}
         </div>
 
-        {/* Pain Point Banner */}
+        {/* Pain Point Banner - Compact */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.5 }}
-          className="relative rounded-xl overflow-hidden"
+          transition={{ duration: 0.6, delay: 0.3 }}
+          className="relative rounded-xl overflow-hidden mb-8"
         >
           <div className="absolute inset-0 bg-gradient-to-r from-[#4f8fff]/[0.06] to-[#60a5fa]/[0.03]" />
           <div className="absolute inset-0 border border-[#4f8fff]/10 rounded-xl" />
-          <div className="relative p-6 sm:p-8 flex flex-col sm:flex-row items-start sm:items-center gap-5">
-            <div className="w-12 h-12 rounded-xl bg-[#4f8fff]/10 border border-[#4f8fff]/15 flex items-center justify-center shrink-0">
-              <TrendingUp className="w-6 h-6 text-[#4f8fff]" />
+          <div className="relative p-4 sm:p-5 flex flex-col sm:flex-row items-start sm:items-center gap-4">
+            <div className="w-10 h-10 rounded-xl bg-[#4f8fff]/10 border border-[#4f8fff]/15 flex items-center justify-center shrink-0">
+              <TrendingUp className="w-5 h-5 text-[#4f8fff]" />
             </div>
             <div className="flex-1">
-              <h3 className="text-base font-semibold mb-1">Eliminate Friction. Accelerate Growth.</h3>
-              <p className="text-sm text-[#7d8fa8] leading-relaxed">
+              <h3 className="text-sm font-semibold mb-0.5">Eliminate Friction. Accelerate Growth.</h3>
+              <p className="text-xs text-[#7d8fa8] leading-relaxed">
                 We eliminate friction in financial operations and compliance workflows, transforming administrative bottlenecks into streamlined profit centers.
               </p>
             </div>
-            <Shield className="w-8 h-8 text-[#4f8fff]/20 shrink-0 hidden sm:block" />
+            <Shield className="w-6 h-6 text-[#4f8fff]/20 shrink-0 hidden sm:block" />
           </div>
         </motion.div>
+
+        {/* Executive Charts */}
+        <ExecutiveChartsSection />
       </div>
     </section>
   )
