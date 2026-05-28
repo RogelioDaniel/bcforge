@@ -167,8 +167,9 @@ function SlideExecutiveHook({ onCTA }: { onCTA: () => void }) {
         <motion.div
           animate={{ y: [0, 6, 0] }}
           transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
+          className="scroll-chevron-glow"
         >
-          <ChevronDown className="w-4 h-4 text-[#7d9a8a]/40" />
+          <ChevronDown className="w-5 h-5 text-[#10b981]" strokeWidth={2.5} />
         </motion.div>
       </motion.div>
     </section>
