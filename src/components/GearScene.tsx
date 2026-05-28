@@ -28,6 +28,22 @@ const CAMERA_LOOKATS: [number, number, number][] = [
 ]
 
 // ═══════════════════════════════════════════════════════════════════════
+// Mobile Detection — Adaptive Quality
+// ═══════════════════════════════════════════════════════════════════════
+
+function useIsMobile(): boolean {
+  return useSyncExternalStore(
+    (onStoreChange) => {
+      const mql = window.matchMedia('(max-width: 768px)')
+      mql.addEventListener('change', onStoreChange)
+      return () => mql.removeEventListener('change', onStoreChange)
+    },
+    () => window.matchMedia('(max-width: 768px)').matches,
+    () => false, // SSR default
+  )
+}
+
+// ═══════════════════════════════════════════════════════════════════════
 // Gear Geometry Generator
 // ═══════════════════════════════════════════════════════════════════════
 
@@ -109,7 +125,7 @@ function pickRandom<T>(arr: T[]): T {
   return arr[Math.floor(Math.random() * arr.length)]
 }
 
-// Get the pitch radius (where teeth mesh) — outer radius + half tooth depth
+// Get the pitch radius (where teeth mesh)
 function getPitchRadius(config: { outerRadius: number; toothDepth: number }): number {
   return config.outerRadius + config.toothDepth * 0.5
 }
@@ -128,14 +144,13 @@ function hasOverlap(
     const dx = newPos[0] - gear.position[0]
     const dy = newPos[1] - gear.position[1]
     const dist2D = Math.sqrt(dx * dx + dy * dy)
-    // Overlap if distance is less than sum of pitch radii minus a small gap
     const minDist = newPitch + existingPitch - margin
     if (dist2D < minDist) return true
   }
   return false
 }
 
-// Check if a position is within the visible area bounds
+// Check if position is within visible area bounds
 function isInBounds(pos: [number, number, number], outerR: number): boolean {
   const bound = 5.5
   return (
@@ -146,10 +161,9 @@ function isInBounds(pos: [number, number, number], outerR: number): boolean {
   )
 }
 
-function generateRandomGears(count: number): GearConfig[] {
+function generateRandomGears(count: number, isMobile: boolean): GearConfig[] {
   const configs: GearConfig[] = []
 
-  // Helper to create a random gear shape config
   function makeGearShape(isLarge: boolean) {
     const outerR = isLarge ? rand(1.0, 1.8) : rand(0.35, 0.9)
     const innerR = outerR * rand(0.18, 0.3)
@@ -158,7 +172,6 @@ function generateRandomGears(count: number): GearConfig[] {
     return { innerR, outerR, teethCount, toothDepth }
   }
 
-  // Helper to create full gear config with position
   function makeGear(
     shape: { innerR: number; outerR: number; teethCount: number; toothDepth: number },
     position: [number, number, number],
@@ -172,28 +185,27 @@ function generateRandomGears(count: number): GearConfig[] {
       outerRadius: shape.outerR,
       teeth: shape.teethCount,
       toothDepth: shape.toothDepth,
-      thickness: rand(0.2, 0.45),
-      speed: rand(0.15, 0.7),
-      direction: (parentDirection * -1) as 1 | -1, // Meshing gears rotate opposite
+      thickness: isMobile ? rand(0.15, 0.3) : rand(0.2, 0.45),
+      speed: isMobile ? rand(0.1, 0.4) : rand(0.15, 0.7),
+      direction: (parentDirection * -1) as 1 | -1,
       color: pickRandom(GEAR_COLORS),
       emissiveColor: pickRandom(EMISSIVE_COLORS),
-      emissiveIntensity: rand(0.03, 0.15),
-      metalness: rand(0.84, 0.95),
-      roughness: rand(0.1, 0.25),
-      castShadow: isLarge,
+      emissiveIntensity: isMobile ? rand(0.05, 0.2) : rand(0.03, 0.15),
+      metalness: isMobile ? 0.7 : rand(0.84, 0.95),
+      roughness: isMobile ? 0.35 : rand(0.1, 0.25),
+      castShadow: !isMobile && isLarge,
     }
   }
 
-  // ═══ Step 1: Place the central (root) gear ═══
+  // Place the central (root) gear
   const rootShape = makeGearShape(true)
   const rootGear = makeGear(rootShape, [0, 0, rand(-0.3, 0.3)], 1, true)
   rootGear.speed = rand(0.15, 0.3)
   rootGear.direction = 1
   configs.push(rootGear)
 
-  // ═══ Step 2: Grow the gear network by attaching to existing gears ═══
-  // Each new gear tries to mesh with a random existing gear at its teeth
-  const maxAttempts = 50
+  // Grow the gear network by attaching to existing gears
+  const maxAttempts = isMobile ? 25 : 50
 
   for (let i = 1; i < count; i++) {
     const isLarge = Math.random() > 0.75
@@ -202,42 +214,29 @@ function generateRandomGears(count: number): GearConfig[] {
 
     let placed = false
 
-    // Try multiple times to find a valid meshing position
     for (let attempt = 0; attempt < maxAttempts; attempt++) {
-      // Pick a random existing gear to mesh with
       const parentIdx = Math.floor(Math.random() * configs.length)
       const parent = configs[parentIdx]
       const parentPitch = getPitchRadius(parent)
 
-      // Ideal meshing distance: sum of pitch radii (teeth interlock)
-      // Add small random offset so teeth don't perfectly align every time
       const meshDist = parentPitch + newPitch + rand(-0.02, 0.05)
-
-      // Random angle around the parent gear
       const angle = rand(0, Math.PI * 2)
 
-      // Calculate position
       const newX = parent.position[0] + Math.cos(angle) * meshDist
       const newY = parent.position[1] + Math.sin(angle) * meshDist
-      // Slight Z offset for depth variation
       const newZ = parent.position[2] + rand(-0.8, 0.8)
 
       const newPos: [number, number, number] = [newX, newY, newZ]
 
-      // Check bounds
       if (!isInBounds(newPos, shape.outerR)) continue
-
-      // Check overlap with ALL existing gears (with a small margin for the meshing gap)
       if (hasOverlap(newPos, shape.outerR, shape.toothDepth, configs, 0.08)) continue
 
-      // Valid position found — create the gear
       const gear = makeGear(shape, newPos, parent.direction, isLarge)
       configs.push(gear)
       placed = true
       break
     }
 
-    // If we couldn't place meshing, try a random position as fallback (sparse)
     if (!placed) {
       for (let attempt = 0; attempt < 30; attempt++) {
         const fallbackPos: [number, number, number] = [
@@ -260,7 +259,7 @@ function generateRandomGears(count: number): GearConfig[] {
 }
 
 // ═══════════════════════════════════════════════════════════════════════
-// Environment map for realistic reflections
+// Environment map for realistic reflections (desktop only)
 // ═══════════════════════════════════════════════════════════════════════
 
 function createEnvMap(): THREE.CubeTexture {
@@ -302,10 +301,10 @@ function createEnvMap(): THREE.CubeTexture {
 }
 
 // ═══════════════════════════════════════════════════════════════════════
-// Single Gear Mesh — Realistic metallic
+// Single Gear Mesh — Adaptive Quality
 // ═══════════════════════════════════════════════════════════════════════
 
-function GearMesh({ config, envMap }: { config: GearConfig; envMap: THREE.CubeTexture | null }) {
+function GearMesh({ config, envMap, isMobile }: { config: GearConfig; envMap: THREE.CubeTexture | null; isMobile: boolean }) {
   const meshRef = useRef<THREE.Mesh>(null)
 
   const geometry = useMemo(() => {
@@ -317,16 +316,27 @@ function GearMesh({ config, envMap }: { config: GearConfig; envMap: THREE.CubeTe
     )
     const extrudeSettings: THREE.ExtrudeGeometryOptions = {
       depth: config.thickness,
-      bevelEnabled: true,
+      bevelEnabled: !isMobile, // No bevel on mobile — saves geometry
       bevelThickness: 0.03,
       bevelSize: 0.03,
-      bevelSegments: 3,
-      curveSegments: 2,
+      bevelSegments: isMobile ? 1 : 3,
+      curveSegments: isMobile ? 1 : 2,
     }
     return new THREE.ExtrudeGeometry(shape, extrudeSettings)
-  }, [config.innerRadius, config.outerRadius, config.teeth, config.toothDepth, config.thickness])
+  }, [config.innerRadius, config.outerRadius, config.teeth, config.toothDepth, config.thickness, isMobile])
 
   const material = useMemo(() => {
+    if (isMobile) {
+      // MeshPhongMaterial is much cheaper than MeshStandardMaterial on mobile
+      return new THREE.MeshPhongMaterial({
+        color: config.color,
+        emissive: config.emissiveColor,
+        emissiveIntensity: config.emissiveIntensity * 2,
+        shininess: 40,
+        transparent: true,
+        opacity: 0.92,
+      })
+    }
     return new THREE.MeshStandardMaterial({
       color: config.color,
       metalness: config.metalness,
@@ -338,7 +348,7 @@ function GearMesh({ config, envMap }: { config: GearConfig; envMap: THREE.CubeTe
       envMap: envMap,
       envMapIntensity: 0.6,
     })
-  }, [config.color, config.emissiveColor, config.emissiveIntensity, config.metalness, config.roughness, envMap])
+  }, [config.color, config.emissiveColor, config.emissiveIntensity, config.metalness, config.roughness, envMap, isMobile])
 
   useFrame(({ clock }) => {
     if (meshRef.current) {
@@ -356,34 +366,38 @@ function GearMesh({ config, envMap }: { config: GearConfig; envMap: THREE.CubeTe
         material={material}
         position={[0, 0, offset]}
         castShadow={config.castShadow}
-        receiveShadow
+        receiveShadow={!isMobile}
       />
-      {/* Inner ring accent glow */}
-      <mesh position={[0, 0, 0]} rotation={[0, 0, 0]}>
-        <torusGeometry args={[config.innerRadius * 0.85, 0.025, 8, 32]} />
-        <meshBasicMaterial
-          color={GREEN_ACCENT}
-          transparent
-          opacity={0.25}
-          blending={THREE.AdditiveBlending}
-        />
-      </mesh>
-      {/* Outer rim subtle highlight */}
-      <mesh position={[0, 0, offset + config.thickness / 2]} rotation={[0, 0, 0]}>
-        <torusGeometry args={[config.outerRadius * 0.92, 0.015, 6, 48]} />
-        <meshBasicMaterial
-          color={GREEN}
-          transparent
-          opacity={0.1}
-          blending={THREE.AdditiveBlending}
-        />
-      </mesh>
+      {/* Inner ring accent — only on desktop */}
+      {!isMobile && (
+        <mesh position={[0, 0, 0]} rotation={[0, 0, 0]}>
+          <torusGeometry args={[config.innerRadius * 0.85, 0.025, 8, 32]} />
+          <meshBasicMaterial
+            color={GREEN_ACCENT}
+            transparent
+            opacity={0.25}
+            blending={THREE.AdditiveBlending}
+          />
+        </mesh>
+      )}
+      {/* Outer rim — only on desktop */}
+      {!isMobile && (
+        <mesh position={[0, 0, offset + config.thickness / 2]} rotation={[0, 0, 0]}>
+          <torusGeometry args={[config.outerRadius * 0.92, 0.015, 6, 48]} />
+          <meshBasicMaterial
+            color={GREEN}
+            transparent
+            opacity={0.1}
+            blending={THREE.AdditiveBlending}
+          />
+        </mesh>
+      )}
     </group>
   )
 }
 
 // ═══════════════════════════════════════════════════════════════════════
-// Floating Particles — Green sparks
+// Floating Particles — Desktop only
 // ═══════════════════════════════════════════════════════════════════════
 
 function GearParticles() {
@@ -480,98 +494,120 @@ function CameraController({ activeSlide }: { activeSlide: number }) {
 }
 
 // ═══════════════════════════════════════════════════════════════════════
-// Gear Scene — Enhanced lighting + shadows
+// Gear Scene — Adaptive Lighting
 // ═══════════════════════════════════════════════════════════════════════
 
-function GearScene({ activeSlide, gearConfigs, envMap }: { activeSlide: number; gearConfigs: GearConfig[]; envMap: THREE.CubeTexture | null }) {
+function GearScene({ activeSlide, gearConfigs, envMap, isMobile }: { activeSlide: number; gearConfigs: GearConfig[]; envMap: THREE.CubeTexture | null; isMobile: boolean }) {
   return (
     <>
-      {/* Ambient fill — very subtle */}
-      <ambientLight intensity={0.08} color="#0a2a18" />
+      {/* Ambient fill */}
+      <ambientLight intensity={isMobile ? 0.2 : 0.08} color="#0a2a18" />
 
-      {/* Main directional light — key light with shadows */}
-      <directionalLight
-        position={[8, 6, 5]}
-        intensity={0.6}
-        color="#e8fff0"
-        castShadow
-        shadow-mapSize-width={1024}
-        shadow-mapSize-height={1024}
-        shadow-camera-far={25}
-        shadow-camera-left={-8}
-        shadow-camera-right={8}
-        shadow-camera-top={8}
-        shadow-camera-bottom={-8}
-        shadow-bias={-0.001}
-      />
+      {isMobile ? (
+        <>
+          {/* Mobile: Only 2 lights — minimal GPU cost */}
+          <directionalLight
+            position={[5, 4, 5]}
+            intensity={0.8}
+            color="#e8fff0"
+          />
+          <pointLight
+            position={[0, 0, 3]}
+            intensity={1.2}
+            color={GREEN}
+            distance={18}
+            decay={2}
+          />
+        </>
+      ) : (
+        <>
+          {/* Desktop: Full lighting setup */}
+          {/* Main directional light — key light with shadows */}
+          <directionalLight
+            position={[8, 6, 5]}
+            intensity={0.6}
+            color="#e8fff0"
+            castShadow
+            shadow-mapSize-width={1024}
+            shadow-mapSize-height={1024}
+            shadow-camera-far={25}
+            shadow-camera-left={-8}
+            shadow-camera-right={8}
+            shadow-camera-top={8}
+            shadow-camera-bottom={-8}
+            shadow-bias={-0.001}
+          />
 
-      {/* Fill light — softer from opposite side */}
-      <directionalLight
-        position={[-6, 3, 4]}
-        intensity={0.25}
-        color="#a8f0c8"
-      />
+          {/* Fill light — softer from opposite side */}
+          <directionalLight
+            position={[-6, 3, 4]}
+            intensity={0.25}
+            color="#a8f0c8"
+          />
 
-      {/* Rim light — back edge highlight for depth */}
-      <directionalLight
-        position={[0, -2, -6]}
-        intensity={0.15}
-        color="#34d399"
-      />
+          {/* Rim light — back edge highlight for depth */}
+          <directionalLight
+            position={[0, -2, -6]}
+            intensity={0.15}
+            color="#34d399"
+          />
 
-      {/* Green point light — center glow */}
-      <pointLight
-        position={[0, 0, 3]}
-        intensity={1.0}
-        color={GREEN}
-        distance={18}
-        decay={2}
-      />
+          {/* Green point light — center glow */}
+          <pointLight
+            position={[0, 0, 3]}
+            intensity={1.0}
+            color={GREEN}
+            distance={18}
+            decay={2}
+          />
 
-      {/* Accent point light — top right warm green */}
-      <pointLight
-        position={[4, 3, 1]}
-        intensity={0.5}
-        color={GREEN_ACCENT}
-        distance={14}
-        decay={2}
-      />
+          {/* Accent point light — top right warm green */}
+          <pointLight
+            position={[4, 3, 1]}
+            intensity={0.5}
+            color={GREEN_ACCENT}
+            distance={14}
+            decay={2}
+          />
 
-      {/* Deep fill point light — bottom left */}
-      <pointLight
-        position={[-4, -2, 2]}
-        intensity={0.3}
-        color="#047857"
-        distance={12}
-        decay={2}
-      />
+          {/* Deep fill point light — bottom left */}
+          <pointLight
+            position={[-4, -2, 2]}
+            intensity={0.3}
+            color="#047857"
+            distance={12}
+            decay={2}
+          />
 
-      {/* Cool rim point light — back */}
-      <pointLight
-        position={[0, 1, -5]}
-        intensity={0.2}
-        color="#6ee7b7"
-        distance={10}
-        decay={2}
-      />
+          {/* Cool rim point light — back */}
+          <pointLight
+            position={[0, 1, -5]}
+            intensity={0.2}
+            color="#6ee7b7"
+            distance={10}
+            decay={2}
+          />
 
-      {/* Spot light — dramatic highlight on main gear */}
-      <spotLight
-        position={[2, 5, 4]}
-        intensity={0.4}
-        color="#d0ffe8"
-        angle={0.5}
-        penumbra={0.8}
-        distance={15}
-        decay={2}
-        castShadow
-      />
+          {/* Spot light — dramatic highlight on main gear */}
+          <spotLight
+            position={[2, 5, 4]}
+            intensity={0.4}
+            color="#d0ffe8"
+            angle={0.5}
+            penumbra={0.8}
+            distance={15}
+            decay={2}
+            castShadow
+          />
+        </>
+      )}
 
       {gearConfigs.map((config, i) => (
-        <GearMesh key={i} config={config} envMap={envMap} />
+        <GearMesh key={i} config={config} envMap={envMap} isMobile={isMobile} />
       ))}
 
-      <GearParticles />
+      {/* Particles — desktop only */}
+      {!isMobile && <GearParticles />}
 
       <CameraController activeSlide={activeSlide} />
     </>
@@ -588,17 +624,19 @@ export function GearBackground({ activeSlide }: { activeSlide: number }) {
     () => true,
     () => false
   )
+  const isMobile = useIsMobile()
 
-  // Generate random gears once per mount — new config each page load
+  // Generate random gears — fewer on mobile
   const gearConfigs = useMemo(() => {
-    const count = Math.floor(rand(6, 11)) // 6-10 gears
-    return generateRandomGears(count)
-  }, [])
+    const count = isMobile ? Math.floor(rand(4, 7)) : Math.floor(rand(6, 11))
+    return generateRandomGears(count, isMobile)
+  }, [isMobile])
 
+  // Environment map — desktop only
   const envMap = useMemo(() => {
-    if (typeof document === 'undefined') return null
+    if (typeof document === 'undefined' || isMobile) return null
     return createEnvMap()
-  }, [])
+  }, [isMobile])
 
   if (!mounted) {
     return <div className="fixed inset-0 bg-[#04120a]" />
@@ -617,34 +655,39 @@ export function GearBackground({ activeSlide }: { activeSlide: number }) {
         }}
       />
 
-      {/* Organic glow blob — top right */}
-      <div
-        className="absolute inset-0"
-        style={{
-          background: 'radial-gradient(ellipse 40% 35% at 75% 25%, rgba(52, 211, 153, 0.04) 0%, transparent 70%)',
-        }}
-      />
-
-      {/* Organic glow blob — bottom left */}
-      <div
-        className="absolute inset-0"
-        style={{
-          background: 'radial-gradient(ellipse 35% 30% at 20% 80%, rgba(6, 95, 70, 0.05) 0%, transparent 65%)',
-        }}
-      />
+      {/* Organic glow blobs — desktop only (CSS gradients are cheap, but reduce on mobile) */}
+      {!isMobile && (
+        <>
+          <div
+            className="absolute inset-0"
+            style={{
+              background: 'radial-gradient(ellipse 40% 35% at 75% 25%, rgba(52, 211, 153, 0.04) 0%, transparent 70%)',
+            }}
+          />
+          <div
+            className="absolute inset-0"
+            style={{
+              background: 'radial-gradient(ellipse 35% 30% at 20% 80%, rgba(6, 95, 70, 0.05) 0%, transparent 65%)',
+            }}
+          />
+        </>
+      )}
 
       <Canvas
-        camera={{ position: CAMERA_POSITIONS[0], fov: 50 }}
-        shadows
+        camera={{ position: CAMERA_POSITIONS[0], fov: isMobile ? 55 : 50 }}
+        shadows={!isMobile}
+        dpr={isMobile ? [1, 1.5] : [1, 2]}
         gl={{
           alpha: true,
-          antialias: true,
-          toneMapping: THREE.ACESFilmicToneMapping,
+          antialias: !isMobile,
+          toneMapping: isMobile ? THREE.NoToneMapping : THREE.ACESFilmicToneMapping,
           toneMappingExposure: 1.2,
+          powerPreference: 'high-performance',
         }}
+        performance={{ min: 0.5 }}
         style={{ background: 'transparent' }}
       >
-        <GearScene activeSlide={activeSlide} gearConfigs={gearConfigs} envMap={envMap} />
+        <GearScene activeSlide={activeSlide} gearConfigs={gearConfigs} envMap={envMap} isMobile={isMobile} />
       </Canvas>
 
       {/* Edge vignette overlay for depth */}
